@@ -125,6 +125,8 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Find & Replace
 " Far.vim makes it easier to find and replace text through multiple files.
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
+" Make the yanked region apparent!
+Plug 'machakann/vim-highlightedyank'
 
 " theme
 Plug 'ajmwagar/vim-deus'
@@ -379,6 +381,8 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+" copy content put
+nnoremap cp "0p
 
 " delays and poor user experience.
 set updatetime=100

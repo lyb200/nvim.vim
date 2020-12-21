@@ -20,7 +20,11 @@ endif
 " ==================================================
 " ============= vim-plug, myplugins ================
 " ==================================================
-call plug#begin('~/AppData/Local/nvim/plugged')
+if has('unix')
+	call plug#begin('~/.config/nvim/plugged')
+else
+	call plug#begin('~/AppData/Local/nvim/plugged')
+endif
 
 " Treesitter need more soft
 "Plug 'nvim-treesitter/nvim-treesitter'
@@ -40,10 +44,10 @@ Plug 'airblade/vim-rooter'
 " file navigation
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
-" <c-p> :Leaderf file
-Plug 'junegunn/fzf.vim'
 " An efficient fuzzy finder that helps to locate files, buffers, mrus, gtags, etc.
 " on the fly for both vim and neovim.
+Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+" <c-p> :Leaderf file
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " Make Ranger running in a floating window to communicate with Neovim via RPC
 Plug 'kevinhwang91/rnvimr'
@@ -202,7 +206,11 @@ call plug#end()
 
 " let g:python_host_prog  = 'C:\Python27\python.exe'
 let g:loaded_python_provider = 0
-let g:python3_host_prog = 'C:\Python38\python.exe'
+if has('unix')
+	let g:python3_host_prog = '/usr/bin/python3'
+else
+	let g:python3_host_prog = 'C:\Python38\python.exe'
+endif
 
 let mapleader=","
 " ########################## START ########################### #               coc.nvim config more plugins               # ############################################################ let g:coc_global_extensions = [ \ 'coc-marketplace', \ 'coc-actions', \ 'coc-diagnostic', \ 'coc-explorer', \ 'coc-flutter-tools', \ 'coc-gitignore', \ 'coc-html',
@@ -355,11 +363,19 @@ set noswapfile
 
 if has('persistent_undo')
 	set undofile
-	if has('nvim')
-		" set undodir=~\AppData\Local\nvim\undo,.
-		set undodir=~\AppData\Local\nvim\undo
+	if has('unix')
+		if has('nvim')
+			set undodir='~/.config/nvim/tmp/undo'
+		else
+			set undodir="/vimfiles/undo"
+		endif
 	else
-		set undodir=~\vimfiles\undo,.
+		if has('nvim')
+			" set undodir=~\AppData\Local\nvim\undo,.
+			set undodir="~\AppData\Local\nvim\undo"
+		else
+			set undodir=~\vimfiles\undo,.
+		endif
 	endif
 endif
 
@@ -525,8 +541,8 @@ set nowrap
 set textwidth=0
 
 " Indentation
-nnoremap < <<
-nnoremap > >>
+" nnoremap < <<
+" nnoremap > >>
 
 " find adjacent duplicate words
 noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
@@ -541,8 +557,8 @@ xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
 
 if has('win32')
-	silent !mkdir -p ~\AppData\Local\/nvim/tmp/backup
-	silent !mkdir -p ~\AppData\Local\/nvim/tmp/undo
+	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\backup
+	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\undo
 else
 	silent !mkdir -p ~/.config/nvim/tmp/backup
 	silent !mkdir -p ~/.config/nvim/tmp/undo
@@ -1024,10 +1040,10 @@ vnoremap <silent> <leader><leader>r :Farr<cr>
 " ===
 " To extend the global list, you can simply extend it
 " let g:antovim_definitions = extend(g:antovim_definitions, [['yes', 'no', 'maybe']])
-"
+nnoremap gs :Antovim<CR>
 
 " ===
-" === Antovim
+" === tabular
 " ===
 vmap gt :Tabularize /
 
@@ -1078,7 +1094,11 @@ endfunc
 " ===
 " === FZF
 " ===
-set rtp+=$HOME/AppData/Local/nvim/opt/fzf
+if has('unix')
+	set runtimepath+=$HOME/.config/.fzf/bin
+else
+	set runtimepath+=$HOME/AppData/Local/nvim
+endif
 nnoremap <c-p> :Leaderf file<CR>
 " noremap <silent> <C-p> :Files<CR>
 noremap <silent> <A-f> :Rg<CR>

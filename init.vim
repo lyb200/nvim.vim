@@ -125,6 +125,8 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Find & Replace
 " Far.vim makes it easier to find and replace text through multiple files.
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
+" Make the yanked region apparent!
+Plug 'machakann/vim-highlightedyank'
 
 " theme
 Plug 'ajmwagar/vim-deus'
@@ -203,19 +205,7 @@ let g:loaded_python_provider = 0
 let g:python3_host_prog = 'C:\Python38\python.exe'
 
 let mapleader=","
-
-" ########################## START ###########################
-" #               coc.nvim config more plugins               #
-" ############################################################
-let g:coc_global_extensions = [
-			\ 'coc-marketplace',
-			\ 'coc-actions',
-			\ 'coc-diagnostic',
-			\ 'coc-explorer',
-			\ 'coc-flutter-tools',
-			\ 'coc-gitignore',
-			\ 'coc-html',
-			\ 'coc-css',
+" ########################## START ########################### #               coc.nvim config more plugins               # ############################################################ let g:coc_global_extensions = [ \ 'coc-marketplace', \ 'coc-actions', \ 'coc-diagnostic', \ 'coc-explorer', \ 'coc-flutter-tools', \ 'coc-gitignore', \ 'coc-html',
 			\ 'coc-json',
 			\ 'coc-lists',
 			\ 'coc-prettier',
@@ -379,6 +369,8 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+" Copy put, especial after visual region put.
+nnoremap cp "0p
 
 " delays and poor user experience.
 set updatetime=100

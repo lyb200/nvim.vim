@@ -213,7 +213,17 @@ else
 endif
 
 let mapleader=","
-" ########################## START ########################### #               coc.nvim config more plugins               # ############################################################ let g:coc_global_extensions = [ \ 'coc-marketplace', \ 'coc-actions', \ 'coc-diagnostic', \ 'coc-explorer', \ 'coc-flutter-tools', \ 'coc-gitignore', \ 'coc-html',
+" ########################## START ###########################
+" #               coc.nvim config more plugins               #
+" ############################################################
+let g:coc_global_extensions = [
+			\ 'coc-marketplace',
+			\ 'coc-actions',
+			\ 'coc-diagnostic',
+			\ 'coc-explorer',
+			\ 'coc-flutter-tools',
+			\ 'coc-gitignore',
+			\ 'coc-html',
 			\ 'coc-json',
 			\ 'coc-lists',
 			\ 'coc-prettier',

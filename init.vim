@@ -52,7 +52,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " Make Ranger running in a floating window to communicate with Neovim via RPC
 Plug 'kevinhwang91/rnvimr'
 
-" for finding defitinitionshammer_and_pick and references/usages
+" Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
 
 " Taglist
@@ -220,7 +220,6 @@ let g:coc_global_extensions = [
 			\ 'coc-marketplace',
 			\ 'coc-actions',
 			\ 'coc-diagnostic',
-			\ 'coc-explorer',
 			\ 'coc-flutter-tools',
 			\ 'coc-gitignore',
 			\ 'coc-html',
@@ -243,6 +242,7 @@ let g:coc_global_extensions = [
 			\ 'coc-yank'
 			\ ]
 
+			" \ 'coc-explorer',
 			" \ 'coc-emmet',
 			" \ 'coc-yaml',
 
@@ -397,6 +397,7 @@ nnoremap Y y$
 vnoremap Y "+y
 " Copy put, especial after visual region put.
 nnoremap cp "0p
+inoremap jk <ESC>
 
 " delays and poor user experience.
 set updatetime=100
@@ -704,7 +705,18 @@ au BufWrite *.js :Autoformat
 " ===
 " === any-jump
 " ===
+" In normal or visual mode.
+" Just place you cursor on any variable/class/constant/name/symbol and press \j.
+" You can also use visual mode to select proper keyword (j also works in visual mode)
+" With :AnyJumpArg myKeyword command you can manually write what you want to be searched for.
+" Normal mode: Jump to definition under cursore
 nnoremap \j :AnyJump<CR>
+" Visual mode: jump to selected text in visual mode
+xnoremap \j :AnyJumpVisual<CR>
+" Normal mode: open previous opened file (after jump)
+nnoremap \ab :AnyJumpBack<CR>
+" Normal mode: open last closed search window again
+nnoremap \al :AnyJumpLastResults<CR>
 let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.9
 

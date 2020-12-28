@@ -395,8 +395,6 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
-" Copy put, especial after visual region put.
-nnoremap cp "0p
 inoremap jk <ESC>
 
 " delays and poor user experience.

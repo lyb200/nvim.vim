@@ -417,8 +417,6 @@ set termguicolors
 set splitbelow
 set splitright
 
-" some version color incorrect
-"let &t_ut=''
 "can change  directory
 set autochdir
 
@@ -633,6 +631,8 @@ autocmd BufNewFile,BufRead * endtry
 
 
 let &t_CO=256
+" some version color incorrect
+"let &t_ut=''
 " set cursor sharp
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"

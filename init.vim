@@ -131,6 +131,12 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
 " Make the yanked region apparent!
 Plug 'machakann/vim-highlightedyank'
+" abolish.vim: easily search for, substitute, and abbreviate multiple variants of a word
+" Substitute: Child to Adult use the command :S or :Subvert/child{,ren}/adult{,s}/g
+" Coercion: Want to turn fooBar into foo_bar? Press crs (coerce to snake_case).
+" MixedCase (crm), camelCase (crc), snake_case (crs), UPPER_CASE (cru), dash-case (cr-),
+" dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
+Plug 'tpope/vim-abolish'
 
 " theme
 Plug 'ajmwagar/vim-deus'
@@ -526,6 +532,25 @@ syntax enable
 noremap <silent> H ^
 " L key: go to the end of the line
 noremap <silent> L $
+" exchange two command
+noremap <silent> $ L
+noremap <silent> ^ H
+
+" can maintain sustitute flags
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+" visual-star.vim
+" can make * at visual characters
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch(cmdtype)
+	let temp = @s
+	norm! gv"sy
+	let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+	let @s = temp
+endfunction
 
 " split windows config
 " nmap s <nop>
@@ -1198,3 +1223,8 @@ let g:rnvimr_layout = { 'relative': 'editor',
             \ 'row': 0,
             \ 'style': 'minimal' }
 let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+
+" ===
+" === vim-abolish
+" ===
+" you can use :S --> :Subvert

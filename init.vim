@@ -215,6 +215,7 @@ let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 if has('unix')
 	let g:python3_host_prog = '/usr/bin/python3'
+	let g:perl_host_prog = '/usr/bin/perl'
 else
 	let g:python3_host_prog = 'C:\Python38\python.exe'
 endif
@@ -405,6 +406,8 @@ vnoremap Y "+y
 " special ynak register 0, for 2nd visual put
 vnoremap <leader>p "0p
 inoremap jk <ESC>
+" to first nonspace column
+set startofline
 
 " delays and poor user experience.
 set updatetime=100
@@ -536,8 +539,8 @@ noremap <silent> H ^
 " L key: go to the end of the line
 noremap <silent> L $
 " exchange two command
-noremap <silent> $ L
-noremap <silent> ^ H
+nnoremap <silent> $ L
+nnoremap <silent> ^ H
 
 " can maintain sustitute flags
 nnoremap & :&&<CR>
@@ -595,8 +598,8 @@ if has('win32')
 	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\backup
 	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\undo
 else
-	silent !mkdir -p ~/.config/nvim/tmp/backup
-	silent !mkdir -p ~/.config/nvim/tmp/undo
+	silent !mkdir -p $HOME/.config/nvim/tmp/backup
+	silent !mkdir -p $HOME/.config/nvim/tmp/undo
 endif
 
 " open file where you leave the file

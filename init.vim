@@ -212,6 +212,7 @@ call plug#end()
 
 " let g:python_host_prog  = 'C:\Python27\python.exe'
 let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
 if has('unix')
 	let g:python3_host_prog = '/usr/bin/python3'
 else
@@ -401,6 +402,8 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+" special ynak register 0, for 2nd visual put
+vnoremap <leader>p "0p
 inoremap jk <ESC>
 
 " delays and poor user experience.

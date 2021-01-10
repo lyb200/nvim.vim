@@ -192,6 +192,10 @@ Plug 'mbbill/undotree'
 " easymotion
 Plug 'easymotion/vim-easymotion'
 " Pairs of handy bracket mappings
+" A mnemonic for the "a" commands is "args" and for the "q" commands is "quickfix".
+" has more than 20 [\] commands. eg.
+" [a :previous, [A :first, [b bprevious [t : tnext, [T :tfirst, [p :cprevious etc.
+" [e Exchange the current line with [count] lines above it.
 Plug 'tpope/vim-unimpaired'
 
 " code debug

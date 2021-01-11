@@ -10,8 +10,8 @@ if has('win32')
 	endif
 elseif has('unix')
 	" for linux or macOS
-	if empty(glob('~/.config/nvim/autoload/plug.vim'))
-		silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+	if empty(glob('$HOME/.config/nvim/autoload/plug.vim'))
+		silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
 					\ https://199.232.68.133/junegunn/vim-plug/master/plug.vim
 		"autocmd VimEnter * PlugInstall
 		autocmd VimEnter * PlugInstall | source $MYVIMRC
@@ -21,9 +21,9 @@ endif
 " ============= vim-plug, myplugins ================
 " ==================================================
 if has('unix')
-	call plug#begin('~/.config/nvim/plugged')
+	call plug#begin('$HOME/.config/nvim/plugged')
 else
-	call plug#begin('~/AppData/Local/nvim/plugged')
+	call plug#begin('$HOME/AppData/Local/nvim/plugged')
 endif
 
 " Treesitter need more soft
@@ -387,16 +387,16 @@ if has('persistent_undo')
 	set undofile
 	if has('unix')
 		if has('nvim')
-			set undodir='~/.config/nvim/tmp/undo'
+			set undodir='$HOME/.config/nvim/tmp/undo'
 		else
 			set undodir="/vimfiles/undo"
 		endif
 	else
 		if has('nvim')
-			" set undodir=~\AppData\Local\nvim\undo,.
-			set undodir="~\AppData\Local\nvim\undo"
+			" set undodir=$HOME\AppData\Local\nvim\undo,.
+			set undodir="$HOME\AppData\Local\nvim\undo"
 		else
-			set undodir=~\vimfiles\undo,.
+			set undodir=$HOME\vimfiles\undo,.
 		endif
 	endif
 endif
@@ -680,7 +680,7 @@ colorscheme deus
 " auto source init.vim
 augroup autosourcing
 	autocmd!
-	" autocmd BufWritePost ~/AppData/Local/nvim/init.vim source %
+	" autocmd BufWritePost $HOME/AppData/Local/nvim/init.vim source %
 	autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
@@ -712,7 +712,7 @@ noremap <leader>tmp :+tabmove<CR>
 " === Markdown Settings
 " ===
 " Snippets
-" source ~/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
+" source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
 " Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 

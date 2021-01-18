@@ -52,6 +52,13 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " Make Ranger running in a floating window to communicate with Neovim via RPC
 Plug 'kevinhwang91/rnvimr'
 
+if has('unix')
+	" Ranger integration in vim and neovim
+	Plug 'francoiscabrol/ranger.vim'
+	" If you use neovim, you have to add the dependency to the plugin bclose.vim:
+	Plug 'rbgrouleff/bclose.vim'
+endif
+
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
 
@@ -1238,3 +1245,26 @@ let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
 " === vim-abolish
 " ===
 " you can use :S --> :Subvert
+
+
+" ===
+" === ranger
+" ===
+let g:ranger_map_keys = 0
+map <leader>ra :Ranger<CR>
+map <leader>rnt :RangerNewTab<CR>
+" Ranger // open current file by default
+" RangerCurrentFile // Default Ranger behaviour
+" RangerCurrentDirectory
+" RangerWorkingDirectory
+
+" // open always in new tabs
+" RangerNewTab
+" RangerCurrentFileNewTab
+" RangerCurrentDirectoryNewTab
+" RangerWorkingDirectoryNewTab
+
+" // open tab, when existant or in new tab when not existant
+" RangerCurrentFileExistingOrNewTab
+" RangerCurrentDirectoryExistingOrNewTab
+" RangerWorkingDirectoryExistingOrNewTab

@@ -52,7 +52,7 @@
 	"diagnostic.hintSign": "\uf864",
 	"diagnostic.displayByAle": false,
 	"diagnostic.refreshOnInsertMode": false,
-	"diagnostic.refreshAfterSave": false,
+	/* "diagnostic.refreshAfterSave": false, */
 	"diagnostic.checkCurrentLine": true,
 	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
 	"diagnostic.virtualText": true,
@@ -196,8 +196,8 @@
 	"prettier.useTabs": true,
 	"prettier.trailingComma": "all",
 	"prettier.singleQuote": false,
-	"todolist.autoUpload": true,
-	"todolist.promptForReminder": false,
+	/* "todolist.autoUpload": true, */
+	/* "todolist.promptForReminder": false, */
 	"coc-actions.hideCursor": false,
 	"coc-actions.showActionKind": true,
 	"diagnostic-languageserver.filetypes": {
@@ -214,27 +214,27 @@
 		"eelixir": "mix_format"
 	},
 	"languageserver": {
-		/* "lua": { */
-		/* 	"command": "lua-lsp", */
-		/* 	"filetypes": ["lua"] */
-		/* }, */
-		/* "swift": { */
-		/* 	"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp", */
-		/* 	"args": [], */
-		/* 	"filetypes": ["swift"], */
-		/* 	"initializationOptions": {}, */
-		/* 	"settings": {} */
-		/* }, */
-		/* "golang": { */
-		/* 	"command": "gopls", */
-		/* 	"rootPatterns": ["go.mod"], */
-		/* 	"filetypes": ["go"], */
-		/* 	"initializationOptions": { */
-		/* 		"gocodeCompletionEnabled": true, */
-		/* 		"diagnosticsEnabled": true, */
-		/* 		"lintTool": "golint" */
-		/* 	} */
-		/* }, */
+		"lua": {
+			"command": "lua-lsp",
+			"filetypes": ["lua"]
+		},
+		"swift": {
+			"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+			"args": [],
+			"filetypes": ["swift"],
+			"initializationOptions": {},
+			"settings": {}
+		},
+		"golang": {
+			"command": "gopls",
+			"rootPatterns": ["go.mod"],
+			"filetypes": ["go"],
+			"initializationOptions": {
+				"gocodeCompletionEnabled": true,
+				"diagnosticsEnabled": true,
+				"lintTool": "golint"
+			}
+		},
 		"bash": {
 			"command": "bash-language-server",
 			"args": ["start"],

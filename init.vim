@@ -1226,6 +1226,7 @@ let g:rnvimr_draw_border = 0
 " let g:rnvimr_bw_enable = 1
 highlight link RnvimrNormal CursorLine
 nnoremap <silent> <leader>rt :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+tnoremap <silent> <leader>rt :<C-\><C-n>:RnvimrToggle<CR>
 let g:rnvimr_action = {
             \ '<C-t>': 'NvimEdit tabedit',
             \ '<C-x>': 'NvimEdit split',

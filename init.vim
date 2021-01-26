@@ -394,14 +394,14 @@ if has('persistent_undo')
 	set undofile
 	if has('unix')
 		if has('nvim')
-			set undodir='$HOME/.config/nvim/tmp/undo'
+			set undodir=$HOME/.config/nvim/tmp/undo
 		else
-			set undodir="/vimfiles/undo"
+			set undodir=/vimfiles/undo
 		endif
 	else
 		if has('nvim')
 			" set undodir=$HOME\AppData\Local\nvim\undo,.
-			set undodir="$HOME\AppData\Local\nvim\undo"
+			set undodir=$HOME\AppData\Local\nvim\undo
 		else
 			set undodir=$HOME\vimfiles\undo,.
 		endif
@@ -1169,6 +1169,7 @@ noremap <silent> <A-h> :History<CR>
 noremap <silent> <A-l> :Lines<CR>
 noremap <silent> <A-w> :Buffers<CR>
 noremap <leader>; :History:<CR>
+noremap <A-d> :BD<CR>
 
 let g:fzf_preview_window = 'right:60%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -1189,8 +1190,6 @@ command! BD call fzf#run(fzf#wrap({
   \ 'sink*': { lines -> s:delete_buffers(lines) },
   \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
 \ }))
-
-noremap <A-d> :BD<CR>
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 

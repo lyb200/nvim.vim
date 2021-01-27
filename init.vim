@@ -394,7 +394,7 @@ if has('persistent_undo')
 	set undofile
 	if has('unix')
 		if has('nvim')
-			set undodir=$HOME/.config/nvim/tmp/undo
+			set undodir=$HOME/tmp/undo
 		else
 			set undodir=/vimfiles/undo
 		endif
@@ -609,8 +609,8 @@ if has('win32')
 	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\backup
 	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\undo
 else
-	silent !mkdir -p $HOME/.config/nvim/tmp/backup
-	silent !mkdir -p $HOME/.config/nvim/tmp/undo
+	silent !mkdir -p $HOME/tmp/backup
+	silent !mkdir -p $HOME/tmp/undo
 endif
 
 " open file where you leave the file

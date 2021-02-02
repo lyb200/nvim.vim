@@ -605,7 +605,7 @@ nnoremap <leader>tt :NERDTreeToggle<CR>
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 
 " Press <leader><space> twice to jump to the next '<++>' and edit it
-noremap <LEADER><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+noremap <SPACE><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Spelling Check with <space>sc
 noremap <LEADER>sc :set spell!<CR>

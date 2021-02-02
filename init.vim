@@ -601,6 +601,15 @@ noremap <silent> <leader>o za
 
 nnoremap <leader>tt :NERDTreeToggle<CR>
 
+" Opening a terminal window
+noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
+
+" Press <leader><space> twice to jump to the next '<++>' and edit it
+noremap <LEADER><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+
+" Spelling Check with <space>sc
+noremap <LEADER>sc :set spell!<CR>
+
 " visual line continue move
 xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv

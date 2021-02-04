@@ -62,7 +62,7 @@ endif
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
 
-" Taglist
+" Taglist: Viewer & Finder for LSP symbols and tags
 Plug 'liuchengxu/vista.vim'
 
 " Format code with one button press (or automatically on save).
@@ -144,6 +144,9 @@ Plug 'machakann/vim-highlightedyank'
 " MixedCase (crm), camelCase (crc), snake_case (crs), UPPER_CASE (cru), dash-case (cr-),
 " dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
 Plug 'tpope/vim-abolish'
+
+" Plugin to toggle, display and navigate marks
+Plug 'kshenoy/vim-signature'
 
 " theme
 Plug 'ajmwagar/vim-deus'
@@ -580,7 +583,7 @@ nmap sj :set splitbelow<CR>:split<CR>
 nmap sk :set nosplitbelow<CR>:split<CR>
 
 " Open the init.vim file anytime
-noremap <leader>i :e $MYVIMRC<CR>
+noremap <leader>n :e $MYVIMRC<CR>
 
 " find and replace
 noremap \s :%s//g<left><left>
@@ -593,8 +596,8 @@ set textwidth=0
 " nnoremap < <<
 " nnoremap > >>
 
-" find adjacent duplicate words
-noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
+" search adjacent duplicate words
+noremap sdw /\(\<\w\+\>\)\_s*\1
 
 " Folding
 noremap <silent> <leader>o za
@@ -731,6 +734,8 @@ noremap <leader>tmp :+tabmove<CR>
 " source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
 " Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
+" md shortcut for only markdown
+source ./md-snippets.vim
 
 " ===
 " === Undotree
@@ -1073,6 +1078,17 @@ let g:vista#renderer#icons = {
 " autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 let g:scrollstatus_size = 15
+
+" Show the nearest method/function in the statusline
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+
+" By default vista.vim never run if you don't call it explicitly.
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " ===
 " === Far.vim

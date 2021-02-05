@@ -735,7 +735,11 @@ noremap <leader>tmp :+tabmove<CR>
 " Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 " md shortcut for only markdown
-source ./md-snippets.vim
+if has('unix')
+	source $HOME/.config/nvim/md-snippets.vim
+else
+	source $HOME/AppData/Local/nvim/md-snippets.vim
+endif
 
 " ===
 " === Undotree

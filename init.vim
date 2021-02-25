@@ -1319,7 +1319,7 @@ let g:clever_f_ignore_case = 1
 " set it to 1 to enable searching by smart case.
 let g:clever_f_smart_case = 1
 " timeout
-" let g:clever_f_timeout_ms = 200
+let g:clever_f_timeout_ms = 1000
 " Repeat last input
 let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 " If you want to show a prompt when you input a character for clever-f

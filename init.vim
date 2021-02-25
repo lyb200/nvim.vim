@@ -192,6 +192,8 @@ Plug 'tpope/vim-commentary'
 
 " emmet
 Plug 'mattn/emmet-vim'
+" The ultimate snippet solution for Vim.
+" Plug 'SirVer/ultisnips'
 
 " vim-snippets
 Plug 'honza/vim-snippets'
@@ -730,7 +732,10 @@ noremap <leader>tmp :+tabmove<CR>
 " ===
 " === Markdown Settings
 " ===
-" Snippets
+
+" ===
+" === Snippets
+" ===
 " source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
 " Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell

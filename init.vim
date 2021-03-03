@@ -61,6 +61,8 @@ endif
 
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
+" Extended f, F, t and T key mappings for Vim.
+Plug 'rhysd/clever-f.vim'
 
 " Taglist: Viewer & Finder for LSP symbols and tags
 Plug 'liuchengxu/vista.vim'
@@ -192,6 +194,8 @@ Plug 'tpope/vim-commentary'
 
 " emmet
 Plug 'mattn/emmet-vim'
+" The ultimate snippet solution for Vim.
+" Plug 'SirVer/ultisnips'
 
 " vim-snippets
 Plug 'honza/vim-snippets'
@@ -735,7 +739,10 @@ noremap <leader>tmp :+tabmove<CR>
 " ===
 " === Markdown Settings
 " ===
-" Snippets
+
+" ===
+" === Snippets
+" ===
 " source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
 " Auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -1302,3 +1309,27 @@ map <leader>rnt :RangerNewTab<CR>
 " RangerCurrentFileExistingOrNewTab
 " RangerCurrentDirectoryExistingOrNewTab
 " RangerWorkingDirectoryExistingOrNewTab
+
+
+" ===
+" === clever-f
+" ===
+" controls to search a character across multi lines or not.
+" set it to 1 to search a character only in current line.
+let g:clever_f_across_no_line = 0
+" controls whether or not searches are case-insensitive.
+" 1 for case-inseitive
+let g:clever_f_ignore_case = 1
+" controls whether searches are smart case or not
+" set it to 1 to enable searching by smart case.
+let g:clever_f_smart_case = 1
+" timeout
+let g:clever_f_timeout_ms = 1000
+" Repeat last input
+let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
+" If you want to show a prompt when you input a character for clever-f
+" let g:clever_f_show_prompt = 1
+" Match all symbols with one char
+let g:clever_f_chars_match_any_signs = ';'
+" Keeping the functionality of ;
+" map ; <Plug>(clever-f-repeat-forward)

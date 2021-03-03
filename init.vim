@@ -486,6 +486,11 @@ setglobal termencoding=utf-8
 scriptencoding=utf-8
 
 set mouse=a
+" input method will change
+set noimdisable
+" make :lmap and IM turn off automatically when leaving Insert mode.
+inoremap <ESC> <ESC>:set iminsert=0<CR>
+
 " za，trigger fold; zA, trigger fold recursively;
 " zM，close all folds; zm, fold more: subtract v:count1 from 'foldlevel'.
 " zR，open all folds. zr, reduce folding: add v:count1 to 'foldlevel'

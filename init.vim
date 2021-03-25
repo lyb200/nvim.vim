@@ -590,7 +590,7 @@ nmap sk :set nosplitbelow<CR>:split<CR>
 noremap <leader>n :e $MYVIMRC<CR>
 
 " find and replace
-noremap \s :%s//g<left><left>
+noremap \s :%s@\v@g<left><left>
 noremap <LEADER>sw :set wrap<CR>
 set nowrap
 

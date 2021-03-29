@@ -422,7 +422,7 @@ noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
 " special ynak register 0, for 2nd visual put
-vnoremap <leader>p "0p
+nnoremap <leader>p "0p
 inoremap jk <ESC>
 " to first nonspace column
 set startofline

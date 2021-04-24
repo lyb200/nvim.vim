@@ -421,8 +421,8 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
-" special ynak register 0, for 2nd visual put
-nnoremap <leader>p "0p
+" system copyboard to visual select some characters.
+nnoremap <leader>p d"+p
 inoremap jk <ESC>
 " to first nonspace column
 set startofline

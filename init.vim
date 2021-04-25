@@ -422,7 +422,8 @@ noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
 " system copyboard to visual select some characters.
-nnoremap <leader>p d"+p
+vnoremap <leader>p d"+p
+nnoremap <leader>p "0p
 inoremap jk <ESC>
 " to first nonspace column
 set startofline

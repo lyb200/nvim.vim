@@ -415,7 +415,6 @@ if has('persistent_undo')
 	endif
 endif
 
-" nnoremap / /\v
 nnoremap S :w<CR>
 nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
@@ -462,6 +461,7 @@ set relativenumber
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set shiftround
 
 " show tab and tail
 set list
@@ -582,7 +582,7 @@ function! s:VSetSearch(cmdtype)
 	let @s = temp
 endfunction
 
-" split windows config
+" slplit windows config
 " nmap s <nop>
 " ss swatch cursor to top or end of current line
 noremap <expr>ss col(".")==1?"$":"0"
@@ -594,8 +594,11 @@ nmap sk :set nosplitbelow<CR>:split<CR>
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
+" lookup keyword under the cursor(man)
+noremap <leader>k K
 
 " find and replace
+" nnoremap / /\v
 noremap \s :%s@\v@g<left><left>
 noremap <LEADER>sw :set wrap<CR>
 set nowrap

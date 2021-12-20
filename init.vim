@@ -420,6 +420,11 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+" delete all, yank all, change all
+nnoremap dal ggdG
+nnoremap yal ggyG
+nnoremap cal ggcG
+
 " system copyboard to visual select some characters.
 " vnoremap <leader>p d"+p
 nnoremap <leader>p "0p
@@ -1337,3 +1342,5 @@ let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 let g:clever_f_chars_match_any_signs = ';'
 " Keeping the functionality of ;
 " map ; <Plug>(clever-f-repeat-forward)
+
+" vim: set filetype=vim :

@@ -1371,12 +1371,8 @@ let g:clever_f_chars_match_any_signs = ';'
 " Keeping the functionality of ;
 " map ; <Plug>(clever-f-repeat-forward)
 
-<<<<<<< HEAD
-" vim: set filetype=vim :
-=======
 
 " :options can list all configures
 " :h option-list can get help.
 
 " vim: filetype=vim :
->>>>>>> 0015417c5cd2c8781ffa8104f04a72c467a92835

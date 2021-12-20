@@ -407,7 +407,6 @@ if has('persistent_undo')
 	endif
 endif
 
-" nnoremap / /\v
 nnoremap S :w<CR>
 nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
@@ -454,6 +453,7 @@ set relativenumber
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set shiftround
 
 " show tab and tail
 set list
@@ -574,7 +574,7 @@ function! s:VSetSearch(cmdtype)
 	let @s = temp
 endfunction
 
-" split windows config
+" slplit windows config
 " nmap s <nop>
 " ss swatch cursor to top or end of current line
 noremap <expr>ss col(".")==1?"$":"0"
@@ -589,8 +589,21 @@ noremap <leader>n :e $MYVIMRC<CR>
 " remap H and L function
 noremap \h H
 noremap \l L
+" lookup keyword under the cursor(man)
+noremap <leader>k K
+
+cnoreabbrev Wq wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev wrap set wrap
+cnoreabbrev nowrap set nowrap
 
 " find and replace
+nnoremap / /\v
+vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
 noremap \s :%s@\v@g<left><left>
 noremap <LEADER>sw :set wrap<CR>
 set nowrap

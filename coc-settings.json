@@ -1,5 +1,5 @@
 {
-	"coc.preferences.hoverTarget": "preview",
+	/* "coc.preferences.hoverTarget": "preview", */
 	"coc.preferences.enableFloatHighlight": true,
 	"coc.preferences.snippetStatusText": "Ⓢ ",
 	"coc.preferences.extensionUpdateCheck": "daily",
@@ -63,11 +63,21 @@
 	"list.nextKeymap": "<C-n>",
 	"list.previousKeymap": "<C-p>",
 	"snippets.ultisnips.directories": [
-		"UltiSnips",
-		"~/AppData/Local/nvim/plugged/vim-snippets/UltiSnips/"
+		"$HOME/AppData/Local/nvim/plugged/ultiSnips/",
+		"$HOME/AppData/Local/nvim/plugged/vim-snippets/UltiSnips/"
+		/* "UltiSnips", */
 	/* 	"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/" */
 	],
-	"coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "html", "css", "json", "python", "vue", "svelte", "java"],
+	"coc.preferences.formatOnSaveFiletypes": [
+			"javascript",
+			"typescript",
+			"html",
+			"css",
+			"json",
+			"python",
+			"vue",
+			"svelte",
+			"java"],
 	/* "yaml.format.enable": true, */
 	"signature.target": "float",
 	"yank.enableCompletion": false,

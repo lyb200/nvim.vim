@@ -194,9 +194,9 @@ Plug 'tpope/vim-commentary'
 
 " emmet
 Plug 'mattn/emmet-vim'
-" The ultimate snippet solution for Vim.
-" Plug 'SirVer/ultisnips'
 
+" The ultimate snippet solution for Vim.使用coc-snippets 后这个暂时不用。
+" Plug 'SirVer/ultisnips'
 " vim-snippets
 Plug 'honza/vim-snippets'
 
@@ -286,11 +286,11 @@ function! s:check_back_space() abort
 	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use alt-c to trigger Completion.
+" Use alt-c or ctrl-o to trigger Completion.
 if has('nvim')
-	inoremap <silent><expr> <A-C> coc#refresh()
+	inoremap <silent><expr> <C-O> coc#refresh()
 else
-	inoremap <silent><expr> <A-C> coc#refresh()
+	inoremap <silent><expr> <C-O> coc#refresh()
 endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
@@ -339,6 +339,10 @@ nmap <leader>f  <Plug>(coc-format-selected)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
+" 但是，以上的两条配置，niceboy自己的配置如下：
+" xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<cr>
+" nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>CocActionsOpenFromSelected<cr>
+
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
@@ -356,19 +360,6 @@ let g:markdown_fenced_languages=[
 			\ 'help'
 			\]
 
-" Make <tab> used for trigger completion, completion confirm,
-" snippet expand and jump like VSCode.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? coc#_select_confirm() :
-"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-
 " let g:coc_snippet_next = '<tab>'
 
 " may use other keys.
@@ -384,6 +375,7 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
+let g:snips_author = "Sameul"
 
 " ######################## END ###############################
 " #               coc.nvim config more plugins               #
@@ -594,6 +586,9 @@ nmap sk :set nosplitbelow<CR>:split<CR>
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
+" remap H and L function
+noremap \h H
+noremap \l L
 
 " find and replace
 noremap \s :%s@\v@g<left><left>
@@ -740,6 +735,16 @@ noremap <leader>tmp :+tabmove<CR>
 " ===
 " === Markdown Settings
 " ===
+
+" ===
+" === ultisnips
+" ===
+" Trigger configuration. You need to change this to something other than <tab> if you use some plugin.
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " ===
 " === Snippets
@@ -1334,3 +1339,9 @@ let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 let g:clever_f_chars_match_any_signs = ';'
 " Keeping the functionality of ;
 " map ; <Plug>(clever-f-repeat-forward)
+
+
+" :options can list all configures
+" :h option-list can get help.
+
+" vim: filetype=vim :

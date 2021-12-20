@@ -716,6 +716,19 @@ autocmd BufWritePre * :%s/\s\+$//e
 " ===
 exec "nohlsearch"
 
+" open the url under the cursor.
+function! OpenUrlUnderCursor()
+	let s:url = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+	echo s:url
+	if s:url != ""
+		silent exec "!open '".s:url."'" | redraw!
+	else
+		echo "No URL found in line."
+	endif
+endfunction
+" maybe don't open in windows OS.
+map <leader>u :call OpenUrlUnderCursor()<cr>
+
 " ##############################################################
 " #                      Plugins Config                        #
 " ##############################################################

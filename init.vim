@@ -508,8 +508,6 @@ let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 "----------------Visuals------------------"
-"colorscheme atom-dark
-colorscheme deus
 
 " auto source init.vim
 augroup autosourcing
@@ -752,6 +750,9 @@ call plug#end()
 " ##############################################################
 " #                      Plugins Config                        #
 " ##############################################################
+
+"colorscheme atom-dark
+colorscheme deus
 
 " ===
 " === Tab management

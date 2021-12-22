@@ -17,214 +17,6 @@ elseif has('unix')
 		autocmd VimEnter * PlugInstall | source $MYVIMRC
 	endif
 endif
-" ==================================================
-" ============= vim-plug, myplugins ================
-" ==================================================
-if has('unix')
-	call plug#begin('$HOME/.config/nvim/plugged')
-else
-	call plug#begin('$HOME/AppData/Local/nvim/plugged')
-endif
-
-" Treesitter need more soft
-"Plug 'nvim-treesitter/nvim-treesitter'
-
-" the fancy Start Screen for vim
-Plug 'mhinz/vim-startify'
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
-
-" Plug 'tpope/vim-vinegar'
-
-" Rooter changes the working directory to the project root
-" when you open a file or directory.
-Plug 'airblade/vim-rooter'
-
-" file navigation
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" An efficient fuzzy finder that helps to locate files, buffers, mrus, gtags, etc.
-" on the fly for both vim and neovim.
-Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
-" <c-p> :Leaderf file
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-" Make Ranger running in a floating window to communicate with Neovim via RPC
-Plug 'kevinhwang91/rnvimr'
-
-if has('unix')
-	" Ranger integration in vim and neovim
-	Plug 'francoiscabrol/ranger.vim'
-	" If you use neovim, you have to add the dependency to the plugin bclose.vim:
-	Plug 'rbgrouleff/bclose.vim'
-endif
-
-" Jump to any definition and references, IDE madness without overhead
-Plug 'pechorin/any-jump.vim'
-" Extended f, F, t and T key mappings for Vim.
-Plug 'rhysd/clever-f.vim'
-
-" Taglist: Viewer & Finder for LSP symbols and tags
-Plug 'liuchengxu/vista.vim'
-
-" Format code with one button press (or automatically on save).
-" a list of formatprograms that are supported by default
-Plug 'Chiel92/vim-autoformat'
-" codefmt is a utility for syntax-aware code formatting.
-" Add maktaba and codefmt to the runtimepath.
-" (The latter must be installed before it can be used.)
-Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
-Plug 'google/vim-glaive'
-
-" auto set indent settings.
-Plug 'tpope/vim-sleuth'
-" Best syntax and indentation support. Hand-selected language packs.
-Plug 'sheerun/vim-polyglot'
-
-" HTML, CSS, JavaScript, Typescript, PHP, JSON, etc.
-Plug 'elzr/vim-json'
-Plug 'neoclide/jsonc.vim'
-" HTML5 + inline SVG omnicomplete function, indent and syntax for Vim.
-" Based on the default htmlcomplete.vim.
-" This plugin contributes to vim-polyglot language pack.
-Plug 'othree/html5.vim'
-" The plugin is designed to automatically rename closing HTML/XML tags
-" when editing opening ones (or the other way around).
-Plug 'AndrewRadev/tagalong.vim'
-" Vim script for text filtering and alignment
-Plug 'godlygeek/tabular' " gt, or :Tabularize <regex> to align
-Plug 'alvan/vim-closetag'	"default key > or >>
-" A Vim syntax highlighting plugin for JavaScript and Flow.js
-Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
-" Vim syntax highlighting for Vue components.
-Plug 'posva/vim-vue'
-
-" live server, plugin for live html, css, and javascript editing in vim
-" bracey highlights all the elements selected by the css rule under the cursor.
-" Any changes to a css file will automatically reload the css file in the browser
-" if it contains no errors
-Plug 'turbio/bracey.vim'
-
-" Python
-Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-" Semshi provides semantic highlighting for Python in Neovim.
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
-" Text objects, folding, and more for Python and other indented languages.
-Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
-
-" Markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
-Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
-Plug 'dkarter/bullets.vim'
-
-" Editor Enhancement
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
-" Super-simple vim plugin for cycling through antonyms/words related to word under cursor
-" gs for :Antovim<rc> switch antonyms or related word.
-Plug 'jwarby/antovim'
-" Vim script for text filtering and alignment
-Plug 'godlygeek/tabular' " gt, or :Tabularize <regex> to align
-" Ctrl+L <c-l> and <c-g>c (insert) to toggle capslock
-Plug 'tpope/vim-capslock'
-Plug 'gcmt/wildfire.vim'	" can quickly select the closest text object
-Plug 'tpope/vim-repeat'		" using the . command after a plugin map
-" Visual-Multi (VM in short) is a multiple selections/cursors plugin.
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-" Find & Replace
-" Far.vim makes it easier to find and replace text through multiple files.
-Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
-" Make the yanked region apparent!
-Plug 'machakann/vim-highlightedyank'
-" abolish.vim: easily search for, substitute, and abbreviate multiple variants of a word
-" Substitute: Child to Adult use the command :S or :Subvert/child{,ren}/adult{,s}/g
-" Coercion: Want to turn fooBar into foo_bar? Press crs (coerce to snake_case).
-" MixedCase (crm), camelCase (crc), snake_case (crs), UPPER_CASE (cru), dash-case (cr-),
-" dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
-Plug 'tpope/vim-abolish'
-
-" Plugin to toggle, display and navigate marks
-Plug 'kshenoy/vim-signature'
-
-" theme
-Plug 'ajmwagar/vim-deus'
-Plug 'morhetz/gruvbox'
-
-" Status line
-Plug 'theniceboy/eleline.vim'
-Plug 'ojroques/vim-scrollstatus'
-
-" Cool Icons
-"Plug 'kyazdani42/nvim-web-devicons'
-Plug 'ryanoasis/vim-devicons'
-
-" General Highlighter
-" windows system has some problem, can't works.
-"Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
-
-" for automatically highlighting other uses of the current word under the cursor
-Plug 'RRethy/vim-illuminate'
-
-" fuzzy file finder
-" Plug 'kien/ctrlp.vim'
-
-" Auto Complete
-" https://github.com/neoclide/coc.nvim
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" for insert mode completion of words in adjacent tmux panes
-"Just enter insert mode, start typing any word you see and
-"press <C-X><C-U> to the trigger user defined insert mode completion.
-Plug 'wellle/tmux-complete.vim'
-" Plug 'christoomey/vim-tmux-navigator'
-
-" Fugitive is the premier Vim plugin for Git.
-" The crown jewel of Fugitive is :Git (or just :G), which calls any arbitrary Git command.
-" :Git add :Git commit :Git diff :Git mergetool
-Plug 'tpope/vim-fugitive'
-
-" syntax check/linter
-Plug 'vim-syntastic/syntastic'
-
-" Better Comments
-Plug 'tpope/vim-commentary'
-
-" emmet
-Plug 'mattn/emmet-vim'
-
-" The ultimate snippet solution for Vim.使用coc-snippets 后这个暂时不用。
-" Plug 'SirVer/ultisnips'
-" vim-snippets
-Plug 'honza/vim-snippets'
-
-" Undo Tree
-Plug 'mbbill/undotree'
-
-" easymotion
-Plug 'easymotion/vim-easymotion'
-" Pairs of handy bracket mappings
-" A mnemonic for the "a" commands is "args" and for the "q" commands is "quickfix".
-" has more than 20 [\] commands. eg.
-" [a :previous, [A :first, [b bprevious [t : tnext, [T :tfirst, [p :cprevious etc.
-" [e Exchange the current line with [count] lines above it.
-Plug 'tpope/vim-unimpaired'
-
-" code debug
-" Plug 'puremourning/vimspector'
-
-" See what keys do like in emacs, need more config
-"Plug 'liuchengxu/vim-which-key'
-
-" A high-performance color highlighter for Neovim which has no external dependencies!
-Plug 'norcalli/nvim-colorizer.lua'
-
-" move!  select line or selection to move.
-Plug 'valsorym/.del.vim-json'
-
-call plug#end()
 
 "========================  Custom Mappings ==========================="
 
@@ -747,6 +539,216 @@ endfunction
 " maybe don't open in windows OS.
 map <leader>u :call OpenUrlUnderCursor()<cr>
 
+" ==================================================
+" ============= vim-plug, myplugins ================
+" ==================================================
+if has('unix')
+	call plug#begin('$HOME/.config/nvim/plugged')
+else
+	call plug#begin('$HOME/AppData/Local/nvim/plugged')
+endif
+
+" Treesitter need more soft
+"Plug 'nvim-treesitter/nvim-treesitter'
+
+" the fancy Start Screen for vim
+Plug 'mhinz/vim-startify'
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+" Plug 'tpope/vim-vinegar'
+
+" Rooter changes the working directory to the project root
+" when you open a file or directory.
+Plug 'airblade/vim-rooter'
+
+" file navigation
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" An efficient fuzzy finder that helps to locate files, buffers, mrus, gtags, etc.
+" on the fly for both vim and neovim.
+Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+" <c-p> :Leaderf file
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+" Make Ranger running in a floating window to communicate with Neovim via RPC
+Plug 'kevinhwang91/rnvimr'
+
+if has('unix')
+	" Ranger integration in vim and neovim
+	Plug 'francoiscabrol/ranger.vim'
+	" If you use neovim, you have to add the dependency to the plugin bclose.vim:
+	Plug 'rbgrouleff/bclose.vim'
+endif
+
+" Jump to any definition and references, IDE madness without overhead
+Plug 'pechorin/any-jump.vim'
+" Extended f, F, t and T key mappings for Vim.
+Plug 'rhysd/clever-f.vim'
+
+" Taglist: Viewer & Finder for LSP symbols and tags
+Plug 'liuchengxu/vista.vim'
+
+" Format code with one button press (or automatically on save).
+" a list of formatprograms that are supported by default
+Plug 'Chiel92/vim-autoformat'
+" codefmt is a utility for syntax-aware code formatting.
+" Add maktaba and codefmt to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage.
+Plug 'google/vim-glaive'
+
+" auto set indent settings.
+Plug 'tpope/vim-sleuth'
+" Best syntax and indentation support. Hand-selected language packs.
+Plug 'sheerun/vim-polyglot'
+
+" HTML, CSS, JavaScript, Typescript, PHP, JSON, etc.
+Plug 'elzr/vim-json'
+Plug 'neoclide/jsonc.vim'
+" HTML5 + inline SVG omnicomplete function, indent and syntax for Vim.
+" Based on the default htmlcomplete.vim.
+" This plugin contributes to vim-polyglot language pack.
+Plug 'othree/html5.vim'
+" The plugin is designed to automatically rename closing HTML/XML tags
+" when editing opening ones (or the other way around).
+Plug 'AndrewRadev/tagalong.vim'
+" Vim script for text filtering and alignment
+" <leader>gt, or :Tabularize <regex> to align，用于对其等号的
+Plug 'godlygeek/tabular'
+Plug 'alvan/vim-closetag'	"default key > or >>
+" A Vim syntax highlighting plugin for JavaScript and Flow.js
+Plug 'yuezk/vim-js', { 'for': ['vim-plug', 'php', 'html', 'javascript', 'css', 'less'] }
+" Vim syntax highlighting for Vue components.
+Plug 'posva/vim-vue'
+
+" live server, plugin for live html, css, and javascript editing in vim
+" bracey highlights all the elements selected by the css rule under the cursor.
+" Any changes to a css file will automatically reload the css file in the browser
+" if it contains no errors
+Plug 'turbio/bracey.vim'
+
+" Python
+Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
+" Semshi provides semantic highlighting for Python in Neovim.
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+" Text objects, folding, and more for Python and other indented languages.
+Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
+
+" Markdown
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
+Plug 'dkarter/bullets.vim'
+
+" Editor Enhancement
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+" Super-simple vim plugin for cycling through antonyms/words related to word under cursor
+" gs for :Antovim<rc> switch antonyms or related word.
+Plug 'jwarby/antovim'
+" Vim script for text filtering and alignment
+Plug 'godlygeek/tabular' " gt, or :Tabularize <regex> to align
+" Ctrl+L <c-l> and <c-g>c (insert) to toggle capslock
+Plug 'tpope/vim-capslock'
+Plug 'gcmt/wildfire.vim'	" can quickly select the closest text object
+Plug 'tpope/vim-repeat'		" using the . command after a plugin map
+" Visual-Multi (VM in short) is a multiple selections/cursors plugin.
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+" Find & Replace
+" Far.vim makes it easier to find and replace text through multiple files.
+Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
+" Make the yanked region apparent!
+Plug 'machakann/vim-highlightedyank'
+" abolish.vim: easily search for, substitute, and abbreviate multiple variants of a word
+" Substitute: Child to Adult use the command :S or :Subvert/child{,ren}/adult{,s}/g
+" Coercion: Want to turn fooBar into foo_bar? Press crs (coerce to snake_case).
+" MixedCase (crm), camelCase (crc), snake_case (crs), UPPER_CASE (cru), dash-case (cr-),
+" dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
+Plug 'tpope/vim-abolish'
+
+" Plugin to toggle, display and navigate marks
+Plug 'kshenoy/vim-signature'
+
+" theme
+Plug 'ajmwagar/vim-deus'
+Plug 'morhetz/gruvbox'
+
+" Status line
+Plug 'theniceboy/eleline.vim'
+Plug 'ojroques/vim-scrollstatus'
+
+" Cool Icons
+"Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
+
+" General Highlighter
+" windows system has some problem, can't works.
+"Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+
+" for automatically highlighting other uses of the current word under the cursor
+Plug 'RRethy/vim-illuminate'
+
+" fuzzy file finder
+" Plug 'kien/ctrlp.vim'
+
+" Auto Complete
+" https://github.com/neoclide/coc.nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" for insert mode completion of words in adjacent tmux panes
+"Just enter insert mode, start typing any word you see and
+"press <C-X><C-U> to the trigger user defined insert mode completion.
+Plug 'wellle/tmux-complete.vim'
+" Plug 'christoomey/vim-tmux-navigator'
+
+" Fugitive is the premier Vim plugin for Git.
+" The crown jewel of Fugitive is :Git (or just :G), which calls any arbitrary Git command.
+" :Git add :Git commit :Git diff :Git mergetool
+Plug 'tpope/vim-fugitive'
+
+" syntax check/linter
+Plug 'vim-syntastic/syntastic'
+
+" Better Comments
+Plug 'tpope/vim-commentary'
+
+" emmet
+Plug 'mattn/emmet-vim'
+
+" The ultimate snippet solution for Vim.使用coc-snippets 后这个暂时不用。
+" Plug 'SirVer/ultisnips'
+" vim-snippets
+Plug 'honza/vim-snippets'
+
+" Undo Tree
+Plug 'mbbill/undotree'
+
+" easymotion
+Plug 'easymotion/vim-easymotion'
+" Pairs of handy bracket mappings
+" A mnemonic for the "a" commands is "args" and for the "q" commands is "quickfix".
+" has more than 20 [\] commands. eg.
+" [a :previous, [A :first, [b bprevious [t : tnext, [T :tfirst, [p :cprevious etc.
+" [e Exchange the current line with [count] lines above it.
+Plug 'tpope/vim-unimpaired'
+
+" code debug
+" Plug 'puremourning/vimspector'
+
+" See what keys do like in emacs, need more config
+"Plug 'liuchengxu/vim-which-key'
+
+" A high-performance color highlighter for Neovim which has no external dependencies!
+Plug 'norcalli/nvim-colorizer.lua'
+
+" move!  select line or selection to move.
+Plug 'valsorym/.del.vim-json'
+
+call plug#end()
+
 " ##############################################################
 " #                      Plugins Config                        #
 " ##############################################################
@@ -1185,7 +1187,7 @@ nnoremap gs :Antovim<CR>
 " ===
 " === tabular
 " ===
-vmap gt :Tabularize /
+vmap <leader>gt :Tabularize /
 
 
 " Compile function

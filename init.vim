@@ -31,147 +31,6 @@ else
 endif
 
 let mapleader=","
-" ########################## START ###########################
-" #               coc.nvim config more plugins               #
-" ############################################################
-let g:coc_global_extensions = [
-			\ 'coc-marketplace',
-			\ 'coc-actions',
-			\ 'coc-diagnostic',
-			\ 'coc-flutter-tools',
-			\ 'coc-gitignore',
-			\ 'coc-html',
-			\ 'coc-json',
-			\ 'coc-lists',
-			\ 'coc-prettier',
-			\ 'coc-snippets',
-			\ 'coc-pyright',
-			\ 'coc-python',
-			\ 'coc-stylelint',
-			\ 'coc-syntax',
-			\ 'coc-tasks',
-			\ 'coc-todolist',
-			\ 'coc-translator',
-			\ 'coc-tslint-plugin',
-			\ 'coc-tsserver',
-			\ 'coc-vetur',
-			\ 'coc-vimlsp',
-			\ 'coc-flutter-tools',
-			\ 'coc-yank'
-			\ ]
-
-			" \ 'coc-explorer',
-			" \ 'coc-emmet',
-			" \ 'coc-yaml',
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<TAB>" :
-			\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use alt-c or ctrl-o to trigger Completion.
-if has('nvim')
-	inoremap <silent><expr> <C-O> coc#refresh()
-else
-	inoremap <silent><expr> <C-O> coc#refresh()
-endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
-
-" Use K[ey] to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	elseif (coc#rpc#ready())
-		call CocActionAsync('doHover')
-	else
-		execute '!' . &keywordprg . " " . expand('<cword>')
-	endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" 但是，以上的两条配置，niceboy自己的配置如下：
-" xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<cr>
-" nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>CocActionsOpenFromSelected<cr>
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" coc-explorer config
-nmap <leader>e :CocCommand explorer<CR>
-
-" coc-translator
-nmap <leader>ts <Plug>(coc-translator-p)
-
-" coc-vimslp config
-let g:markdown_fenced_languages=[
-			\ 'vim',
-			\ 'help'
-			\]
-
-" let g:coc_snippet_next = '<tab>'
-
-" may use other keys.
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-let g:snips_author = "Sameul"
-
-" ######################## END ###############################
-" #               coc.nvim config more plugins               #
-" ############################################################
 
 " Toggle on and off...
 nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
@@ -658,7 +517,7 @@ Plug 'tpope/vim-repeat'		" using the . command after a plugin map
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Find & Replace
 " Far.vim makes it easier to find and replace text through multiple files.
-Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
+Plug 'brooth/far.vim'  ", { 'on': ['F', 'Far', 'Fardo'] }
 " Make the yanked region apparent!
 Plug 'machakann/vim-highlightedyank'
 " abolish.vim: easily search for, substitute, and abbreviate multiple variants of a word
@@ -751,6 +610,147 @@ call plug#end()
 " #                      Plugins Config                        #
 " ##############################################################
 
+" ########################## START ###########################
+" #               coc.nvim config more plugins               #
+" ############################################################
+let g:coc_global_extensions = [
+			\ 'coc-marketplace',
+			\ 'coc-actions',
+			\ 'coc-diagnostic',
+			\ 'coc-flutter-tools',
+			\ 'coc-gitignore',
+			\ 'coc-html',
+			\ 'coc-json',
+			\ 'coc-lists',
+			\ 'coc-prettier',
+			\ 'coc-snippets',
+			\ 'coc-pyright',
+			\ 'coc-python',
+			\ 'coc-stylelint',
+			\ 'coc-syntax',
+			\ 'coc-tasks',
+			\ 'coc-todolist',
+			\ 'coc-translator',
+			\ 'coc-tslint-plugin',
+			\ 'coc-tsserver',
+			\ 'coc-vetur',
+			\ 'coc-vimlsp',
+			\ 'coc-flutter-tools',
+			\ 'coc-yank'
+			\ ]
+
+			" \ 'coc-explorer',
+			" \ 'coc-emmet',
+			" \ 'coc-yaml',
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use alt-c or ctrl-o to trigger Completion.
+if has('nvim')
+	inoremap <silent><expr> <C-O> coc#refresh()
+else
+	inoremap <silent><expr> <C-O> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
+
+" Use K[ey] to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	elseif (coc#rpc#ready())
+		call CocActionAsync('doHover')
+	else
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" 但是，以上的两条配置，niceboy自己的配置如下：
+" xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<cr>
+" nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>CocActionsOpenFromSelected<cr>
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" coc-explorer config
+nmap <leader>e :CocCommand explorer<CR>
+
+" coc-translator
+nmap <leader>ts <Plug>(coc-translator-p)
+
+" coc-vimslp config
+let g:markdown_fenced_languages=[
+			\ 'vim',
+			\ 'help'
+			\]
+
+" let g:coc_snippet_next = '<tab>'
+
+" may use other keys.
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+let g:snips_author = "Sameul"
+
+" ######################## END ###############################
+" #               coc.nvim config more plugins               #
+" ############################################################
 "colorscheme atom-dark
 colorscheme deus
 
@@ -1372,7 +1372,7 @@ let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 " Match all symbols with one char
 let g:clever_f_chars_match_any_signs = ';'
 " Keeping the functionality of ;
-" map ; <Plug>(clever-f-repeat-forward)
+map ; <Plug>(clever-f-repeat-forward)
 
 
 " :options can list all configures

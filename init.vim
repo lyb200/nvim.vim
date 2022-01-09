@@ -64,9 +64,10 @@ noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
 " delete all, yank all, change all
-nnoremap dal ggdG
-nnoremap yal ggyG
-nnoremap cal ggcG
+" nnoremap dal ggdG
+" nnoremap yal ggyG
+" nnoremap cal ggcG
+onoremap al ggvG
 
 " system copyboard to visual select some characters.
 " vnoremap <leader>p d"+p
@@ -239,6 +240,8 @@ nmap sl :set splitright<CR>:vsplit<CR>
 nmap sh :set nosplitright<CR>:vsplit<CR>
 nmap sj :set splitbelow<CR>:split<CR>
 nmap sk :set nosplitbelow<CR>:split<CR>
+" show diffs side by side
+set diffopt+=vertical
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
@@ -576,7 +579,7 @@ Plug 'tpope/vim-commentary'
 Plug 'mattn/emmet-vim'
 
 " The ultimate snippet solution for Vim.使用coc-snippets 后这个暂时不用。
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " vim-snippets
 Plug 'honza/vim-snippets'
 

@@ -40,6 +40,32 @@ set nocompatible
 " set nobackup
 set noswapfile
 
+if has('win32')
+	if has('nvim')
+		silent !mkdir $HOME/AppData/Local/nvim/tmp/backup
+		silent !mkdir $HOME/AppData/Local/nvim/tmp/undo
+	else
+		silent !mkdir $HOME/vimfiles/tmp/undo
+		silent !mkdir $HOME/vimfiles/tmp/backup
+	endif
+else
+	silent !mkdir -p $HOME/tmp/backup
+	silent !mkdir -p $HOME/tmp/undo
+endif
+
+if has('nvim')
+	set backupdir=$HOME/AppData/Local/nvim/tmp/backup
+else
+	set backupdir=$HOME/tmp/backup
+endif
+
+if has('mksession')
+	if isdirectory('$HOME/AppData/Local/nvim/tmp')
+		set viewdir=$HOME/AppData/Local/nvim/tmp/view
+	endif
+	set viewoptions=cursor,folds
+endif
+
 if has('persistent_undo')
 	set undofile
 	if has('unix')
@@ -51,9 +77,9 @@ if has('persistent_undo')
 	else
 		if has('nvim')
 			" set undodir=$HOME\AppData\Local\nvim\undo,.
-			set undodir=$HOME\AppData\Local\nvim\undo
+			set undodir=$HOME\AppData\Local\nvim\tmp\undo
 		else
-			set undodir=$HOME\vimfiles\undo,.
+			set undodir=$HOME\vimfiles\tmp\undo,.
 		endif
 	endif
 endif
@@ -67,17 +93,18 @@ vnoremap Y "+y
 " nnoremap dal ggdG
 " nnoremap yal ggyG
 " nnoremap cal ggcG
-onoremap al ggvG
+onoremap al ggVG
 
 " system copyboard to visual select some characters.
-" vnoremap <leader>p d"+p
 nnoremap <leader>p "0p
 inoremap jk <ESC>
+
 " to first nonspace column
 set startofline
 
 " delays and poor user experience.
 set updatetime=100
+
 " Don't pass message to |ins-completion-menu|.
 set shortmess+=c
 " split"	 : Also shows partial off-screen results in a preview window.
@@ -115,6 +142,8 @@ set shiftround
 " show tab and tail
 set list
 " set listchars=tab:▸\ ,trail:▫
+" set listchars+=nbsp:⦸   "CIRCLED reverse solidus(U+29B8)
+" »(U+00BB) «(U+00AB) •(U+2022) ▷(U+25B7)
 set listchars=tab:\|\ ,trail:▫
 
 " Keep 1000 items in the history.
@@ -166,7 +195,16 @@ set incsearch
 set ignorecase
 set smartcase
 
-set linebreak
+if has('linebreak')
+	" indent wrapped lines to match start
+	set linebreak
+	"Arrow pointing downwards then curving rightwards
+	let &showbreak='⤷' "⤷(U+2937)
+	if exists('&breakindentopt')
+		"emphasize broken line by indenting them
+		set breakindentopt=shift:2
+	endif
+endif
 
 set autoindent
 set smartindent
@@ -258,6 +296,11 @@ cnoreabbrev Q q
 cnoreabbrev wrap set wrap
 cnoreabbrev nowrap set nowrap
 
+" j, k  Store relative line number jumps in the jumplist
+" if they exceed a threshold.
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
+
 " find and replace
 nnoremap / /\v
 vnoremap / /\v
@@ -265,6 +308,7 @@ nnoremap ? ?\v
 vnoremap ? ?\v
 noremap \s :%s@\v@g<left><left>
 noremap <LEADER>sw :set wrap<CR>
+
 set nowrap
 
 set textwidth=0
@@ -294,13 +338,6 @@ noremap <LEADER>sc :set spell!<CR>
 xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
 
-if has('win32')
-	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\backup
-	" silent !mkdir  $HOME\AppData\Local\nvim\tmp\undo
-else
-	silent !mkdir -p $HOME/tmp/backup
-	silent !mkdir -p $HOME/tmp/undo
-endif
 
 " open file where you leave the file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -529,6 +566,8 @@ Plug 'machakann/vim-highlightedyank'
 " MixedCase (crm), camelCase (crc), snake_case (crs), UPPER_CASE (cru), dash-case (cr-),
 " dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
 Plug 'tpope/vim-abolish'
+" Enhanced in-file search for Vim
+Plug 'wincent/loupe'
 
 " Plugin to toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'
@@ -1376,6 +1415,19 @@ let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 let g:clever_f_chars_match_any_signs = ';'
 " Keeping the functionality of ;
 map ; <Plug>(clever-f-repeat-forward)
+
+" ===
+" === wincent/loupe
+" ===
+" Loupe maps <leader>n to <Plug>(LoupeClearHighlight), which clears all visible highlights
+" (like :nohighlight does). To use an alternative mapping instead, create a different one
+" in your .vimrc instead using :nmap:
+
+" Instead of <leader>n, use <leader>x.
+nmap \n <Plug>(LoupeClearHighlight)
+
+
+
 
 
 " :options can list all configures

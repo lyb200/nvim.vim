@@ -93,7 +93,7 @@ vnoremap Y "+y
 " nnoremap dal ggdG
 " nnoremap yal ggyG
 " nnoremap cal ggcG
-onoremap al ggVG
+onoremap al :<c-u>normal! ggVG<CR>
 
 " system copyboard to visual select some characters.
 nnoremap <leader>p "0p
@@ -272,8 +272,8 @@ endfunction
 " slplit windows config
 " nmap s <nop>
 " ss swatch cursor to top or end of current line
-noremap <expr>ss col(".")==1?"$":"0"
-vnoremap <expr>ss col(".")==1?"$h":"0"
+noremap <expr>se col(".")==1?"$":"0"
+vnoremap <expr>se col(".")==1?"$h":"0"
 nmap sl :set splitright<CR>:vsplit<CR>
 nmap sh :set nosplitright<CR>:vsplit<CR>
 nmap sj :set splitbelow<CR>:split<CR>
@@ -567,7 +567,7 @@ Plug 'machakann/vim-highlightedyank'
 " dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
 Plug 'tpope/vim-abolish'
 " Enhanced in-file search for Vim
-Plug 'wincent/loupe'
+" Plug 'wincent/loupe'
 
 " Plugin to toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'

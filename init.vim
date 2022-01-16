@@ -87,6 +87,14 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+" Save a file you edited in vim without the needed permission
+" :w !sudo tee %
+
+" noremap ; :
+
 " move faster
 noremap J 5j
 noremap K 5k
@@ -135,10 +143,10 @@ set autochdir
 
 set hidden
 set cursorline
-" set cursorcolumn
+" set cursor column
 
 " minimal number of screen to keep above and below the cursor.
-set scrolloff=4
+set scrolloff=5
 set number
 set relativenumber
 set tabstop=2
@@ -184,6 +192,8 @@ inoremap <ESC> <ESC>:set iminsert=0<CR>
 " za，trigger fold; zA, trigger fold recursively;
 " zM，close all folds; zm, fold more: subtract v:count1 from 'foldlevel'.
 " zR，open all folds. zr, reduce folding: add v:count1 to 'foldlevel'
+" zn, fold none: reset 'foldenable'. All folds will be open.
+" zN, fold normal.
 " set foldmethod=indent
 " set foldmethod=syntax
 set foldlevel=99
@@ -311,8 +321,11 @@ cnoreabbrev Wq wq
 cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
-cnoreabbrev wrap set wrap
-cnoreabbrev nowrap set nowrap
+" cnoreabbrev wrap :set wrap
+" cnoreabbrev nowrap :set nowrap
+set nowrap
+noremap sw :set wrap<CR>
+noremap sW :set nowrap<CR>
 
 " j, k  Store relative line number jumps in the jumplist
 " if they exceed a threshold.
@@ -326,9 +339,6 @@ nnoremap ? ?\v
 vnoremap ? ?\v
 nnoremap ss :%s@\v@g<left><left>
 vnoremap ss :s@\v@g<left><left>
-noremap <LEADER>sw :set wrap<CR>
-
-set nowrap
 
 set textwidth=0
 
@@ -337,7 +347,8 @@ set textwidth=0
 " nnoremap > >>
 
 " search adjacent duplicate words
-noremap sdw /\(\<\w\+\>\)\_s*\1
+" noremap sdw /\(\<\w\+\>\)\_s*\1
+noremap sdw /\v(<\w+>)\_s*<\1><cr>
 
 " Folding
 noremap <silent> - za
@@ -345,21 +356,29 @@ noremap <silent> - za
 nnoremap st :NERDTreeToggle<CR>
 
 " Opening a terminal window
-noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
+noremap s/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 
-" Press <leader><space> twice to jump to the next '<++>' and edit it
+" Press <leader><space> twice to jump to the next '' and edit it
 noremap <SPACE><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
-" Spelling Check with <space>sc
-noremap <LEADER>sc :set spell!<CR>
+" Toggle spelling check with sc
+noremap sc :set spell!<CR>
+" Locate the word in front of the cursor and
+" find the first spell suggestion for it.
+noremap <A-s> ea<C-x>s
+inoremap <A-s> <ESC>ea<C-x>s
 
 " visual line continue move
 xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
 
-
 " open file where you leave the file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" 如果已经安装figlet，可以得到一个文字性的图案
+if has('unix')
+	noremap <leader>gp :r !figlet
+endif
 
 " ===================== START MAP Config ====================
 " =                     switch window                       =
@@ -419,7 +438,7 @@ autocmd BufNewFile,BufRead * endtry
 
 let &t_CO=256
 " some version color incorrect
-"let &t_ut=''
+let &t_ut=''
 " set cursor sharp
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -500,8 +519,8 @@ endif
 
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
-" Extended f, F, t and T key mappings for Vim.
-Plug 'rhysd/clever-f.vim'
+" Extended f, F, t and T key mappings for Vim. maybe don't work.
+" Plug 'rhysd/clever-f.vim'
 
 " Taglist: Viewer & Finder for LSP symbols and tags
 Plug 'liuchengxu/vista.vim'
@@ -686,7 +705,6 @@ let g:coc_global_extensions = [
 			\ 'coc-json',
 			\ 'coc-lists',
 			\ 'coc-prettier',
-			\ 'coc-snippets',
 			\ 'coc-pyright',
 			\ 'coc-python',
 			\ 'coc-stylelint',
@@ -702,6 +720,7 @@ let g:coc_global_extensions = [
 			\ 'coc-yank'
 			\ ]
 
+			" \ 'coc-snippets',
 			" \ 'coc-explorer',
 			" \ 'coc-emmet',
 			" \ 'coc-yaml',
@@ -821,13 +840,13 @@ colorscheme deus
 " === Tab management
 " ===
 " Create a new tab with tb
-noremap <leader>tb :table<CR>
-" Move around tabs with tn and tp
-noremap <leader>tn :-tabnext<CR>
-noremap <leader>tp :+tabnext<CR>
+noremap <leader>te :tabedit<CR>
+" default gt and gT jump next and previous tab
 " Move the tabs with tmn and tmp
-noremap <leader>tmn :-tabmove<CR>
-noremap <leader>tmp :+tabmove<CR>
+noremap <leader>mt :-tabmove<CR>
+noremap <leader>mT :+tabmove<CR>
+noremap <leader>mf :0tabmove<CR>
+noremap <leader>ml :$tabmove<CR>
 
 " ===
 " === Markdown Settings
@@ -987,6 +1006,10 @@ let g:wildfire_objects = {
 			\ "*" : ["i'", 'i"', "i)", "i]", "i}"],
 			\ "html,xml" : ["at", "it"],
 			\ }
+" Select the next closest text object
+map so <Plug>(wildfire-fuel)
+" Select the previous closest text object
+" map sO <Plug>(wildfire-water)
 
 " ===
 " === vim-commentary
@@ -1439,18 +1462,12 @@ let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 " Match all symbols with one char
 let g:clever_f_chars_match_any_signs = ';'
 " Keeping the functionality of ;
-map ; <Plug>(clever-f-repeat-forward)
+" map ; <Plug>(clever-f-repeat-forward)
 
 " ===
-" === wincent/loupe
+" === auto-pairs
 " ===
-" Loupe maps <leader>n to <Plug>(LoupeClearHighlight), which clears all visible highlights
-" (like :nohighlight does). To use an alternative mapping instead, create a different one
-" in your .vimrc instead using :nmap:
-
-" Instead of <leader>n, use <leader>x.
-nmap \n <Plug>(LoupeClearHighlight)
-
+" inoremap <buffer> <silent> <CR> <C-R>=AutoPairsSpace()<CR>
 
 
 

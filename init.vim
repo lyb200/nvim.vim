@@ -32,10 +32,8 @@ endif
 
 let mapleader=","
 
-" Toggle on and off...
-nmap <silent> <expr>  zz  FS_ToggleFoldAroundSearch({'context':1})
-
 set nocompatible
+set secure
 
 " set nobackup
 set noswapfile
@@ -63,7 +61,7 @@ if has('mksession')
 	if isdirectory('$HOME/AppData/Local/nvim/tmp')
 		set viewdir=$HOME/AppData/Local/nvim/tmp/view
 	endif
-	set viewoptions=cursor,folds
+	set viewoptions=cursor,folds,slash,unix
 endif
 
 if has('persistent_undo')
@@ -89,14 +87,23 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+" move faster
+noremap J 5j
+noremap K 5k
+noremap W 5w
+noremap B 5b
+nnoremap <space>j J
+nnoremap <space>k K
+" cursor to center of screen
+nnoremap n nzz
+nnoremap N Nzz
+
 " delete all, yank all, change all
-" nnoremap dal ggdG
-" nnoremap yal ggyG
-" nnoremap cal ggcG
 onoremap al :<c-u>normal! ggVG<CR>
 
 " system copyboard to visual select some characters.
-nnoremap <leader>p "0p
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
 inoremap jk <ESC>
 
 " to first nonspace column
@@ -107,8 +114,8 @@ set updatetime=100
 
 " Don't pass message to |ins-completion-menu|.
 set shortmess+=c
-" split"	 : Also shows partial off-screen results in a preview window.
-"			   Works for |:substitute|, |:smagic|, |:snomagic|. |hl-Substitute|
+" split" : Also shows partial off-screen results in a preview window.
+"  Works for |:substitute|, |:smagic|, |:snomagic|. |hl-Substitute|
 set inccommand=split
 
 set completeopt=longest,noinsert,menuone,noselect,preview
@@ -134,9 +141,9 @@ set cursorline
 set scrolloff=4
 set number
 set relativenumber
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set shiftround
 
 " show tab and tail
@@ -178,9 +185,20 @@ inoremap <ESC> <ESC>:set iminsert=0<CR>
 " zM，close all folds; zm, fold more: subtract v:count1 from 'foldlevel'.
 " zR，open all folds. zr, reduce folding: add v:count1 to 'foldlevel'
 " set foldmethod=indent
-set foldmethod=syntax
+" set foldmethod=syntax
 set foldlevel=99
 set foldenable
+
+" Vimscript file settings ----------------{{{1
+augroup filetype_vim
+	autocmd!
+	autocmd FileType vim setlocal foldmethod=marker
+augroup END
+"}}}
+
+" save fold record and reload view.
+" autocmd BufWinLeave, BufWritePre *.* mkview
+" autocmd BufWinEnter *.* silent loadview
 
 " t Auto-wrap text using textwidth
 " c Auto-wrap comments using textwidth,
@@ -306,7 +324,8 @@ nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
-noremap \s :%s@\v@g<left><left>
+nnoremap ss :%s@\v@g<left><left>
+vnoremap ss :s@\v@g<left><left>
 noremap <LEADER>sw :set wrap<CR>
 
 set nowrap
@@ -321,9 +340,9 @@ set textwidth=0
 noremap sdw /\(\<\w\+\>\)\_s*\1
 
 " Folding
-noremap <silent> <leader>o za
-
-nnoremap <leader>tt :NERDTreeToggle<CR>
+noremap <silent> - za
+" show NERDTreeToggl
+nnoremap st :NERDTreeToggle<CR>
 
 " Opening a terminal window
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
@@ -436,6 +455,7 @@ endfunction
 " maybe don't open in windows OS.
 map <leader>u :call OpenUrlUnderCursor()<cr>
 
+" Plugins -- plug-vim --------------------------- {{{1
 " ==================================================
 " ============= vim-plug, myplugins ================
 " ==================================================
@@ -647,6 +667,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'valsorym/.del.vim-json'
 
 call plug#end()
+" }}}
 
 " ##############################################################
 " #                      Plugins Config                        #
@@ -725,7 +746,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 
 " Use K[ey] to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> sdo :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)
@@ -815,10 +836,14 @@ noremap <leader>tmp :+tabmove<CR>
 " ===
 " === ultisnips
 " ===
-" Trigger configuration. You need to change this to something other than <tab> if you use some plugin.
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" Trigger configuration. You need to change this to something other
+" than <tab> if you use some plugin.
+" let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<c-y>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 

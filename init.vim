@@ -1,3 +1,10 @@
+"      __  __       _   _       _
+"     |  \/  |_   _| \ | |_   _(_)_ __ ___
+"     | |\/| | | | |  \| \ \ / / | '_ ` _ \
+"     | |  | | |_| | |\  |\ V /| | | | | | |
+"     |_|  |_|\__, |_| \_| \_/ |_|_| |_| |_|
+"            |___/
+
 " auto -install vim-plug --------{{{1
 " ===
 " === auto-install vim-plug
@@ -70,10 +77,10 @@ if has('persistent_undo')
 		endif
 	else
 		if has('nvim')
-			" set undodir=$HOME\AppData\Local\nvim\undo,.
-			set undodir=$HOME\AppData\Local\nvim\tmp\undo
+			" set undodir=$HOME/AppData/Local/nvim/undo,.
+			set undodir=$HOME/AppData/Local/nvim/tmp/undo
 		else
-			set undodir=$HOME\vimfiles\tmp\undo,.
+			set undodir=$HOME/vimfiles/tmp/undo,.
 		endif
 	endif
 endif
@@ -458,17 +465,17 @@ augroup END
 autocmd BufWritePre * :%s/\s\+$//e
 
 " open the url under the cursor.
-function! OpenUrlUnderCursor()
-	let s:url = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
-	echo s:url
-	if s:url != ""
-		silent exec "!open '".s:url."'" | redraw!
-	else
-		echo "No URL found in line."
-	endif
-endfunction
-
 if has('unix')
+	function! OpenUrlUnderCursor()
+		let s:url = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+		echo s:url
+		if s:url != ""
+			silent exec "!open '".s:url."'" | redraw!
+		else
+			echo "No URL found in line."
+		endif
+	endfunction
+
 	" maybe don't open in windows OS.
 	map <leader>u :call OpenUrlUnderCursor()<cr>
 endif
@@ -653,7 +660,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-commentary'
 
 " emmet
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 
 " The ultimate snippet solution for Vim.使用coc-snippets 后这个暂时不用。
 Plug 'SirVer/ultisnips'
@@ -854,11 +861,11 @@ noremap <leader>ml :$tabmove<CR>
 " Trigger configuration. You need to change this to something other
 " than <tab> if you use some plugin.
 " let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsExpandTrigger="<c-y>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
@@ -1164,11 +1171,26 @@ augroup END
 " === emmet-vim
 " ===
 " Enable just for html/css
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+" let g:user_emmet_install_global = 0
+" autocmd FileType html,css EmmetInstall
 " To remap the default <C-Y> leader:
-" the trailing , still needs to be entered, so the new keymap would be <A-E>,.
-let g:user_emmet_leader_key='<A-E>'
+let g:user_emmet_leader_key = '<C-y>'
+
+" imap   <C-y>,   <plug>(emmet-expand-abbr)
+" imap   <C-y>;   <plug>(emmet-expand-word)
+" imap   <C-y>u   <plug>(emmet-update-tag)
+" imap   <C-y>d   <plug>(emmet-balance-tag-inward)
+" imap   <C-y>D   <plug>(emmet-balance-tag-outward)
+" imap   <C-y>n   <plug>(emmet-move-next)
+" imap   <C-y>N   <plug>(emmet-move-prev)
+" imap   <C-y>i   <plug>(emmet-image-size)
+" imap   <C-y>/   <plug>(emmet-toggle-comment)
+" imap   <C-y>j   <plug>(emmet-split-join-tag)
+" imap   <C-y>k   <plug>(emmet-remove-tag)
+" imap   <C-y>a   <plug>(emmet-anchorize-url)
+" imap   <C-y>A   <plug>(emmet-anchorize-summary)
+" imap   <C-y>m   <plug>(emmet-merge-lines)
+" imap   <C-y>c   <plug>(emmet-code-pretty)
 
 " ===
 " === nvim-colorizer.lua

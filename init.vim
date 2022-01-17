@@ -1,3 +1,4 @@
+" auto -install vim-plug --------{{{1
 " ===
 " === auto-install vim-plug
 " ===
@@ -17,9 +18,9 @@ elseif has('unix')
 		autocmd VimEnter * PlugInstall | source $MYVIMRC
 	endif
 endif
+" }}}
 
-"========================  Custom Mappings ==========================="
-
+" config python and perl etc. --------------{{{1
 " let g:python_host_prog  = 'C:\Python27\python.exe'
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
@@ -29,15 +30,10 @@ if has('unix')
 else
 	let g:python3_host_prog = 'C:\Python38\python.exe'
 endif
+" }}}
 
-let mapleader=","
-
-set nocompatible
-set secure
-
+" config nvim backup, undo and view directory ------ {{{1
 " set nobackup
-set noswapfile
-
 if has('win32')
 	if has('nvim')
 		silent !mkdir $HOME/AppData/Local/nvim/tmp/backup
@@ -81,6 +77,11 @@ if has('persistent_undo')
 		endif
 	endif
 endif
+" }}}
+
+
+"========================  Custom Mappings ==========================="
+let mapleader=","
 
 nnoremap S :w<CR>
 nnoremap Q :q<CR>
@@ -88,23 +89,24 @@ noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
-" Save a file you edited in vim without the needed permission
-" :w !sudo tee %
-
-" noremap ; :
+nmap s <nop>
 
 " move faster
 noremap J 5j
 noremap K 5k
-noremap W 5w
-noremap B 5b
+" noremap W 5w
+" noremap B 5b
 nnoremap <space>j J
 nnoremap <space>k K
 " cursor to center of screen
 nnoremap n nzz
 nnoremap N Nzz
+
+" noremap ; :
+
+" Indentation
+" nnoremap < <<
+" nnoremap > >>
 
 " delete all, yank all, change all
 onoremap al :<c-u>normal! ggVG<CR>
@@ -113,6 +115,189 @@ onoremap al :<c-u>normal! ggVG<CR>
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 inoremap jk <ESC>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+" Save a file you edited in vim without the needed permission
+" :w !sudo tee %
+
+" H key: go to the start of the line
+noremap <silent> H ^
+" L key: go to the end of the line
+noremap <silent> L $
+" exchange two command
+nnoremap <silent> $ L
+nnoremap <silent> ^ H
+" swatch cursor to top or end of current line
+noremap <expr>se col(".")==1?"$":"0"
+vnoremap <expr>se col(".")==1?"$h":"0"
+
+" can maintain sustitute flags
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+" ===============get rid of postsearch's highlight ==========
+noremap <BS> :nohlsearch<CR>
+exec "nohlsearch"
+
+" Open the init.vim file anytime
+noremap <leader>n :e $MYVIMRC<CR>
+" remap H and L function
+noremap \h H
+noremap \l L
+" lookup keyword under the cursor(man)
+noremap <leader>k K
+
+cnoreabbrev Wq wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+
+" ==============Command line mode cursor movement ===========
+cnoremap <C-A> <Home>	"default <C-B>
+cnoremap <C-E> <End>
+cnoremap <C-P> <UP>
+cnoremap <C-N> <DOWN>
+cnoremap <C-H> <LEFT>
+cnoremap <C-L> <RIGHT>
+cnoremap <M-H> <S-Left>
+cnoremap <M-L> <S-Right>
+
+" ============== Move cursor in insert mode ===========
+inoremap <C-K> <UP>
+inoremap <C-J> <DOWN>
+inoremap <C-B> <LEFT>
+inoremap <C-L> <RIGHT>
+
+" find and replace
+nnoremap / /\v
+vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
+nnoremap ss :%s@\v@g<left><left>
+vnoremap ss :s@\v@g<left><left>
+
+" j, k  Store relative line number jumps in the jumplist
+" if they exceed a threshold.
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
+
+" search adjacent duplicate words
+" noremap sdw /\(\<\w\+\>\)\_s*\1
+noremap sdw /\v(<\w+>)\_s*<\1><cr>
+
+" Folding
+noremap <silent> - za
+" show NERDTreeToggl
+nnoremap st :NERDTreeToggle<CR>
+
+" Opening a terminal window
+noremap s/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
+
+" Press <leader><space> twice to jump to the next '' and edit it
+noremap <SPACE><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+
+" Toggle spelling check with sc
+noremap sc :set spell!<CR>
+" Locate the word in front of the cursor and
+" find the first spell suggestion for it.
+noremap <A-s> ea<C-x>s
+inoremap <A-s> <ESC>ea<C-x>s
+
+" visual line continue move
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
+" cnoreabbrev wrap :set wrap
+" cnoreabbrev nowrap :set nowrap
+set nowrap
+noremap sw :set wrap<CR>
+noremap sW :set nowrap<CR>
+
+" Split windows  Management
+set splitbelow
+set splitright
+
+nmap sl :set splitright<CR>:vsplit<CR>
+nmap sh :set nosplitright<CR>:vsplit<CR>
+nmap sj :set splitbelow<CR>:split<CR>
+nmap sk :set nosplitbelow<CR>:split<CR>
+" show diffs side by side
+set diffopt+=vertical
+
+" ===================== START MAP Config ====================
+" =                     switch window                       =
+" ===========================================================
+nnoremap <C-H> :wincmd h<CR>
+nnoremap <C-J> :wincmd j<CR>
+nnoremap <C-K> :wincmd k<CR>
+nnoremap <C-L> :wincmd l<CR>
+
+" ====================== exchange tab ======================
+nmap sV <C-W>t<C-w>H
+nmap sH <C-W>t<C-w>K
+" Rotate screens
+noremap srh <C-W>b<C-w>K
+noremap srv <C-W>b<C-w>H
+
+" Press to close the window below the current window
+noremap <LEADER>q <C-w>j:q<CR>
+
+nmap <UP> :resize +5<CR>
+nmap <DOWN> :resize -5<CR>
+nmap <LEFT> :vertical resize +5<CR>
+nmap <RIGHT> :vertical resize -5<CR>
+
+set nocompatible
+set secure
+syntax enable
+
+"----------------Search------------------"
+" highlight search.
+set hlsearch
+set incsearch
+
+set ignorecase
+set smartcase
+
+set autoindent
+set smartindent
+
+set backspace=indent,eol,start
+
+" set clipboard shared with window and vim
+if has('nvim')
+	set clipboard+=unnamedplus
+else
+	set clipboard=unnamed
+endif
+
+" File tpye on
+filetype plugin indent on
+
+" add matchpairs
+set matchpairs+=<:>,«:»
+set whichwrap+=<,>,[,]
+
+set undolevels=5000
+
+set wildmode=list:longest,full
+
+" should make scrolling faster
+set ttyfast
+set lazyredraw
+
+let &t_CO=256
+" some version color incorrect
+let &t_ut=''
+" set cursor sharp
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+set textwidth=0
+
+set noswapfile
 
 " to first nonspace column
 set startofline
@@ -133,10 +318,6 @@ set visualbell
 set colorcolumn=100
 set virtualedit=block
 set termguicolors
-
-" Split Management
-set splitbelow
-set splitright
 
 "can change  directory
 set autochdir
@@ -176,6 +357,10 @@ set pumheight=10
 set notimeout
 set ttimeoutlen=0
 
+autocmd BufNewFile,BufRead * try
+autocmd BufNewFile,BufRead *	set encoding=utf-8
+autocmd BufNewFile,BufRead * endtry
+
 " Convert to Unicode defaults
 set encoding=utf-8
 set fileencoding=utf-8
@@ -195,7 +380,6 @@ inoremap <ESC> <ESC>:set iminsert=0<CR>
 " zn, fold none: reset 'foldenable'. All folds will be open.
 " zN, fold normal.
 " set foldmethod=indent
-" set foldmethod=syntax
 set foldlevel=99
 set foldenable
 
@@ -215,14 +399,6 @@ augroup END
 " inserting the current comment leader automatically.
 set formatoptions-=tc
 
-"----------------Search------------------"
-" highlight search.
-set hlsearch
-set incsearch
-
-set ignorecase
-set smartcase
-
 if has('linebreak')
 	" indent wrapped lines to match start
 	set linebreak
@@ -230,21 +406,25 @@ if has('linebreak')
 	let &showbreak='⤷' "⤷(U+2937)
 	if exists('&breakindentopt')
 		"emphasize broken line by indenting them
-		set breakindentopt=shift:2
+		set breakindentopt=shift:4
 	endif
 endif
 
-set autoindent
-set smartindent
+" visual-star.vim
+" can make * at visual characters
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 
-set backspace=indent,eol,start
+function! s:VSetSearch(cmdtype)
+	let temp = @s
+	norm! gv"sy
+	let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+	let @s = temp
+endfunction
 
-" set clipboard shared with window and vim
-if has('nvim')
-	set clipboard+=unnamedplus
-else
-	set clipboard=unnamed
-endif
+" open file where you leave the file
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
 " To configure a custom clipboard tool, set g:clipboard to a dictionary.
 " For example this configuration integrates the tmux clipboard: >
 if has('tmux')
@@ -262,189 +442,10 @@ if has('tmux')
 		  \ }
 endif
 
-" add matchpairs
-set matchpairs+=<:>,«:»
-set whichwrap+=<,>,[,]
-set noswapfile
-
-set undolevels=5000
-
-set wildmode=list:longest,full
-
-syntax enable
-
-" H key: go to the start of the line
-noremap <silent> H ^
-" L key: go to the end of the line
-noremap <silent> L $
-" exchange two command
-nnoremap <silent> $ L
-nnoremap <silent> ^ H
-
-" can maintain sustitute flags
-nnoremap & :&&<CR>
-xnoremap & :&&<CR>
-
-" visual-star.vim
-" can make * at visual characters
-xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
-xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-
-function! s:VSetSearch(cmdtype)
-	let temp = @s
-	norm! gv"sy
-	let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-	let @s = temp
-endfunction
-
-" slplit windows config
-" nmap s <nop>
-" ss swatch cursor to top or end of current line
-noremap <expr>se col(".")==1?"$":"0"
-vnoremap <expr>se col(".")==1?"$h":"0"
-nmap sl :set splitright<CR>:vsplit<CR>
-nmap sh :set nosplitright<CR>:vsplit<CR>
-nmap sj :set splitbelow<CR>:split<CR>
-nmap sk :set nosplitbelow<CR>:split<CR>
-" show diffs side by side
-set diffopt+=vertical
-
-" Open the init.vim file anytime
-noremap <leader>n :e $MYVIMRC<CR>
-" remap H and L function
-noremap \h H
-noremap \l L
-" lookup keyword under the cursor(man)
-noremap <leader>k K
-
-cnoreabbrev Wq wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
-cnoreabbrev Q q
-" cnoreabbrev wrap :set wrap
-" cnoreabbrev nowrap :set nowrap
-set nowrap
-noremap sw :set wrap<CR>
-noremap sW :set nowrap<CR>
-
-" j, k  Store relative line number jumps in the jumplist
-" if they exceed a threshold.
-nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
-nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
-
-" find and replace
-nnoremap / /\v
-vnoremap / /\v
-nnoremap ? ?\v
-vnoremap ? ?\v
-nnoremap ss :%s@\v@g<left><left>
-vnoremap ss :s@\v@g<left><left>
-
-set textwidth=0
-
-" Indentation
-" nnoremap < <<
-" nnoremap > >>
-
-" search adjacent duplicate words
-" noremap sdw /\(\<\w\+\>\)\_s*\1
-noremap sdw /\v(<\w+>)\_s*<\1><cr>
-
-" Folding
-noremap <silent> - za
-" show NERDTreeToggl
-nnoremap st :NERDTreeToggle<CR>
-
-" Opening a terminal window
-noremap s/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
-
-" Press <leader><space> twice to jump to the next '' and edit it
-noremap <SPACE><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
-
-" Toggle spelling check with sc
-noremap sc :set spell!<CR>
-" Locate the word in front of the cursor and
-" find the first spell suggestion for it.
-noremap <A-s> ea<C-x>s
-inoremap <A-s> <ESC>ea<C-x>s
-
-" visual line continue move
-xnoremap K :move '<-2<CR>gv-gv
-xnoremap J :move '>+1<CR>gv-gv
-
-" open file where you leave the file
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
 " 如果已经安装figlet，可以得到一个文字性的图案
 if has('unix')
 	noremap <leader>gp :r !figlet
 endif
-
-" ===================== START MAP Config ====================
-" =                     switch window                       =
-" ===========================================================
-nnoremap <C-H> :wincmd h<CR>
-nnoremap <C-J> :wincmd j<CR>
-nnoremap <C-K> :wincmd k<CR>
-nnoremap <C-L> :wincmd l<CR>
-
-" ====================== exchange tab ======================
-nmap sV <C-W>t<C-w>H
-nmap sH <C-W>t<C-w>K
-" Rotate screens
-noremap srh <C-W>b<C-w>K
-noremap srv <C-W>b<C-w>H
-
-" Press to close the window below the current window
-noremap <LEADER>q <C-w>j:q<CR>
-
-nmap <UP> :resize +5<CR>
-nmap <DOWN> :resize -5<CR>
-nmap <LEFT> :vertical resize +5<CR>
-nmap <RIGHT> :vertical resize -5<CR>
-
-" ===============get rid of postsearch's highlight ==========
-noremap <BS> :nohlsearch<CR>
-
-" ==============Command line mode cursor movement ===========
-cnoremap <C-A> <Home>	"default <C-B>
-cnoremap <C-E> <End>
-cnoremap <C-P> <UP>
-cnoremap <C-N> <DOWN>
-cnoremap <C-H> <LEFT>
-cnoremap <C-L> <RIGHT>
-cnoremap <M-H> <S-Left>
-cnoremap <M-L> <S-Right>
-
-" ============== Move cursor in insert mode ===========
-inoremap <C-K> <UP>
-inoremap <C-J> <DOWN>
-inoremap <C-B> <LEFT>
-inoremap <C-L> <RIGHT>
-
-" filetype on
-" filetype indent on
-" filetype plugin on
-filetype plugin indent on
-
-" should make scrolling faster
-set ttyfast
-set lazyredraw
-
-autocmd BufNewFile,BufRead * try
-autocmd BufNewFile,BufRead *	set encoding=utf-8
-autocmd BufNewFile,BufRead * endtry
-
-
-let &t_CO=256
-" some version color incorrect
-let &t_ut=''
-" set cursor sharp
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-"----------------Visuals------------------"
 
 " auto source init.vim
 augroup autosourcing
@@ -456,11 +457,6 @@ augroup END
 " delete last trailinDTreeToggle
 autocmd BufWritePre * :%s/\s\+$//e
 
-" ===
-" === Necessary Commands to Execute
-" ===
-exec "nohlsearch"
-
 " open the url under the cursor.
 function! OpenUrlUnderCursor()
 	let s:url = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
@@ -471,8 +467,11 @@ function! OpenUrlUnderCursor()
 		echo "No URL found in line."
 	endif
 endfunction
-" maybe don't open in windows OS.
-map <leader>u :call OpenUrlUnderCursor()<cr>
+
+if has('unix')
+	" maybe don't open in windows OS.
+	map <leader>u :call OpenUrlUnderCursor()<cr>
+endif
 
 " Plugins -- plug-vim --------------------------- {{{1
 " ==================================================
@@ -848,9 +847,6 @@ noremap <leader>mT :+tabmove<CR>
 noremap <leader>mf :0tabmove<CR>
 noremap <leader>ml :$tabmove<CR>
 
-" ===
-" === Markdown Settings
-" ===
 
 " ===
 " === ultisnips
@@ -865,19 +861,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-
-" ===
-" === Snippets
-" ===
-" source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
-" Auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
-" md shortcut for only markdown
-if has('unix')
-	source $HOME/.config/nvim/md-snippets.vim
-else
-	source $HOME/AppData/Local/nvim/md-snippets.vim
-endif
 
 " ===
 " === Undotree
@@ -1076,6 +1059,18 @@ let g:vue_pre_processors = 'detect_on_enter'
 " if argument(s) are given then evaluate them as javascript in the browser.
 " Otherwise, evaluate the entire buffer (regardless of its filetype).
 
+" ===
+" === Snippets  Markdown-Settings
+" ===
+" source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
+" Auto spell
+autocmd BufRead,BufNewFile *.md setlocal spell
+" md shortcut for only markdown
+if has('unix')
+	source $HOME/.config/nvim/md-snippets.vim
+else
+	source $HOME/AppData/Local/nvim/md-snippets.vim
+endif
 
 " ===
 " === vim-instant-markdown
@@ -1094,7 +1089,7 @@ let g:instant_markdown_autoscroll = 1
 " ===
 " === vim-table-mode
 " ===
-noremap <LEADER>tmt :TableModeToggle<CR>
+noremap <LEADER>tm :TableModeToggle<CR>
 "let g:table_mode_disable_mappings = 1
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 

@@ -22,7 +22,7 @@ set guicursor=a:block-blinkon0
 " set guifont=Courier\ New:h16
 " GuiFont! Consolas:h16:l:cANSI:qDRAFT
 if has('nvim')
-	GuiFont! agave\ Nerd\ Font:h16
+	GuiFont! agave\ Nerd\ Font:h14
 	" The GUI completion menu is also ugly and too long,
 	" You can disable it by adding the following setting in ginit.vim
 	GuiPopupmenu 0

@@ -21,7 +21,6 @@ elseif has('unix')
 	if empty(glob('$HOME/.config/nvim/autoload/plug.vim'))
 		silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
 					\ https://199.232.68.133/junegunn/vim-plug/master/plug.vim
-		"autocmd VimEnter * PlugInstall
 		autocmd VimEnter * PlugInstall | source $MYVIMRC
 	endif
 endif
@@ -42,27 +41,26 @@ endif
 " config nvim backup, undo and view directory ------ {{{1
 " set nobackup
 if has('win32')
-	if has('nvim')
-		silent !mkdir $HOME/AppData/Local/nvim/tmp/backup
-		silent !mkdir $HOME/AppData/Local/nvim/tmp/undo
-	else
-		silent !mkdir $HOME/vimfiles/tmp/undo
-		silent !mkdir $HOME/vimfiles/tmp/backup
-	endif
+	silent !mkdir $HOME/AppData/Local/nvim-data/backup
+	silent !mkdir $HOME/AppData/Local/nvim-data/undo
+	silent !mkdir $HOME/AppData/Local/nvim-data/view
 else
 	silent !mkdir -p $HOME/tmp/backup
 	silent !mkdir -p $HOME/tmp/undo
+	silent !mkdir -p $HOME/tmp/view
 endif
 
-if has('nvim')
-	set backupdir=$HOME/AppData/Local/nvim/tmp/backup
+if has('win32')
+	set backupdir=$HOME/AppData/Local/nvim-data/backup
 else
 	set backupdir=$HOME/tmp/backup
 endif
 
 if has('mksession')
-	if isdirectory('$HOME/AppData/Local/nvim/tmp')
-		set viewdir=$HOME/AppData/Local/nvim/tmp/view
+	if has('win32')
+		set viewdir=$HOME/AppData/Local/nvim-data/view
+	else
+		set viewdir=$HOME/tmp/view
 	endif
 	set viewoptions=cursor,folds,slash,unix
 endif
@@ -70,18 +68,10 @@ endif
 if has('persistent_undo')
 	set undofile
 	if has('unix')
-		if has('nvim')
-			set undodir=$HOME/tmp/undo
-		else
-			set undodir=/vimfiles/undo
-		endif
+		set undodir=$HOME/tmp/undo
 	else
-		if has('nvim')
-			" set undodir=$HOME/AppData/Local/nvim/undo,.
-			set undodir=$HOME/AppData/Local/nvim/tmp/undo
-		else
-			set undodir=$HOME/vimfiles/tmp/undo,.
-		endif
+		" set undodir=$HOME/AppData/Local/nvim/undo,.
+		set undodir=$HOME/AppData/Local/nvim-data/undo
 	endif
 endif
 " }}}
@@ -97,14 +87,28 @@ nnoremap Y y$
 vnoremap Y "+y
 
 nmap s <nop>
+nmap t <nop>
+
+noremap to t
 
 " move faster
 noremap J 5j
 noremap K 5k
+noremap H 7h
+noremap L 7l
+" remap H and L function
+noremap sh H
+noremap sl L
 " noremap W 5w
 " noremap B 5b
 nnoremap <space>j J
 nnoremap <space>k K
+" visual line continue move
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
+" nnoremap <silent> $ L
+" nnoremap <silent> ^ H
 " cursor to center of screen
 nnoremap n nzz
 nnoremap N Nzz
@@ -124,20 +128,18 @@ vnoremap <leader>p "+p
 inoremap jk <ESC>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
+cmap sdw w !sudo tee > /dev/null %
 " Save a file you edited in vim without the needed permission
 " :w !sudo tee %
 
 " H key: go to the start of the line
-noremap <silent> H ^
+noremap <silent> ss ^
 " L key: go to the end of the line
-noremap <silent> L $
+noremap <silent> se $
 " exchange two command
-nnoremap <silent> $ L
-nnoremap <silent> ^ H
 " swatch cursor to top or end of current line
-noremap <expr>se col(".")==1?"$":"0"
-vnoremap <expr>se col(".")==1?"$h":"0"
+" noremap <expr>se col(".")==1?"$":"0"
+" vnoremap <expr>se col(".")==1?"$h":"0"
 
 " can maintain sustitute flags
 nnoremap & :&&<CR>
@@ -149,9 +151,6 @@ exec "nohlsearch"
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
-" remap H and L function
-noremap \h H
-noremap \l L
 " lookup keyword under the cursor(man)
 noremap <leader>k K
 
@@ -181,8 +180,8 @@ nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
-nnoremap ss :%s@\v@g<left><left>
-vnoremap ss :s@\v@g<left><left>
+nnoremap \s :%s@\v@g<left><left>
+vnoremap \s :s@\v@g<left><left>
 
 " j, k  Store relative line number jumps in the jumplist
 " if they exceed a threshold.
@@ -196,13 +195,15 @@ noremap sdw /\v(<\w+>)\_s*<\1><cr>
 " Folding
 noremap <silent> - za
 " show NERDTreeToggl
-nnoremap st :NERDTreeToggle<CR>
+nnoremap tt :NERDTreeToggle<CR>
 
 " Opening a terminal window
 noremap s/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 
 " Press <leader><space> twice to jump to the next '' and edit it
-noremap <SPACE><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+" noremap <SPACE><SPACE> <Esc>/<++><CR>:nohlsearch<CR>c4l
+noremap <leader>;  <Esc>/<++><CR>:nohlsearch<CR>c4l
+inoremap <leader>; <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Toggle spelling check with sc
 noremap sc :set spell!<CR>
@@ -210,10 +211,6 @@ noremap sc :set spell!<CR>
 " find the first spell suggestion for it.
 noremap <A-s> ea<C-x>s
 inoremap <A-s> <ESC>ea<C-x>s
-
-" visual line continue move
-xnoremap K :move '<-2<CR>gv-gv
-xnoremap J :move '>+1<CR>gv-gv
 
 " cnoreabbrev wrap :set wrap
 " cnoreabbrev nowrap :set nowrap
@@ -386,6 +383,9 @@ inoremap <ESC> <ESC>:set iminsert=0<CR>
 " zR，open all folds. zr, reduce folding: add v:count1 to 'foldlevel'
 " zn, fold none: reset 'foldenable'. All folds will be open.
 " zN, fold normal.
+" zM, close all folds: set 'foldlevel' to 0.  'foldenable' will be set.
+" zR, Open all folds. This sets 'foldmethod' to highest fold level.
+
 " set foldmethod=indent
 set foldlevel=99
 set foldenable
@@ -436,17 +436,17 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 " For example this configuration integrates the tmux clipboard: >
 if has('tmux')
 	let g:clipboard = {
-		  \   'name': 'myClipboard',
-		  \   'copy': {
-		  \      '+': ['tmux', 'load-buffer', '-'],
-		  \      '*': ['tmux', 'load-buffer', '-'],
-		  \    },
-		  \   'paste': {
-		  \      '+': ['tmux', 'save-buffer', '-'],
-		  \      '*': ['tmux', 'save-buffer', '-'],
-		  \   },
-		  \   'cache_enabled': 1,
-		  \ }
+				\   'name': 'myClipboard',
+				\   'copy': {
+					\      '+': ['tmux', 'load-buffer', '-'],
+					\      '*': ['tmux', 'load-buffer', '-'],
+					\    },
+					\   'paste': {
+						\      '+': ['tmux', 'save-buffer', '-'],
+						\      '*': ['tmux', 'save-buffer', '-'],
+						\   },
+						\   'cache_enabled': 1,
+						\ }
 endif
 
 " 如果已经安装figlet，可以得到一个文字性的图案
@@ -659,9 +659,6 @@ Plug 'vim-syntastic/syntastic'
 " Better Comments
 Plug 'tpope/vim-commentary'
 
-" emmet
-" Plug 'mattn/emmet-vim'
-
 " The ultimate snippet solution for Vim.使用coc-snippets 后这个暂时不用。
 Plug 'SirVer/ultisnips'
 " vim-snippets
@@ -672,6 +669,7 @@ Plug 'mbbill/undotree'
 
 " easymotion
 Plug 'easymotion/vim-easymotion'
+
 " Pairs of handy bracket mappings
 " A mnemonic for the "a" commands is "args" and for the "q" commands is "quickfix".
 " has more than 20 [\] commands. eg.
@@ -709,6 +707,7 @@ let g:coc_global_extensions = [
 			\ 'coc-gitignore',
 			\ 'coc-html',
 			\ 'coc-json',
+			\ 'coc-snippets',
 			\ 'coc-lists',
 			\ 'coc-prettier',
 			\ 'coc-pyright',
@@ -726,10 +725,9 @@ let g:coc_global_extensions = [
 			\ 'coc-yank'
 			\ ]
 
-			" \ 'coc-snippets',
-			" \ 'coc-explorer',
-			" \ 'coc-emmet',
-			" \ 'coc-yaml',
+" \ 'coc-emmet',
+" \ 'coc-explorer',
+" \ 'coc-yaml',
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -746,8 +744,8 @@ function! s:check_back_space() abort
 endfunction
 
 " Use alt-c or ctrl-o to trigger Completion.
-if has('nvim')
-	inoremap <silent><expr> <C-O> coc#refresh()
+if has('unix')
+	inoremap <silent><expr> <C-space> coc#refresh()
 else
 	inoremap <silent><expr> <C-O> coc#refresh()
 endif
@@ -764,6 +762,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD :tab split<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -771,7 +770,8 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 
 " Use K[ey] to show documentation in preview window.
-nnoremap <silent> sdo :call <SID>show_documentation()<CR>
+" nnoremap <silent> sdo :call <SID>show_documentation()<CR>
+nnoremap <silent> \k :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)
@@ -786,12 +786,22 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+nnoremap <c-c> :CocCommand<CR>
+
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+	autocmd!
+	" Setup formatexpr specified filetype(s).
+	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	" Update signature help on jump placeholder.
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
@@ -807,19 +817,60 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+	nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+	nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+	inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+	inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+	vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+	vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold   :call CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR     :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 " coc-explorer config
-nmap <leader>e :CocCommand explorer<CR>
+nmap te :CocCommand explorer<CR>
 
 " coc-translator
-nmap <leader>ts <Plug>(coc-translator-p)
+nmap ts <Plug>(coc-translator-p)
 
 " coc-vimslp config
 let g:markdown_fenced_languages=[
 			\ 'vim',
 			\ 'help'
 			\]
-
-" let g:coc_snippet_next = '<tab>'
 
 " may use other keys.
 " Use <C-l> for trigger snippet expand.
@@ -834,7 +885,27 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
+
 let g:snips_author = "Sameul"
+autocmd BufRead,BufNewFile tsconfig.json set FileType=jsonc
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>-  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>=  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " ######################## END ###############################
 " #               coc.nvim config more plugins               #
@@ -846,7 +917,7 @@ colorscheme deus
 " === Tab management
 " ===
 " Create a new tab with tb
-noremap <leader>te :tabedit<CR>
+noremap <leader>tc :tabedit<CR>
 " default gt and gT jump next and previous tab
 " Move the tabs with tmn and tmp
 noremap <leader>mt :-tabmove<CR>
@@ -860,8 +931,9 @@ noremap <leader>ml :$tabmove<CR>
 " ===
 " Trigger configuration. You need to change this to something other
 " than <tab> if you use some plugin.
-" let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<c-y>"
+let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -872,7 +944,7 @@ let g:UltiSnipsEditSplit="vertical"
 " ===
 " === Undotree
 " ===
-noremap <leader>tu :UndotreeToggle<CR>
+noremap <leader>ud :UndotreeToggle<CR>
 let g:undotree_DiffAutoOpen = 1
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators = 1
@@ -1168,31 +1240,6 @@ augroup END
 " augroup END
 
 " ===
-" === emmet-vim
-" ===
-" Enable just for html/css
-" let g:user_emmet_install_global = 0
-" autocmd FileType html,css EmmetInstall
-" To remap the default <C-Y> leader:
-let g:user_emmet_leader_key = '<C-y>'
-
-" imap   <C-y>,   <plug>(emmet-expand-abbr)
-" imap   <C-y>;   <plug>(emmet-expand-word)
-" imap   <C-y>u   <plug>(emmet-update-tag)
-" imap   <C-y>d   <plug>(emmet-balance-tag-inward)
-" imap   <C-y>D   <plug>(emmet-balance-tag-outward)
-" imap   <C-y>n   <plug>(emmet-move-next)
-" imap   <C-y>N   <plug>(emmet-move-prev)
-" imap   <C-y>i   <plug>(emmet-image-size)
-" imap   <C-y>/   <plug>(emmet-toggle-comment)
-" imap   <C-y>j   <plug>(emmet-split-join-tag)
-" imap   <C-y>k   <plug>(emmet-remove-tag)
-" imap   <C-y>a   <plug>(emmet-anchorize-url)
-" imap   <C-y>A   <plug>(emmet-anchorize-summary)
-" imap   <C-y>m   <plug>(emmet-merge-lines)
-" imap   <C-y>c   <plug>(emmet-code-pretty)
-
-" ===
 " === nvim-colorizer.lua
 " ===
 lua require 'colorizer'.setup()
@@ -1209,16 +1256,16 @@ map <A-j>  :Move current line/selection down
 " ===
 augroup autoformat_settings
 	" autocmd FileType bzl AutoFormatBuffer buildifier
-	" autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+	autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
 	" autocmd FileType dart AutoFormatBuffer dartfmt
 	" autocmd FileType go AutoFormatBuffer gofmt
 	" autocmd FileType gn AutoFormatBuffer gn
 	autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
-	" autocmd FileType java AutoFormatBuffer google-java-format
+	autocmd FileType java AutoFormatBuffer google-java-format
 	autocmd FileType python AutoFormatBuffer yapf
 	" Alternative: autocmd FileType python AutoFormatBuffer autopep8
 	" autocmd FileType rust AutoFormatBuffer rustfmt
-	" autocmd FileType vue AutoFormatBuffer prettier
+	autocmd FileType vue AutoFormatBuffer prettier
 augroup END
 
 " ===
@@ -1231,11 +1278,11 @@ let g:vista_default_executive = 'coc'
 let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#enable_icon = 1
 let g:vista#renderer#icons = {
-\   "function": "\uf794",
-\   "variable": "\uf71b",
-\  }
+			\   "function": "\uf794",
+			\   "variable": "\uf71b",
+			\  }
 " function! NearestMethodOrFunction() abort
-" 	return get(b:, 'vista_nearest_method_or_function', '')
+"		return get(b:, 'vista_nearest_method_or_function', '')
 " endfunction
 " set statusline+=%{NearestMethodOrFunction()}
 " autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
@@ -1244,9 +1291,9 @@ let g:scrollstatus_size = 15
 
 " Show the nearest method/function in the statusline
 function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
+	return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
-set statusline+=%{NearestMethodOrFunction()}
+" set statusline+=%{NearestMethodOrFunction()}
 
 " By default vista.vim never run if you don't call it explicitly.
 " If you want to show the nearest function in your statusline automatically,
@@ -1256,34 +1303,37 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 " ===
 " === Far.vim
 " ===
+" shortcut for far.vim find
+nnoremap <silent> tf  :Farf<cr>
+vnoremap <silent> tf  :Farf<cr>
+" shortcut for far.vim replace
+nnoremap <silent> tr  :Farr<cr>
+vnoremap <silent> tr :Farr<cr>
+
 " :Far {pattern} {replace-with} {file-mask} [params]
-" Find the text to replace.
-" :F {pattern} {file-mask} [params]
-" Find only.
-" Searching Interatively
-" :Farr foo bar **/*.py
-" :Farr [params]
-" Interative Far. Shows searching modes in the status bar (regex, case sensitive, word boundary, replace).
+" Find the text to replace.Similar to :substitute command.The auguments are separated by space(" ").
+" To escape space use "\s" or "\ ", "\"", to escape backslash use "\\\\".
+
+" :F {pattern} {file-mask} [params]  |  Find only.
+
+" :Farr foo bar **/*.py  | Uninterative Farr.
+
+" :Farr [params]         | Interative Far.
+" Shows searching modes in the status bar (regex, case sensitive, word boundary, replace).
 " Modes can be toggled by the key mapping it prompted. Allows to enter {pattern}, {replace-with}
 " and {file-mask} one after the other.
+
 " :Farf [params]
-" Interative F. The interaction is similar to Farr.
-" Commands in the searching result window
+" Interative F. The interaction is similar to Farr. Commands in the searching result window
+
 " :Fardo [params]
 " Runs the replacement task. The shortcut for it is s (substitute).
 " :Farundo [params]
 " Undo the recurrent replacement. The shortcut for it is u (undo).
 " It is available when set let g:far#enable_undo=1.
+
 " :Refar [params]
-" Change Far/F/Farr/Farf params.
-
-" shortcut for far.vim find
-nnoremap <silent> <leader><leader>f  :Farf<cr>
-vnoremap <silent> <leader><leader>f  :Farf<cr>
-
-" shortcut for far.vim replace
-nnoremap <silent> <leader><leader>r  :Farr<cr>
-vnoremap <silent> <leader><leader>r :Farr<cr>
+" Refar reruns Far or Farp with the same arguments or you can change any via [params].
 
 " ===
 " === Antovim
@@ -1356,28 +1406,28 @@ noremap <silent> <A-h> :History<CR>
 "noremap <C-t> :BTags<CR>
 noremap <silent> <A-l> :Lines<CR>
 noremap <silent> <A-w> :Buffers<CR>
-noremap <leader>; :History:<CR>
-noremap <A-d> :BD<CR>
+noremap \h             :History:<CR>
+noremap <A-d>          :BD<CR>
 
 let g:fzf_preview_window = 'right:60%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 function! s:list_buffers()
-  redir => list
-  silent ls
-  redir END
-  return split(list, "\n")
+	redir => list
+	silent ls
+	redir END
+	return split(list, "\n")
 endfunction
 
 function! s:delete_buffers(lines)
-  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+	execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
 command! BD call fzf#run(fzf#wrap({
-  \ 'source': s:list_buffers(),
-  \ 'sink*': { lines -> s:delete_buffers(lines) },
-  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
-\ }))
+			\ 'source': s:list_buffers(),
+			\ 'sink*': { lines -> s:delete_buffers(lines) },
+			\ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+			\ }))
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
@@ -1398,9 +1448,9 @@ let g:Lf_ShowDevIcons = 1
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WildIgnore = {
-        \ 'dir': ['.git', 'vendor', 'node_modules'],
-        \ 'file': ['__vim_project_root']
-        \}
+			\ 'dir': ['.git', 'vendor', 'node_modules'],
+			\ 'file': ['__vim_project_root']
+			\}
 let g:Lf_UseMemoryCache = 0
 let g:Lf_UseCache = 0
 
@@ -1415,18 +1465,18 @@ highlight link RnvimrNormal CursorLine
 nnoremap <silent> <leader>rt :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
 tnoremap <silent> <leader>rt :<C-\><C-n>:RnvimrToggle<CR>
 let g:rnvimr_action = {
-            \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-x>': 'NvimEdit split',
-            \ '<C-v>': 'NvimEdit vsplit',
-            \ 'gw': 'JumpNvimCwd',
-            \ 'yw': 'EmitRangerCwd'
-            \ }
+			\ '<C-t>': 'NvimEdit tabedit',
+			\ '<C-x>': 'NvimEdit split',
+			\ '<C-v>': 'NvimEdit vsplit',
+			\ 'gw': 'JumpNvimCwd',
+			\ 'yw': 'EmitRangerCwd'
+			\ }
 let g:rnvimr_layout = { 'relative': 'editor',
-            \ 'width': &columns,
-            \ 'height': &lines,
-            \ 'col': 0,
-            \ 'row': 0,
-            \ 'style': 'minimal' }
+			\ 'width': &columns,
+			\ 'height': &lines,
+			\ 'col': 0,
+			\ 'row': 0,
+			\ 'style': 'minimal' }
 let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
 
 " ===
@@ -1485,6 +1535,30 @@ let g:clever_f_chars_match_any_signs = ';'
 " === auto-pairs
 " ===
 " inoremap <buffer> <silent> <CR> <C-R>=AutoPairsSpace()<CR>
+" Map <CR> to insert a new indented line if cursor in (|), {|}, [|], '|', "|"
+inoremap <buffer> <silent> <CR> <C-R>=AutoPairsReturn()<CR>
+" Map <BS> to delete brackets and quotes in pair
+inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
+" System Shortcuts:
+" <CR> : Insert new indented line after return if cursor in blank brackets or quotes.
+" <BS> : Delete brackets in pair
+" <M-p>: Toggle Autopairs (|g:AutoPairsShortcutToggle|)
+" <M-e>: Fast Wrap (|g:AutoPairsShortcutFastWrap|)
+" <M-n>: Jump to next closed pair (|g:AutoPairsShortcutJump|)
+" <M-b>: BackInsert (|g:AutoPairsShortcutBackInsert|)
+
+" ===
+" === vim-easymotion
+" ===
+" Set to 0 will disable the default mappings
+let g:EasyMotion_do_mapping = 1
+let g:EasyMotion_do_shade = 0
+let g:EasyMotion_smartcase = 1
+" keep cursor colum JK motion
+let g:EasyMotion_startofline = 0
+map tj  <Plug>(easymotion-sol-j)
+map tk  <Plug>(easymotion-sol-k)
+
 
 
 

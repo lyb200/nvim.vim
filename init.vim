@@ -136,7 +136,6 @@ cmap sdw w !sudo tee > /dev/null %
 noremap <silent> ss ^
 " L key: go to the end of the line
 noremap <silent> se $
-" exchange two command
 " swatch cursor to top or end of current line
 " noremap <expr>se col(".")==1?"$":"0"
 " vnoremap <expr>se col(".")==1?"$h":"0"
@@ -770,8 +769,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 
 " Use K[ey] to show documentation in preview window.
-" nnoremap <silent> sdo :call <SID>show_documentation()<CR>
-nnoremap <silent> \k :call <SID>show_documentation()<CR>
+nnoremap <silent> tk :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)
@@ -864,7 +862,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 nmap te :CocCommand explorer<CR>
 
 " coc-translator
-nmap ts <Plug>(coc-translator-p)
+nmap <leader>ts <Plug>(coc-translator-p)
 
 " coc-vimslp config
 let g:markdown_fenced_languages=[
@@ -964,7 +962,7 @@ au BufWrite *.js :Autoformat
 " === any-jump
 " ===
 " In normal or visual mode.
-" Just place you cursor on any variable/class/constant/name/symbol and press \j.
+" Just place you cursor on any variable/class/constant/name/symbol and press \j or <leader>j.
 " You can also use visual mode to select proper keyword (j also works in visual mode)
 " With :AnyJumpArg myKeyword command you can manually write what you want to be searched for.
 " Normal mode: Jump to definition under cursore
@@ -975,8 +973,13 @@ xnoremap \j :AnyJumpVisual<CR>
 nnoremap \ab :AnyJumpBack<CR>
 " Normal mode: open last closed search window again
 nnoremap \al :AnyJumpLastResults<CR>
+
 let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.9
+" Disabling default any-jump keybindings:
+let g:any_jump_disable_default_keybindings = 0
+" Prefered search engine: rg or ag
+" let g:any_jump_search_prefered_engine = 'rg'
 
 
 " ===
@@ -1556,9 +1559,13 @@ let g:EasyMotion_do_shade = 0
 let g:EasyMotion_smartcase = 1
 " keep cursor colum JK motion
 let g:EasyMotion_startofline = 0
-map tj  <Plug>(easymotion-sol-j)
-map tk  <Plug>(easymotion-sol-k)
-
+" map tj  <Plug>(easymotion-sol-j)
+" map tk  <Plug>(easymotion-sol-k)
+map tw  <Plug>(easymotion-bd-W)
+" to search 2 chars<cr>
+nmap ts <Plug>(easymotion-s2)
+xmap ts <Plug>(easymotion-s2)
+omap tz <Plug>(easymotion-s2)
 
 
 

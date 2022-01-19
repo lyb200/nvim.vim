@@ -557,8 +557,8 @@ Plug 'othree/html5.vim'
 " The plugin is designed to automatically rename closing HTML/XML tags
 " when editing opening ones (or the other way around).
 Plug 'AndrewRadev/tagalong.vim'
-" Vim script for text filtering and alignment
-" <leader>gt, or :Tabularize <regex> to align，用于对其等号的
+" 用于文本过滤和对齐的vim脚本。其原理是使用正则进行分割，然后对齐。
+" <leader>gt <regex> to align
 Plug 'godlygeek/tabular'
 Plug 'alvan/vim-closetag'	"default key > or >>
 " A Vim syntax highlighting plugin for JavaScript and Flow.js
@@ -588,9 +588,6 @@ Plug 'dkarter/bullets.vim'
 " Editor Enhancement
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
-" Super-simple vim plugin for cycling through antonyms/words related to word under cursor
-" gs for :Antovim<rc> switch antonyms or related word.
-Plug 'jwarby/antovim'
 " Vim script for text filtering and alignment
 Plug 'godlygeek/tabular' " gt, or :Tabularize <regex> to align
 " Ctrl+L <c-l> and <c-g>c (insert) to toggle capslock
@@ -1207,8 +1204,9 @@ let g:bullets_enabled_file_types = [
 			\]
 
 " ===
-" === vim-json
+" === valsorym/.del.vim-json
 " ===
+let g:move_key_modifier = 'A'
 nmap <A-k>   :Move current line/selection up
 nmap <A-j>   :Move current line/selection down
 vmap <A-k>   :Move current line/selection up
@@ -1218,8 +1216,7 @@ vmap <A-j>   :Move current line/selection down
 " === vim-visual-multi
 " ===
 " select words with Ctrl-N (like Ctrl-d in Sublime Text/VS Code)
-" press n/N to get next/previous occurrence
-" press [/] to select next/previous cursor
+" press n/N to get next/previous occurrence, press [/] to select next/previous cursor
 " press q to skip current and get next occurrence
 " press Q to remove current cursor/selection
 " in cursor mode commands work as they would in normal mode
@@ -1246,13 +1243,6 @@ augroup END
 " === nvim-colorizer.lua
 " ===
 lua require 'colorizer'.setup()
-
-" ===
-" === valsorym/.del.vim-json
-" ===
-let g:move_key_modifier = 'A'
-map <A-k>  :Move current line/selection up
-map <A-j>  :Move current line/selection down
 
 " ===
 " === AutoFormat vim-codefmt
@@ -1339,16 +1329,14 @@ vnoremap <silent> tr :Farr<cr>
 " Refar reruns Far or Farp with the same arguments or you can change any via [params].
 
 " ===
-" === Antovim
-" ===
-" To extend the global list, you can simply extend it
-" let g:antovim_definitions = extend(g:antovim_definitions, [['yes', 'no', 'maybe']])
-nnoremap gs :Antovim<CR>
-
-" ===
 " === tabular
 " ===
-vmap <leader>gt :Tabularize /
+" 在命令行输入的正则作为分隔符，然后插入空格对齐字段
+" 可以不指定range，会自动匹配指定的正则的行，如果后面不指定正则，会使用前面的正则。
+vmap tab :Tabularize /
+nmap tab :Tabularize /
+" :Tabularize /<regexp>/[flagn...]
+" flag: l, r, or c(for left, right, center), n 代表下一个字段前面的空格数量。
 
 
 " Compile function

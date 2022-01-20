@@ -117,7 +117,7 @@ inoremap <C-H> <C-G>u<C-H>
 nnoremap n nzz
 nnoremap N Nzz
 
-" noremap ; :
+noremap ; :
 
 " Indentation
 " nnoremap < <<
@@ -168,7 +168,7 @@ cnoreabbrev W w
 cnoreabbrev Q q
 
 " ==============Command line mode cursor movement ===========
-cnoremap <C-A> <Home>	"default <C-B>
+cnoremap <C-A> <Home>       "default <C-B>
 cnoremap <C-E> <End>
 cnoremap <C-P> <UP>
 cnoremap <C-N> <DOWN>
@@ -220,6 +220,14 @@ noremap sc :set spell!<CR>
 noremap <A-s> ea<C-x>s
 inoremap <A-s> <ESC>ea<C-x>s
 
+" set filetype to js, py ,java, tj etc
+nnoremap sftjs  :set filetype=javascript<CR>
+nnoremap sftjv  :set filetype=java<CR>
+nnoremap sftpy  :set filetype=python<CR>
+nnoremap sftts  :set filetype=typescript<CR>
+nnoremap sfth   :set filetype=html<CR>
+nnoremap sftvim :set filetype=vim<CR>
+
 " 启用光标
 set mouse=a
 
@@ -229,14 +237,17 @@ set nowrap
 noremap sw :set wrap<CR>
 noremap sW :set nowrap<CR>
 
-" Split windows  Management
+" Split windows Management
 set splitbelow
 set splitright
-
-nmap sl :set splitright<CR>:vsplit<CR>
-nmap sh :set nosplitright<CR>:vsplit<CR>
-nmap sj :set splitbelow<CR>:split<CR>
-nmap sk :set nosplitbelow<CR>:split<CR>
+" nmap sl :set splitright<CR>:vsplit<CR>
+" nmap sh :set nosplitright<CR>:vsplit<CR>
+" nmap sj :set splitbelow<CR>:split<CR>
+" nmap sk :set nosplitbelow<CR>:split<CR>
+nmap sl :set splitright<CR>:vnew<CR>
+nmap sh :set nosplitright<CR>:vnew<CR>
+nmap sj :set splitbelow<CR>:new<CR>
+nmap sk :set nosplitbelow<CR>:new<CR>
 " show diffs side by side
 set diffopt+=vertical
 
@@ -754,9 +765,10 @@ endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-" inoremap <silent><expr> <C-Y> pumvisible() ? coc#_select_confirm()
 inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
 			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" come from cw's config
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " 使用emmet时，需要 ctrl + enter 来触发emmet expand
 " may use other keys.
@@ -772,8 +784,6 @@ let g:coc_snippet_prev = '<c-k>'
 " imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
-
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -938,7 +948,8 @@ noremap <leader>ml :$tabmove<CR>
 " Trigger configuration. You need to change this to something other
 " than <tab> if you use some plugin.
 " let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsExpandTrigger="<c-y>"
+" let g:UltiSnipsExpandTrigger="<c-y>"
+let g:UltiSnipsExpandTrigger="<c-cr>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 " let g:UltiSnipsJumpForwardTrigger="<c-n>"
@@ -1352,7 +1363,7 @@ nmap tab :Tabularize /
 " flag: l, r, or c(for left, right, center), n 代表下一个字段前面的空格数量。
 
 
-" Compile function
+" Compile function (,ru for run) ---------------{{{1
 noremap <leader>ru :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
@@ -1394,6 +1405,7 @@ func! CompileRunGcc()
 		:term go run .
 	endif
 endfunc
+"}}}
 
 " ===
 " === FZF

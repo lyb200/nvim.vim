@@ -97,8 +97,8 @@ noremap K 5k
 noremap H 7h
 noremap L 7l
 " remap H and L function
-noremap sh H
-noremap sl L
+noremap th H
+noremap tl L
 " noremap W 5w
 " noremap B 5b
 nnoremap <space>j J
@@ -145,7 +145,12 @@ nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
 " ===============get rid of postsearch's highlight ==========
-noremap <BS> :nohlsearch<CR>
+" 输入法input method will change
+set noimdisable
+" make :lmap and IM turn off automatically when leaving Insert mode.
+inoremap <ESC> <ESC>:set iminsert=0<CR>
+nnoremap <ESC> <ESC>:nohlsearch<CR>
+" noremap <BS> :nohlsearch<CR>
 exec "nohlsearch"
 
 " Open the init.vim file anytime
@@ -206,10 +211,13 @@ inoremap <leader>; <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Toggle spelling check with sc
 noremap sc :set spell!<CR>
-" Locate the word in front of the cursor and
+" 定于光标之前的单词，然后为它查找第一个拼写建议
 " find the first spell suggestion for it.
 noremap <A-s> ea<C-x>s
 inoremap <A-s> <ESC>ea<C-x>s
+
+" 启用光标
+set mouse=a
 
 " cnoreabbrev wrap :set wrap
 " cnoreabbrev nowrap :set nowrap
@@ -370,12 +378,6 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,chinese
 setglobal termencoding=utf-8
 scriptencoding=utf-8
-
-set mouse=a
-" input method will change
-set noimdisable
-" make :lmap and IM turn off automatically when leaving Insert mode.
-inoremap <ESC> <ESC>:set iminsert=0<CR>
 
 " za，trigger fold; zA, trigger fold recursively;
 " zM，close all folds; zm, fold more: subtract v:count1 from 'foldlevel'.

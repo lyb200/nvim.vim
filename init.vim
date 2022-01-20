@@ -88,8 +88,8 @@ vnoremap Y "+y
 
 nmap s <nop>
 nmap t <nop>
-
-noremap to t
+" till
+noremap ti t
 
 " move faster
 noremap J 5j
@@ -1575,10 +1575,10 @@ let g:EasyMotion_startofline = 0
 " map tj  <Plug>(easymotion-sol-j)
 " map tk  <Plug>(easymotion-sol-k)
 map tw  <Plug>(easymotion-bd-W)
-" to search 2 chars<cr>
-nmap ts <Plug>(easymotion-s2)
-xmap ts <Plug>(easymotion-s2)
-omap tz <Plug>(easymotion-s2)
+" go to search 2 chars<cr>, gs default for go to sleep.
+nmap gs <Plug>(easymotion-s2)
+xmap gs <Plug>(easymotion-s2)
+omap gz <Plug>(easymotion-s2)
 
 " ===
 " === tpope/vim-capslock

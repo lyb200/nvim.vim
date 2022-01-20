@@ -107,6 +107,10 @@ nnoremap <space>k K
 xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
 
+" 使<Bs>和<CR>具有开始新的undo序列
+inoremap <C-H> <C-G>u<C-H>
+" inoremap <CR> <C-]><C-G>u<CR>
+
 " nnoremap <silent> $ L
 " nnoremap <silent> ^ H
 " cursor to center of screen
@@ -592,7 +596,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 " Vim script for text filtering and alignment
 Plug 'godlygeek/tabular' " gt, or :Tabularize <regex> to align
-" Ctrl+L <c-l> and <c-g>c (insert) to toggle capslock
+" <a-l> and <c-g>c (insert) to toggle capslock
 Plug 'tpope/vim-capslock'
 Plug 'gcmt/wildfire.vim'	" can quickly select the closest text object
 Plug 'tpope/vim-repeat'		" using the . command after a plugin map
@@ -706,6 +710,7 @@ let g:coc_global_extensions = [
 			\ 'coc-html',
 			\ 'coc-json',
 			\ 'coc-snippets',
+			\ 'coc-emmet',
 			\ 'coc-lists',
 			\ 'coc-prettier',
 			\ 'coc-pyright',
@@ -723,7 +728,6 @@ let g:coc_global_extensions = [
 			\ 'coc-yank'
 			\ ]
 
-" \ 'coc-emmet',
 " \ 'coc-explorer',
 " \ 'coc-yaml',
 
@@ -750,8 +754,26 @@ endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+" inoremap <silent><expr> <C-Y> pumvisible() ? coc#_select_confirm()
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
 			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" 使用emmet时，需要 ctrl + enter 来触发emmet expand
+" may use other keys.
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+" Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -767,7 +789,8 @@ nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 
-" Use K[ey] to show documentation in preview window.
+" Use to K[ey] to show documentation in preview window.
+" 似乎与默认K的功能一样
 nnoremap <silent> tk :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -869,20 +892,6 @@ let g:markdown_fenced_languages=[
 			\ 'help'
 			\]
 
-" may use other keys.
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-
 let g:snips_author = "Sameul"
 autocmd BufRead,BufNewFile tsconfig.json set FileType=jsonc
 
@@ -937,6 +946,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+" Split the window vertically or horizontally depending on context.
+" let g:UltiSnipsEditSplit="context"
 
 " ===
 " === Undotree
@@ -1557,6 +1568,11 @@ nmap ts <Plug>(easymotion-s2)
 xmap ts <Plug>(easymotion-s2)
 omap tz <Plug>(easymotion-s2)
 
+" ===
+" === tpope/vim-capslock
+" ===
+imap <a-l> <C-O><Plug>CapsLockToggle
+set statusline^=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
 
 
 

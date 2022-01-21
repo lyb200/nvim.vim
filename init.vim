@@ -132,7 +132,7 @@ vnoremap <leader>p "+p
 inoremap jk <ESC>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap sdw w !sudo tee > /dev/null %
+cmap <C-/> :<C-u>w !sudo tee > /dev/null %
 " Save a file you edited in vim without the needed permission
 " :w !sudo tee %
 
@@ -152,9 +152,9 @@ xnoremap & :&&<CR>
 " 输入法input method will change
 set noimdisable
 " make :lmap and IM turn off automatically when leaving Insert mode.
-inoremap <ESC> <ESC>:set iminsert=0<CR>
-nnoremap <ESC> <ESC>:nohlsearch<CR>
-" noremap <BS> :nohlsearch<CR>
+inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+nnoremap <silent> <ESC> <ESC>:nohlsearch<CR>
+" noremap <silent> <BS> :nohlsearch<CR>
 exec "nohlsearch"
 
 " Open the init.vim file anytime
@@ -198,7 +198,7 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 " search adjacent duplicate words
 " noremap sdw /\(\<\w\+\>\)\_s*\1
-noremap sdw /\v(<\w+>)\_s*<\1><cr>
+noremap \dw /\v(<\w+>)\_s*<\1><cr>
 
 " Folding
 noremap <silent> - za

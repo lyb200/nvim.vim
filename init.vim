@@ -90,6 +90,8 @@ nmap s <nop>
 nmap t <nop>
 " till
 noremap ti t
+noremap ; :
+noremap <space>; ;
 
 " move faster
 noremap J 5j
@@ -111,13 +113,9 @@ xnoremap J :move '>+1<CR>gv-gv
 inoremap <C-H> <C-G>u<C-H>
 " inoremap <CR> <C-]><C-G>u<CR>
 
-" nnoremap <silent> $ L
-" nnoremap <silent> ^ H
 " cursor to center of screen
 nnoremap n nzz
 nnoremap N Nzz
-
-noremap ; :
 
 " Indentation
 " nnoremap < <<
@@ -188,8 +186,8 @@ nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
-nnoremap \s :%s@\v@g<left><left>
-vnoremap \s :s@\v@g<left><left>
+nnoremap \s :%s/\v/g<left><left>
+vnoremap \s :s/\v/g<left><left>
 
 " j, k  Store relative line number jumps in the jumplist
 " if they exceed a threshold.
@@ -465,7 +463,7 @@ if has('tmux')
 						\ }
 endif
 
-" 如果已经安装figlet，可以得到一个文字性的图案
+" gp for get picture 如果已经安装figlet，可以得到一个文字性的图案
 if has('unix')
 	noremap <leader>gp :r !figlet
 endif

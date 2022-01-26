@@ -111,6 +111,7 @@ xnoremap J :move '>+1<CR>gv-gv
 
 " 使<Bs>和<CR>具有开始新的undo序列
 inoremap <C-H> <C-G>u<C-H>
+" 好像会让回车不能使用好
 " inoremap <CR> <C-]><C-G>u<CR>
 
 " cursor to center of screen
@@ -131,7 +132,7 @@ vnoremap <leader>p "+p
 inoremap jk <ESC>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap <C-/> :<C-u>w !sudo tee > /dev/null %
+cmap <C-s> :<C-u>w !sudo tee > /dev/null %
 " Save a file you edited in vim without the needed permission
 " :w !sudo tee %
 
@@ -147,18 +148,23 @@ noremap <silent> se $
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
-" ===============get rid of postsearch's highlight ==========
 " 输入法input method will change
 set noimdisable
 " make :lmap and IM turn off automatically when leaving Insert mode.
-inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+autocmd! InsertLeave * set imdisable
+autocmd! InsertEnter * set noimdisable
+" gvim
+if has("gui_running")
+	set imactivatekey=C-space
+	inoremap <ESC> <ESC>:set iminsert=0<CR>
+endif
 nnoremap <silent> <ESC> <ESC>:nohlsearch<CR>
 " noremap <silent> <BS> :nohlsearch<CR>
 exec "nohlsearch"
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
-" lookup keyword under the cursor(man)
+" lookup keyword under the cursor(manual pag)
 noremap <leader>k K
 
 cnoreabbrev Wq wq
@@ -190,6 +196,16 @@ vnoremap ? ?\v
 nnoremap \s :%s/\v/g<left><left>
 vnoremap \s :s/\v/g<left><left>
 
+" Tab management
+" Create a new tab with tb
+noremap <leader>tc :tabedit<CR>
+" default gt and gT jump next and previous tab
+" Move the tabs with tmn and tmp
+noremap <leader>mt :-tabmove<CR>
+noremap <leader>mT :+tabmove<CR>
+noremap <leader>mf :0tabmove<CR>
+noremap <leader>ml :$tabmove<CR>
+
 " j, k  Store relative line number jumps in the jumplist
 " if they exceed a threshold.
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
@@ -201,6 +217,8 @@ noremap \dw /\v(<\w+>)\_s*<\1><cr>
 
 " Folding
 noremap <silent> - za
+noremap <silent> _ zM
+
 " show NERDTreeToggl
 nnoremap tt :NERDTreeToggle<CR>
 
@@ -367,6 +385,17 @@ set list
 " »(U+00BB) «(U+00AB) •(U+2022) ▷(U+25B7) →(U2192) ↲(U21b2)
 set listchars=tab:\|\ ,trail:▫
 
+if has('linebreak')
+	" indent wrapped lines to match start
+	set linebreak
+	"Arrow pointing downwards then curving rightwards
+	let &showbreak='⤷' "⤷(U+2937)
+	if exists('&breakindentopt')
+		"emphasize broken line by indenting them
+		set breakindentopt=shift:2,list:-1,min:20
+	endif
+endif
+
 " Keep 1000 items in the history.
 set history=1000
 " always show tab page:2, only >1 files:1, never show:0
@@ -420,17 +449,6 @@ augroup END
 " c Auto-wrap comments using textwidth,
 " inserting the current comment leader automatically.
 set formatoptions-=tc
-
-if has('linebreak')
-	" indent wrapped lines to match start
-	set linebreak
-	"Arrow pointing downwards then curving rightwards
-	let &showbreak='⤷' "⤷(U+2937)
-	if exists('&breakindentopt')
-		"emphasize broken line by indenting them
-		set breakindentopt=shift:4
-	endif
-endif
 
 " visual-star.vim
 " can make * at visual characters
@@ -625,6 +643,18 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-abolish'
 " Enhanced in-file search for Vim
 " Plug 'wincent/loupe'
+
+" 输入法自动切换, for linux
+if has('unix')
+	Plug 'lyokha/vim-xkbswitch'
+	" In windows you need not only the plugin, but DLL-files from latest release.
+	" If you have 64-bit Vim, you need libxkbswitch64.dll.
+	" For 32-bit version use libxkbswitch32.dll.
+else
+	Plug 'DeXP/xkb-switch-win'
+endif
+" 翻译，暂时不用，基本上是网速太慢的提示
+Plug 'voldikss/vim-translator'
 
 " Plugin to toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'
@@ -892,13 +922,24 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " coc-explorer config
 nmap te :CocCommand explorer<CR>
 
+<<<<<<< HEAD
 " coc-translator
+=======
+" ===
+" === coc-translator
+" ===
+>>>>>>> 52dcc17cb5e9b4bc141a3f114dafc35bae86fa4d
 " popup
 nmap <leader>tp <Plug>(coc-translator-p)
 vmap <leader>tp <Plug>(coc-translator-pv)
 " replace
+<<<<<<< HEAD
 nmap <Leader>tr <Plug>(coc-translator-r)
 vmap <Leader>tr <Plug>(coc-translator-rv)
+=======
+nmap <leader>tr <Plug>(coc-translator-r)
+vmap <leader>tr <Plug>(coc-translator-rv)
+>>>>>>> 52dcc17cb5e9b4bc141a3f114dafc35bae86fa4d
 
 " coc-vimslp config
 let g:markdown_fenced_languages=[
@@ -932,18 +973,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " ############################################################
 "colorscheme atom-dark
 colorscheme deus
-
-" ===
-" === Tab management
-" ===
-" Create a new tab with tb
-noremap <leader>tc :tabedit<CR>
-" default gt and gT jump next and previous tab
-" Move the tabs with tmn and tmp
-noremap <leader>mt :-tabmove<CR>
-noremap <leader>mT :+tabmove<CR>
-noremap <leader>mf :0tabmove<CR>
-noremap <leader>ml :$tabmove<CR>
 
 
 " ===
@@ -1590,7 +1619,34 @@ omap gz <Plug>(easymotion-s2)
 imap <a-l> <C-O><Plug>CapsLockToggle
 set statusline^=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
 
+" ===
+" === vim-xkbswitch
+" ===
+" Basic configuration requires only 1 line in your .vimrc:
+let g:XkbSwitchEnabled = 1
+let g:XkbSwitchLib = 'C:/Nervim_xkbswitch/libxkbswitch32.dll'
 
+" ===
+" === vim-translator
+" ===
+let g:translator_default_engines=['bing', 'haici', 'youdao']
+" Echo translation in the cmdline
+nmap <silent> \tc <Plug>Translate
+vmap <silent> \tc <Plug>TranslateV
+" Display translation in a window
+nmap <silent> \tw <Plug>TranslateW
+vmap <silent> \tw <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> \tr <Plug>TranslateR
+vmap <silent> \tr <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> \tx <Plug>TranslateX
+" 一旦翻译窗口打开，<C-w>p to jump into it and again to jump back
+" 有一个函数可以滚动窗口 only works in neovim.
+nnoremap <silent><expr> <M-y> translator#window#float#has_scroll() ?
+                            \ translator#window#float#scroll(1) : "\<M-f>"
+nnoremap <silent><expr> <M-u> translator#window#float#has_scroll() ?
+                            \ translator#window#float#scroll(0) : "\<M-f>"
 
 " :options can list all configures
 " :h option-list can get help.

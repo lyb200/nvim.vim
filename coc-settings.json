@@ -210,6 +210,8 @@
 	/* "todolist.promptForReminder": false, */
 	"coc-actions.hideCursor": false,
 	"coc-actions.showActionKind": true,
+	// "translator.enableHover": true,
+	"translator.window.enableBorder":true,
 	"diagnostic-languageserver.filetypes": {
 		"vim": "vint",
 		"email": "languagetool",

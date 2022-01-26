@@ -111,7 +111,8 @@ xnoremap J :move '>+1<CR>gv-gv
 
 " 使<Bs>和<CR>具有开始新的undo序列
 inoremap <C-H> <C-G>u<C-H>
-inoremap <CR> <C-]><C-G>u<CR>
+" 好像会让回车不能使用好
+" inoremap <CR> <C-]><C-G>u<CR>
 
 " cursor to center of screen
 nnoremap n nzz
@@ -391,7 +392,7 @@ if has('linebreak')
 	let &showbreak='⤷' "⤷(U+2937)
 	if exists('&breakindentopt')
 		"emphasize broken line by indenting them
-		set breakindentopt=shift:2
+		set breakindentopt=shift:2,list:-1,min:20
 	endif
 endif
 
@@ -653,7 +654,7 @@ else
 	Plug 'DeXP/xkb-switch-win'
 endif
 " 翻译，暂时不用，基本上是网速太慢的提示
-" Plug 'voldikss/vim-translator'
+Plug 'voldikss/vim-translator'
 
 " Plugin to toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'
@@ -921,7 +922,9 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " coc-explorer config
 nmap te :CocCommand explorer<CR>
 
-" coc-translator
+" ===
+" === coc-translator
+" ===
 " popup
 nmap <leader>tp <Plug>(coc-translator-p)
 vmap <leader>tp <Plug>(coc-translator-pv)
@@ -1614,8 +1617,27 @@ set statusline^=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
 let g:XkbSwitchEnabled = 1
 let g:XkbSwitchLib = 'C:/Nervim_xkbswitch/libxkbswitch32.dll'
 
-
-
+" ===
+" === vim-translator
+" ===
+let g:translator_default_engines=['bing', 'haici', 'youdao']
+" Echo translation in the cmdline
+nmap <silent> \tc <Plug>Translate
+vmap <silent> \tc <Plug>TranslateV
+" Display translation in a window
+nmap <silent> \tw <Plug>TranslateW
+vmap <silent> \tw <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> \tr <Plug>TranslateR
+vmap <silent> \tr <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> \tx <Plug>TranslateX
+" 一旦翻译窗口打开，<C-w>p to jump into it and again to jump back
+" 有一个函数可以滚动窗口 only works in neovim.
+nnoremap <silent><expr> <M-y> translator#window#float#has_scroll() ?
+                            \ translator#window#float#scroll(1) : "\<M-f>"
+nnoremap <silent><expr> <M-u> translator#window#float#has_scroll() ?
+                            \ translator#window#float#scroll(0) : "\<M-f>"
 
 " :options can list all configures
 " :h option-list can get help.

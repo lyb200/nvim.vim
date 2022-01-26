@@ -922,24 +922,15 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " coc-explorer config
 nmap te :CocCommand explorer<CR>
 
-<<<<<<< HEAD
-" coc-translator
-=======
 " ===
 " === coc-translator
 " ===
->>>>>>> 52dcc17cb5e9b4bc141a3f114dafc35bae86fa4d
 " popup
 nmap <leader>tp <Plug>(coc-translator-p)
 vmap <leader>tp <Plug>(coc-translator-pv)
 " replace
-<<<<<<< HEAD
-nmap <Leader>tr <Plug>(coc-translator-r)
-vmap <Leader>tr <Plug>(coc-translator-rv)
-=======
 nmap <leader>tr <Plug>(coc-translator-r)
 vmap <leader>tr <Plug>(coc-translator-rv)
->>>>>>> 52dcc17cb5e9b4bc141a3f114dafc35bae86fa4d
 
 " coc-vimslp config
 let g:markdown_fenced_languages=[

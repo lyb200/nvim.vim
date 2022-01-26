@@ -123,6 +123,7 @@ nnoremap N Nzz
 
 " delete all, yank all, change all
 onoremap al :<c-u>normal! ggVG<CR>
+nnoremap val ggVG
 
 " system copyboard to visual select some characters.
 nnoremap <leader>p "+p
@@ -363,7 +364,7 @@ set shiftround
 set list
 " set listchars=tab:▸\ ,trail:▫
 " set listchars+=nbsp:⦸   "CIRCLED reverse solidus(U+29B8)
-" »(U+00BB) «(U+00AB) •(U+2022) ▷(U+25B7)
+" »(U+00BB) «(U+00AB) •(U+2022) ▷(U+25B7) →(U2192) ↲(U21b2)
 set listchars=tab:\|\ ,trail:▫
 
 " Keep 1000 items in the history.
@@ -892,7 +893,12 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 nmap te :CocCommand explorer<CR>
 
 " coc-translator
-nmap <leader>ts <Plug>(coc-translator-p)
+" popup
+nmap <leader>tp <Plug>(coc-translator-p)
+vmap <leader>tp <Plug>(coc-translator-pv)
+" replace
+nmap <Leader>tr <Plug>(coc-translator-r)
+vmap <Leader>tr <Plug>(coc-translator-rv)
 
 " coc-vimslp config
 let g:markdown_fenced_languages=[

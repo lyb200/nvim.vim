@@ -6,9 +6,6 @@
 "            |___/
 
 " auto -install vim-plug --------{{{1
-" ===
-" === auto-install vim-plug
-" ===
 if has('win32')
 	if empty(glob('$HOME/AppData/Local/nvim/autoload/plug.vim'))
 		silent !iwr -useb https://199.232.68.133/junegunn/vim-plug/master/plug.vim |
@@ -26,58 +23,7 @@ elseif has('unix')
 endif
 " }}}
 
-" config python and perl etc. --------------{{{1
-" let g:python_host_prog  = 'C:\Python27\python.exe'
-let g:loaded_python_provider = 0
-let g:loaded_ruby_provider = 0
-if has('unix')
-	let g:python3_host_prog = '/usr/bin/python3'
-	let g:perl_host_prog = '/usr/bin/perl'
-else
-	let g:python3_host_prog = 'C:\Python38\python.exe'
-endif
-" }}}
-
-" config nvim backup, undo and view directory ------ {{{1
-" set nobackup
-if has('win32')
-	silent !mkdir $HOME/AppData/Local/nvim-data/backup
-	silent !mkdir $HOME/AppData/Local/nvim-data/undo
-	silent !mkdir $HOME/AppData/Local/nvim-data/view
-else
-	silent !mkdir -p $HOME/tmp/backup
-	silent !mkdir -p $HOME/tmp/undo
-	silent !mkdir -p $HOME/tmp/view
-endif
-
-if has('win32')
-	set backupdir=$HOME/AppData/Local/nvim-data/backup
-else
-	set backupdir=$HOME/tmp/backup
-endif
-
-if has('mksession')
-	if has('win32')
-		set viewdir=$HOME/AppData/Local/nvim-data/view
-	else
-		set viewdir=$HOME/tmp/view
-	endif
-	set viewoptions=cursor,folds,slash,unix
-endif
-
-if has('persistent_undo')
-	set undofile
-	if has('unix')
-		set undodir=$HOME/tmp/undo
-	else
-		" set undodir=$HOME/AppData/Local/nvim/undo,.
-		set undodir=$HOME/AppData/Local/nvim-data/undo
-	endif
-endif
-" }}}
-
-
-"========================  Custom Mappings ==========================="
+"====================== Custom Mappings ===========================
 let mapleader=","
 
 nnoremap S :w<CR>
@@ -85,6 +31,8 @@ nnoremap Q :q<CR>
 noremap <C-Q> :qa<CR>
 nnoremap Y y$
 vnoremap Y "+y
+
+inoremap jk <ESC>
 
 nmap s <nop>
 nmap t <nop>
@@ -96,13 +44,12 @@ noremap <space>; ;
 " move faster
 noremap J 5j
 noremap K 5k
-noremap H 7h
-noremap L 7l
+noremap H ^
+noremap L $
 " remap H and L function
 noremap th H
 noremap tl L
-" noremap W 5w
-" noremap B 5b
+
 nnoremap <space>j J
 nnoremap <space>k K
 " visual line continue move
@@ -110,7 +57,7 @@ xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
 
 " 使<Bs>和<CR>具有开始新的undo序列
-inoremap <C-H> <C-G>u<C-H>
+" inoremap <C-H> <C-G>u<C-H>
 " 好像会让回车不能使用好
 " inoremap <CR> <C-]><C-G>u<CR>
 
@@ -129,17 +76,12 @@ nnoremap val ggVG
 " system copyboard to visual select some characters.
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
-inoremap jk <ESC>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap <C-s> :<C-u>w !sudo tee > /dev/null %
 " Save a file you edited in vim without the needed permission
 " :w !sudo tee %
 
-" H key: go to the start of the line
-noremap <silent> ss ^
-" L key: go to the end of the line
-noremap <silent> se $
 " swatch cursor to top or end of current line
 " noremap <expr>se col(".")==1?"$":"0"
 " vnoremap <expr>se col(".")==1?"$h":"0"
@@ -392,7 +334,7 @@ if has('linebreak')
 	let &showbreak='⤷' "⤷(U+2937)
 	if exists('&breakindentopt')
 		"emphasize broken line by indenting them
-		set breakindentopt=shift:2,list:-1,min:20
+		set breakindentopt=shift:2
 	endif
 endif
 
@@ -464,6 +406,56 @@ endfunction
 
 " open file where you leave the file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" config nvim backup, undo and view directory ------ {{{1
+" set nobackup
+if has('win32')
+	silent !mkdir $HOME/AppData/Local/nvim-data/backup
+	silent !mkdir $HOME/AppData/Local/nvim-data/undo
+	silent !mkdir $HOME/AppData/Local/nvim-data/view
+else
+	silent !mkdir -p $HOME/tmp/backup
+	silent !mkdir -p $HOME/tmp/undo
+	silent !mkdir -p $HOME/tmp/view
+endif
+
+if has('win32')
+	set backupdir=$HOME/AppData/Local/nvim-data/backup
+else
+	set backupdir=$HOME/tmp/backup
+endif
+
+if has('mksession')
+	if has('win32')
+		set viewdir=$HOME/AppData/Local/nvim-data/view
+	else
+		set viewdir=$HOME/tmp/view
+	endif
+	set viewoptions=cursor,folds,slash,unix
+endif
+
+if has('persistent_undo')
+	set undofile
+	if has('unix')
+		set undodir=$HOME/tmp/undo
+	else
+		" set undodir=$HOME/AppData/Local/nvim/undo,.
+		set undodir=$HOME/AppData/Local/nvim-data/undo
+	endif
+endif
+" }}}
+
+" config python and perl etc. --------------{{{1
+" let g:python_host_prog  = 'C:\Python27\python.exe'
+let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
+if has('unix')
+	let g:python3_host_prog = '/usr/bin/python3'
+	let g:perl_host_prog = '/usr/bin/perl'
+else
+	let g:python3_host_prog = 'C:\Python38\python.exe'
+endif
+" }}}
 
 " To configure a custom clipboard tool, set g:clipboard to a dictionary.
 " For example this configuration integrates the tmux clipboard: >

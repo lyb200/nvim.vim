@@ -180,12 +180,12 @@ noremap <A-s> ea<C-x>s
 inoremap <A-s> <ESC>ea<C-x>s
 
 " set filetype to js, py ,java, tj etc
-nnoremap sftjs  :set filetype=javascript<CR>
-nnoremap sftjv  :set filetype=java<CR>
-nnoremap sftpy  :set filetype=python<CR>
-nnoremap sftts  :set filetype=typescript<CR>
-nnoremap sfth   :set filetype=html<CR>
-nnoremap sftvim :set filetype=vim<CR>
+nnoremap sfjs  :set filetype=javascript<CR>
+nnoremap sfjv  :set filetype=java<CR>
+nnoremap sfpy  :set filetype=python<CR>
+nnoremap sfts  :set filetype=typescript<CR>
+nnoremap sfht  :set filetype=html<CR>
+nnoremap sfvim :set filetype=vim<CR>
 
 " 启用光标
 set mouse=a
@@ -228,9 +228,9 @@ noremap srv <C-W>b<C-w>H
 " Press to close the window below the current window
 noremap <LEADER>q <C-w>j:q<CR>
 
-nmap <UP> :resize +5<CR>
-nmap <DOWN> :resize -5<CR>
-nmap <LEFT> :vertical resize +5<CR>
+nmap <UP>    :resize +5<CR>
+nmap <DOWN>  :resize -5<CR>
+nmap <LEFT>  :vertical resize +5<CR>
 nmap <RIGHT> :vertical resize -5<CR>
 
 set nocompatible

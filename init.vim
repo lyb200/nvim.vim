@@ -42,8 +42,8 @@ noremap ; :
 noremap <space>; ;
 
 " move faster
-noremap J 5j
-noremap K 5k
+nnoremap J 5j
+nnoremap K 5k
 noremap H ^
 noremap L $
 " remap H and L function
@@ -53,8 +53,8 @@ noremap tl L
 nnoremap <space>j J
 nnoremap <space>k K
 " visual line continue move
-xnoremap K :move '<-2<CR>gv-gv
-xnoremap J :move '>+1<CR>gv-gv
+" xnoremap K :move '<-2<CR>gv-gv
+" xnoremap J :move '>+1<CR>gv-gv
 
 " 使<Bs>和<CR>具有开始新的undo序列
 " inoremap <C-H> <C-G>u<C-H>

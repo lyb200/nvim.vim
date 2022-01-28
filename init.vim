@@ -128,7 +128,7 @@ cnoremap <M-L> <S-Right>
 inoremap <C-K> <UP>
 inoremap <C-J> <DOWN>
 inoremap <C-B> <LEFT>
-inoremap <C-L> <RIGHT>
+inoremap <C-L> <RIGHT>   " 与后面的snippet-expand 冲突
 
 " find and replace
 nnoremap / /\v
@@ -679,7 +679,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " for insert mode completion of words in adjacent tmux panes
 "Just enter insert mode, start typing any word you see and
 "press <C-X><C-U> to the trigger user defined insert mode completion.
-Plug 'wellle/tmux-complete.vim'
+" Plug 'wellle/tmux-complete.vim'   " 使用是在js文件有错误提示
 " Plug 'christoomey/vim-tmux-navigator'
 
 " Fugitive is the premier Vim plugin for Git.
@@ -779,7 +779,7 @@ endfunction
 
 " Use alt-c or ctrl-o to trigger Completion.
 if has('unix')
-	inoremap <silent><expr> <C-space> coc#refresh()
+	inoremap <silent><expr> <C-O> coc#refresh()
 else
 	inoremap <silent><expr> <C-O> coc#refresh()
 endif
@@ -794,7 +794,7 @@ inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
 " 使用emmet时，需要 ctrl + enter 来触发emmet expand
 " may use other keys.
 " Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+" imap <C-l> <Plug>(coc-snippets-expand)
 " Use <C-j> for select text for visual placeholder of snippet.
 vmap <C-j> <Plug>(coc-snippets-select)
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim

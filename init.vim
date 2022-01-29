@@ -128,7 +128,8 @@ cnoremap <M-L> <S-Right>
 inoremap <C-K> <UP>
 inoremap <C-J> <DOWN>
 inoremap <C-B> <LEFT>
-inoremap <C-L> <RIGHT>   " 与后面的snippet-expand 冲突
+" 与后面的snippet-expand 冲突
+inoremap <C-L> <RIGHT>
 
 " find and replace
 nnoremap / /\v
@@ -636,6 +637,12 @@ Plug 'tpope/vim-abolish'
 " Enhanced in-file search for Vim
 " Plug 'wincent/loupe'
 
+" move!  select line or selection to move.
+Plug 'valsorym/.del.vim-json'
+
+" easymotion
+Plug 'easymotion/vim-easymotion'
+
 " 输入法自动切换, for linux
 if has('unix')
 	Plug 'lyokha/vim-xkbswitch'
@@ -701,9 +708,6 @@ Plug 'honza/vim-snippets'
 " Undo Tree
 Plug 'mbbill/undotree'
 
-" easymotion
-Plug 'easymotion/vim-easymotion'
-
 " Pairs of handy bracket mappings
 " A mnemonic for the "a" commands is "args" and for the "q" commands is "quickfix".
 " has more than 20 [\] commands. eg.
@@ -720,8 +724,8 @@ Plug 'tpope/vim-unimpaired'
 " A high-performance color highlighter for Neovim which has no external dependencies!
 Plug 'norcalli/nvim-colorizer.lua'
 
-" move!  select line or selection to move.
-Plug 'valsorym/.del.vim-json'
+" 在默认浏览器中打开url
+Plug 'dhruvasagar/vim-open-url'
 
 call plug#end()
 " }}}
@@ -779,9 +783,9 @@ endfunction
 
 " Use alt-c or ctrl-o to trigger Completion.
 if has('unix')
-	inoremap <silent><expr> <C-O> coc#refresh()
+	inoremap <silent><expr> <C-e> coc#refresh()
 else
-	inoremap <silent><expr> <C-O> coc#refresh()
+	inoremap <silent><expr> <C-e> coc#refresh()
 endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
@@ -1627,9 +1631,21 @@ nmap <silent> \tx <Plug>TranslateX
 " 一旦翻译窗口打开，<C-w>p to jump into it and again to jump back
 " 有一个函数可以滚动窗口 only works in neovim.
 nnoremap <silent><expr> <M-y> translator#window#float#has_scroll() ?
-                            \ translator#window#float#scroll(1) : "\<M-f>"
+			\ translator#window#float#scroll(1) : "\<M-f>"
 nnoremap <silent><expr> <M-u> translator#window#float#has_scroll() ?
-                            \ translator#window#float#scroll(0) : "\<M-f>"
+			\ translator#window#float#scroll(0) : "\<M-f>"
+
+" ===
+" === vim-open-url
+" ===
+" 里面的代码有些自己修改过，把谷歌改成了百度，及必应
+" gB: Open url under cursor in the default web browser.
+" g<CR>: Search word under cursor using default search engine
+" gG: baidu search word under cursor in the default web browser
+" gW: Wikipedia search word under cursor in the default web browser
+
+
+
 
 " :options can list all configures
 " :h option-list can get help.

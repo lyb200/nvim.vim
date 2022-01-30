@@ -503,7 +503,7 @@ if has('unix')
 	endfunction
 
 	" maybe don't open in windows OS.
-	map <leader>u :call OpenUrlUnderCursor()<cr>
+	map <leader>ou :call OpenUrlUnderCursor()<cr>
 endif
 
 " Plugins -- plug-vim --------------------------- {{{1
@@ -725,7 +725,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'norcalli/nvim-colorizer.lua'
 
 " 在默认浏览器中打开url
-Plug 'dhruvasagar/vim-open-url'
+" Plug 'dhruvasagar/vim-open-url'
+Plug 'lyb200/vim-open-url'
 
 call plug#end()
 " }}}
@@ -1638,11 +1639,13 @@ nnoremap <silent><expr> <M-u> translator#window#float#has_scroll() ?
 " ===
 " === vim-open-url
 " ===
-" 里面的代码有些自己修改过，把谷歌改成了百度，及必应
 " gB: Open url under cursor in the default web browser.
-" g<CR>: Search word under cursor using default search engine
-" gG: baidu search word under cursor in the default web browser
-" gW: Wikipedia search word under cursor in the default web browser
+" s<CR>: Search word under cursor using default search engine(baidu)
+" sb: baidu search word under cursor in the default web browser
+" sm: bing search word under cursor in the default web browser
+" <leadr>gt: 把选择的或光标下的单词送到百度翻译页面
+
+
 
 
 

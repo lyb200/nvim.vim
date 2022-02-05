@@ -1,5 +1,4 @@
 {
-	/* "coc.preferences.hoverTarget": "preview", */
 	"coc.preferences.enableFloatHighlight": true,
 	"coc.preferences.snippetStatusText": "Ⓢ ",
 	"coc.preferences.extensionUpdateCheck": "daily",
@@ -52,216 +51,233 @@
 	"diagnostic.hintSign": "\uf864",
 	"diagnostic.displayByAle": false,
 	"diagnostic.refreshOnInsertMode": false,
-	/* "diagnostic.refreshAfterSave": false, */
 	"diagnostic.checkCurrentLine": true,
 	"diagnostic.virtualTextPrefix": " ❯❯❯ ",
 	"diagnostic.virtualText": true,
 	"codeLens.enable": true,
 	"list.previewHighlightGroup": "Statement",
-	/* "list.nextKeymap": "<C-j>", */
-	/* "list.previousKeymap": "<C-k>", */
 	"list.nextKeymap": "<C-n>",
 	"list.previousKeymap": "<C-p>",
 	"snippets.ultisnips.directories": [
 		"$HOME/AppData/Local/nvim/plugged/ultiSnips/",
-		"$HOME/AppData/Local/nvim/plugged/vim-snippets/UltiSnips/"
-		/* "UltiSnips", */
-	/* 	"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/" */
+		"$HOME/AppData/Local/nvim/plugged/vim-snippets/UltiSnips/",
+		"$HOME/.config/nvim/plugged/vim-snippets/UltiSnips/"
 	],
 	"coc.preferences.formatOnSaveFiletypes": [
-			"javascript",
-			"typescript",
-			"html",
-			"css",
-			"json",
-			"python",
-			"vue",
-			"svelte",
-			"java"],
-	/* "yaml.format.enable": true, */
-	"signature.target": "float",
-	"yank.enableCompletion": false,
-	"typescript.suggestionActions.enabled": true,
-	"typescript.format.enabled": true,
-	"explorer.width": 38,
-	"explorer.quitOnOpen": true,
-	"explorer.sources": [
-		{
-			"name": "buffer",
-			"expand": false
-		},
-		{
-			"name": "file",
-			"expand": true
-		}
-	],
-	"explorer.file.column.indent.indentLine": true,
-	"explorer.file.showHiddenFiles": true,
-	"explorer.icon.enableNerdfont": true,
-	"explorer.git.showIgnored": true,
-	"explorer.keyMappingMode": "none",
-	"explorer.buffer.showHiddenBuffers": false,
-	"explorer.keyMappings.global": {
-		"i": false, // cancel default mapkey
-
-		"*": "toggleSelection",
-		"<tab>": "actionMenu",
-
-		"gk": "expandablePrev",
-		"gj": "expandableNext",
-		"h": "collapse",
-		"l": ["expandable?", "expand", "open"],
-		"J": ["toggleSelection", "normal:j"],
-		"K": ["toggleSelection", "normal:k"],
-		"gl": "expand:recursive",
-		"gh": "collapse:recursive",
-		"<2-LeftMouse>": [
-			"expandable?",
-			["expanded?", "collapse", "expand"],
-			"open"
-		],
-		"o": ["expanded?", "collapse", "expand"],
-		"<cr>": ["expandable?", "cd", "open"],
-		"e": "open",
-		"s": "open:split",
-		"E": "open:vsplit",
-		"t": "open:tab",
-		"<bs>": "gotoParent",
-		"gs": "reveal:select",
-		"il": "preview:labeling",
-		"ic": "preview:content",
-		"Il": "previewOnHover:toggle:labeling",
-		"Ic": "previewOnHover:toggle:content",
-		"II": "previewOnHover:disable",
-
-		"y": "copyFilepath",
-		"Y": "copyFilename",
-		"c": "copyFile",
-		"x": "cutFile",
-		"p": "pasteFile",
-		"d": "delete",
-		"D": "deleteForever",
-
-		"a": "addFile",
-		"A": "addDirectory",
-		"r": "rename",
-
-		".": "toggleHidden",
-		"R": "refresh",
-
-		"?": "help",
-		"q": "quit",
-		"<esc>": "esc",
-		"X": "systemExecute",
-		"gd": "listDrive",
-
-		"f": "search",
-		"F": "searchRecursive",
-
-		"gf": "gotoSource:file",
-		"gb": "gotoSource:buffer",
-
-		"[[": "sourcePrev",
-		"]]": "sourceNext",
-
-		"[i": "indentPrev",
-		"]i": "indentNext",
-
-		"[m": "indexPrev:modified",
-		"]m": "indexNext:modified",
-
-		"[d": "indexPrev:diagnosticError:diagnosticWarning",
-		"]d": "indexNext:diagnosticError:diagnosticWarning",
-		"[D": "indexPrev:diagnosticError",
-		"]D": "indexNext:diagnosticError",
-
-		"[c": "indexPrev:git",
-		"]c": "indexNext:git",
-		"<<": "gitStage",
-		">>": "gitUnstage"
-	},
-	"flutter.outlineWidth": 40,
-	"flutter.outlineIconPadding": 0,
-	"flutter.UIPath": true,
-	"flutter.openDevLogSplitCommand": "botright 12split",
-	"flutter.lsp.initialization.onlyAnalyzeProjectsWithOpenFiles": false,
-	"tslint.autoFixOnSave": false,
-	"python.autoComplete.addBrackets": true,
-	"python.jediEnabled": false,
-	"python.formatting.provider": "yapf",
-	"python.formatting.yapfArgs": [
-		"--style",
-		"{SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1}"
-	],
-	"html.format.enable": true,
-	"javascript.referencesCodeLens.enable": true,
-	"javascript.showUnused": true,
-	"javascript.suggest.names": true,
-	"javascript.suggestionActions.enabled": true,
-	"json.format.enable": true,
-	"prettier.printWidth": 100,
-	"prettier.eslintIntegration": true,
-	"prettier.disableLanguages": [],
-	"prettier.formatterPriority": 1,
-	"prettier.useTabs": true,
-	"prettier.trailingComma": "all",
-	"prettier.singleQuote": false,
-	/* "todolist.autoUpload": true, */
-	/* "todolist.promptForReminder": false, */
-	"coc-actions.hideCursor": false,
-	"coc-actions.showActionKind": true,
-	// "translator.enableHover": true,
-	"translator.window.enableBorder":true,
-	"diagnostic-languageserver.filetypes": {
-		"vim": "vint",
-		"email": "languagetool",
-		"markdown": ["write-good", "markdownlint"],
-		"sh": "shellcheck",
-		"elixir": ["mix_credo", "mix_credo_compile"],
-		"eelixir": ["mix_credo", "mix_credo_compile"],
-		"php": ["phpstan", "psalm"]
-	},
-	"diagnostic-languageserver.formatFiletypes": {
-		"elixir": "mix_format",
-		"eelixir": "mix_format"
-	},
-	"languageserver": {
-		"lua": {
-			"command": "lua-lsp",
-			"filetypes": ["lua"]
-		},
-		"swift": {
-			"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-			"args": [],
-			"filetypes": ["swift"],
-			"initializationOptions": {},
-			"settings": {}
-		},
-		"golang": {
-			"command": "gopls",
-			"rootPatterns": ["go.mod"],
-			"filetypes": ["go"],
-			"initializationOptions": {
-				"gocodeCompletionEnabled": true,
-				"diagnosticsEnabled": true,
-				"lintTool": "golint"
+		"javascript",
+		"typescript",
+		"html",
+		"css",
+		"json",
+		"python",
+		"vue",
+		"svelte",
+		"java"],
+		"signature.target": "float",
+		"yank.enableCompletion": false,
+		"typescript.suggestionActions.enabled": true,
+		"typescript.format.enabled": true,
+		"explorer.width": 38,
+		"explorer.quitOnOpen": true,
+		"explorer.sources": [
+			{
+				"name": "buffer",
+				"expand": false
+			},
+			{
+				"name": "file",
+				"expand": true
 			}
+		],
+		"explorer.file.column.indent.indentLine": true,
+		"explorer.file.showHiddenFiles": true,
+		"explorer.icon.enableNerdfont": true,
+		"explorer.git.showIgnored": true,
+		"explorer.keyMappingMode": "none",
+		"explorer.buffer.showHiddenBuffers": false,
+		"explorer.keyMappings.global": {
+			"i": false, // cancel default mapkey
+
+			"*": "toggleSelection",
+			"<tab>": "actionMenu",
+
+			"gk": "expandablePrev",
+			"gj": "expandableNext",
+			"h": "collapse",
+			"l": ["expandable?", "expand", "open"],
+			"J": ["toggleSelection", "normal:j"],
+			"K": ["toggleSelection", "normal:k"],
+			"gl": "expand:recursive",
+			"gh": "collapse:recursive",
+			"<2-LeftMouse>": [
+				"expandable?",
+				["expanded?", "collapse", "expand"],
+				"open"
+			],
+			"o": ["expanded?", "collapse", "expand"],
+			"<cr>": ["expandable?", "cd", "open"],
+			"e": "open",
+			"s": "open:split",
+			"E": "open:vsplit",
+			"t": "open:tab",
+			"<bs>": "gotoParent",
+			"gs": "reveal:select",
+			"il": "preview:labeling",
+			"ic": "preview:content",
+			"Il": "previewOnHover:toggle:labeling",
+			"Ic": "previewOnHover:toggle:content",
+			"II": "previewOnHover:disable",
+
+			"y": "copyFilepath",
+			"Y": "copyFilename",
+			"c": "copyFile",
+			"x": "cutFile",
+			"p": "pasteFile",
+			"d": "delete",
+			"D": "deleteForever",
+
+			"a": "addFile",
+			"A": "addDirectory",
+			"r": "rename",
+
+			".": "toggleHidden",
+			"R": "refresh",
+
+			"?": "help",
+			"q": "quit",
+			"<esc>": "esc",
+			"X": "systemExecute",
+			"gd": "listDrive",
+
+			"f": "search",
+			"F": "searchRecursive",
+
+			"gf": "gotoSource:file",
+			"gb": "gotoSource:buffer",
+
+			"[[": "sourcePrev",
+				"]]": "sourceNext",
+
+				"[i": "indentPrev",
+					"]i": "indentNext",
+
+					"[m": "indexPrev:modified",
+						"]m": "indexNext:modified",
+
+						"[d": "indexPrev:diagnosticError:diagnosticWarning",
+							"]d": "indexNext:diagnosticError:diagnosticWarning",
+							"[D": "indexPrev:diagnosticError",
+								"]D": "indexNext:diagnosticError",
+
+								"[c": "indexPrev:git",
+									"]c": "indexNext:git",
+									"<<": "gitStage",
+									">>": "gitUnstage"
 		},
-		"bash": {
-			"command": "bash-language-server",
-			"args": ["start"],
-			"filetypes": ["sh"],
-			"ignoredRootPaths": []
+		"flutter.outlineWidth": 40,
+		"flutter.outlineIconPadding": 0,
+		"flutter.UIPath": true,
+		"flutter.openDevLogSplitCommand": "botright 12split",
+		"flutter.lsp.initialization.onlyAnalyzeProjectsWithOpenFiles": false,
+		"tslint.autoFixOnSave": false,
+		"python.autoComplete.addBrackets": true,
+		"python.jediEnabled": false,
+		"python.formatting.provider": "yapf",
+		"python.formatting.yapfArgs": [
+			"--style",
+			"{SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1}"
+		],
+		"html.format.enable": true,
+		"javascript.referencesCodeLens.enable": true,
+		"javascript.showUnused": true,
+		"javascript.suggest.names": true,
+		"javascript.suggestionActions.enabled": true,
+		"json.format.enable": true,
+		"prettier.printWidth": 100,
+		"prettier.eslintIntegration": true,
+		"prettier.disableLanguages": [],
+		"prettier.formatterPriority": 1,
+		"prettier.useTabs": true,
+		"prettier.trailingComma": "all",
+		"prettier.singleQuote": false,
+		"coc-actions.hideCursor": false,
+		"coc-actions.showActionKind": true,
+		"translator.window.enableBorder":true,
+		"diagnostic-languageserver.filetypes": {
+			"vim": "vint",
+			"email": "languagetool",
+			"markdown": ["write-good", "markdownlint"],
+			"sh": "shellcheck",
+			"elixir": ["mix_credo", "mix_credo_compile"],
+			"eelixir": ["mix_credo", "mix_credo_compile"],
+			"php": ["phpstan", "psalm"]
 		},
-		"ccls": {
-			"command": "ccls",
-			"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-			"rootPatterns": [".ccls", ".ccls-root", "compile_commands.json", ".git/", ".hg/"],
-			"initializationOptions": {
-				"cache": {
-					"directory": "/tmp/ccls"
+		"diagnostic-languageserver.formatFiletypes": {
+			"elixir": "mix_format",
+			"eelixir": "mix_format"
+		},
+		"languageserver": {
+			"vimls": {
+				"module": "C:/Users/lyb/AppData/Roaming/npm/node_modules/vim-language-server/bin/index.js",
+				"args": ["--node-ipc"],
+				"initializationOptions": {
+					"isNeovim": true, // is neovim, default false
+					"iskeyword": "@,48-57,_,192-255,-#", // vim iskeyword option
+					"vimruntime": "", // $VIMRUNTIME option
+					"runtimepath": "",   // vim runtime path separate by `,`
+					"diagnostic": {
+						"enable": true
+					},
+					"trace.server":"verbose",
+					"indexes": {
+						"runtimepath": true,      // if index runtimepath's vim files this will effect the suggest
+						"gap": 100,               // index time gap between next file
+						"count": 3,               // count of files index at the same time
+						"projectRootPatterns" : ["strange-root-pattern", ".git", "autoload", "plugin"] // Names of files used as the mark of project root. If empty, the default value [".git", "autoload", "plugin"] will be used
+					},
+					"suggest": {
+						"fromVimruntime": true,   // completionItems from vimruntime's vim files
+						"fromRuntimepath": false  // completionItems from runtimepath's vim files, if this is true that fromVimruntime is true
+					}
+				},
+				"filetypes": [ "vim" ]
+			},
+			"lua": {
+				"command": "lua-lsp",
+				"filetypes": ["lua"]
+			},
+			"swift": {
+				"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+				"args": [],
+				"filetypes": ["swift"],
+				"initializationOptions": {},
+				"settings": {}
+			},
+			"golang": {
+				"command": "gopls",
+				"rootPatterns": ["go.mod"],
+				"filetypes": ["go"],
+				"initializationOptions": {
+					"gocodeCompletionEnabled": true,
+					"diagnosticsEnabled": true,
+					"lintTool": "golint"
+				}
+			},
+			"bash": {
+				"command": "bash-language-server",
+				"args": ["start"],
+				"filetypes": ["sh"],
+				"ignoredRootPaths": []
+			},
+			"ccls": {
+				"command": "ccls",
+				"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+				"rootPatterns": [".ccls", ".ccls-root", "compile_commands.json", ".git/", ".hg/"],
+				"initializationOptions": {
+					"cache": {
+						"directory": "/tmp/ccls"
+					}
 				}
 			}
 		}
-	}
 }

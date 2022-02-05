@@ -33,6 +33,7 @@ nnoremap Y y$
 vnoremap Y "+y
 
 inoremap jk <ESC>
+inoremap kj <ESC>
 
 nmap s <nop>
 nmap t <nop>
@@ -66,8 +67,8 @@ nnoremap n nzz
 nnoremap N Nzz
 
 " Indentation
-" nnoremap < <<
-" nnoremap > >>
+vnoremap < <gv
+vnoremap > >gv
 
 " delete all, yank all, change all
 onoremap al :<c-u>normal! ggVG<CR>
@@ -180,13 +181,8 @@ noremap sc :set spell!<CR>
 noremap <A-s> ea<C-x>s
 inoremap <A-s> <ESC>ea<C-x>s
 
-" set filetype to js, py ,java, tj etc
-nnoremap sfjs  :set filetype=javascript<CR>
-nnoremap sfjv  :set filetype=java<CR>
-nnoremap sfpy  :set filetype=python<CR>
-nnoremap sfts  :set filetype=typescript<CR>
-nnoremap sfht  :set filetype=html<CR>
-nnoremap sfvim :set filetype=vim<CR>
+" 手动设置文件类型
+nnoremap sf :set filetype=
 
 " 启用光标
 set mouse=a
@@ -220,8 +216,8 @@ nnoremap <C-K> :wincmd k<CR>
 nnoremap <C-L> :wincmd l<CR>
 
 " ====================== exchange tab ======================
-nmap sV <C-W>t<C-w>H
-nmap sH <C-W>t<C-w>K
+nmap sV <C-W>t<C-w>H<C-W>l
+nmap sH <C-W>t<C-w>K<C-W>j
 " Rotate screens
 noremap srh <C-W>b<C-w>K
 noremap srv <C-W>b<C-w>H
@@ -258,7 +254,7 @@ else
 	set clipboard=unnamed
 endif
 
-" File tpye on
+" File type on
 filetype plugin indent on
 
 " add matchpairs
@@ -519,7 +515,7 @@ endif
 " Treesitter need more soft
 "Plug 'nvim-treesitter/nvim-treesitter'
 
-" the fancy Start Screen for vim
+" 起始页 the fancy Start Screen for vim
 Plug 'mhinz/vim-startify'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
@@ -527,23 +523,24 @@ Plug 'junegunn/vim-easy-align'
 
 " Plug 'tpope/vim-vinegar'
 
-" Rooter changes the working directory to the project root
-" when you open a file or directory.
-Plug 'airblade/vim-rooter'
-
 " file navigation
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
 " An efficient fuzzy finder that helps to locate files, buffers, mrus, gtags, etc.
 " on the fly for both vim and neovim.
-Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Rooter changes the working directory to the project root
+" when you open a file or directory.
+Plug 'airblade/vim-rooter'
 " <c-p> :Leaderf file
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-" Make Ranger running in a floating window to communicate with Neovim via RPC
-Plug 'kevinhwang91/rnvimr'
 
 if has('unix')
-	" Ranger integration in vim and neovim
+	" Make Ranger running in a floating window to communicate with Neovim via RPC
+	Plug 'kevinhwang91/rnvimr'
+	" 在vim和neovim中整合Ranger，这两个是否有冲突？
 	Plug 'francoiscabrol/ranger.vim'
 	" If you use neovim, you have to add the dependency to the plugin bclose.vim:
 	Plug 'rbgrouleff/bclose.vim'
@@ -607,17 +604,19 @@ Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-p
 Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 
 " Markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'suan/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+"为 Markdown 生成 TOC 的 Vim 插件
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
+" 对部分文件进行自动编号或重复插入 - or *
 Plug 'dkarter/bullets.vim'
 
 " Editor Enhancement
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 " Vim script for text filtering and alignment
-Plug 'godlygeek/tabular' " gt, or :Tabularize <regex> to align
-" <a-l> and <c-g>c (insert) to toggle capslock
+Plug 'godlygeek/tabular' " tab or :Tabularize <regex> to align
+" <a-l> and <c-g>c (insert) to toggle capslock，切换大小写
 Plug 'tpope/vim-capslock'
 Plug 'gcmt/wildfire.vim'	" can quickly select the closest text object
 Plug 'tpope/vim-repeat'		" using the . command after a plugin map
@@ -634,8 +633,10 @@ Plug 'machakann/vim-highlightedyank'
 " MixedCase (crm), camelCase (crc), snake_case (crs), UPPER_CASE (cru), dash-case (cr-),
 " dot.case (cr.), space case (cr<space>), and Title Case (crt) are all just 3 keystrokes away.
 Plug 'tpope/vim-abolish'
-" Enhanced in-file search for Vim
-" Plug 'wincent/loupe'
+" Peekaboo extends " and @ in normal mode and <CTRL-R> in insert mode
+" so you can see the contents of the registers.
+" 寄存器面板
+Plug 'junegunn/vim-peekaboo'
 
 " move!  select line or selection to move.
 Plug 'valsorym/.del.vim-json'
@@ -655,7 +656,7 @@ endif
 " 翻译，暂时不用，基本上是网速太慢的提示
 Plug 'voldikss/vim-translator'
 
-" Plugin to toggle, display and navigate marks
+" 显示或隐藏mark, Plugin to toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'
 
 " theme
@@ -663,11 +664,12 @@ Plug 'ajmwagar/vim-deus'
 Plug 'morhetz/gruvbox'
 
 " Status line
-Plug 'theniceboy/eleline.vim'
+" Plug 'theniceboy/eleline.vim'
+" Plug 'liuchengxu/eleline.vim'
 Plug 'ojroques/vim-scrollstatus'
-
+Plug 'nvim-lualine/lualine.nvim'
 " Cool Icons
-"Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 
 " General Highlighter
@@ -686,13 +688,19 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " for insert mode completion of words in adjacent tmux panes
 "Just enter insert mode, start typing any word you see and
 "press <C-X><C-U> to the trigger user defined insert mode completion.
-" Plug 'wellle/tmux-complete.vim'   " 使用是在js文件有错误提示
+" Plug 'wellle/tmux-complete.vim'   " 使用时在js文件有错误提示
 " Plug 'christoomey/vim-tmux-navigator'
 
 " Fugitive is the premier Vim plugin for Git.
 " The crown jewel of Fugitive is :Git (or just :G), which calls any arbitrary Git command.
 " :Git add :Git commit :Git diff :Git mergetool
 Plug 'tpope/vim-fugitive'
+" A git commit browser in Vim
+Plug 'junegunn/gv.vim'
+" 使用符合提示git管理的文件是否增加、删除和修改
+Plug 'mhinz/vim-signify'
+" GitHub extension for fugitive.vim
+Plug 'tpope/vim-rhubarb'
 
 " syntax check/linter
 Plug 'vim-syntastic/syntastic'
@@ -727,6 +735,9 @@ Plug 'norcalli/nvim-colorizer.lua'
 " 在默认浏览器中打开url
 " Plug 'dhruvasagar/vim-open-url'
 Plug 'lyb200/vim-open-url'
+
+" 中文vim文档
+" Plug 'yianwillis/vimcdoc'
 
 call plug#end()
 " }}}
@@ -1184,7 +1195,7 @@ let g:vue_pre_processors = 'detect_on_enter'
 " Otherwise, evaluate the entire buffer (regardless of its filetype).
 
 " ===
-" === Snippets  Markdown-Settings
+" === Snippets Markdown-Settings
 " ===
 " source $HOME/AppData/Local/nvim/plugged/vim-snippets/snippets/**.snippets
 " Auto spell
@@ -1199,8 +1210,9 @@ endif
 " ===
 " === vim-instant-markdown
 " ===
-nnoremap <leader>mp :InstantMarkdownPreview<CR>
-nnoremap <leader>ms :InstantMarkdownStop<CR>
+nnoremap <leader>mp  :InstantMarkdownPreview<CR>
+nnoremap <leader>tft :TableFormat<CR>
+nnoremap <leader>ms  :InstantMarkdownStop<CR>
 
 let g:instant_markdown_slow = 0
 let g:instant_markdown_autostart = 0
@@ -1214,39 +1226,67 @@ let g:instant_markdown_autoscroll = 1
 " === vim-table-mode
 " ===
 noremap <LEADER>tm :TableModeToggle<CR>
+let b:table_mode_corner='+'
+" 可以把其他格式转换为table格式，:Tableize  , 默认是 ,
+" 也可以使用不同的分隔符，:Tableize/{pattern}，例如，:Tableize/;
 "let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+" 在插入模式下，使用 || 或 __, 快速启用 / 禁用 表格模式table mode：
+function! s:isAtStartOfLine(mapping)
+	let text_before_cursor = getline('.')[0 : col('.')-1]
+	let mapping_pattern = '\V' . escape(a:mapping, '\')
+	let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+	return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+			\ <SID>isAtStartOfLine('\|\|') ?
+			\ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+" inoreabbrev <expr> __
+"           \ <SID>isAtStartOfLine('__') ?
+"           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 " ===
 " === vim-markdown-toc
 " ===
+" :GenTocGFM  --> 用于生成GFM连接格式的目录.
+" :GenTocRedcarplet --> 用于生成Redcarplet连接格式的目录.
 "let g:vmt_auto_update_on_save = 0
 "let g:vmt_dont_insert_fence = 1
 let g:vmt_cycle_list_item_markers = 1
 let g:vmt_fence_text = 'TOC'
 let g:vmt_fence_closing_text = '/TOC'
 
-function! s:isAtStartOfLine(mapping)
-	let text_before_cursor = getline('.')[0 : col('.')-1]
-	let mapping_pattern = '\V' . escape(a:mapping, '\')
-	let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-	return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' .
-				\ mapping_pattern . '\v$')
-endfunction
-inoreabbrev <expr> <bar><bar>
-			\ <SID>isAtStartOfLine('\|\|') ?
-			\ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-
 " ===
 " === Bullets.vim
 " ===
-" let g:bullets_set_mappings = 0
 let g:bullets_enabled_file_types = [
 			\ 'markdown',
 			\ 'text',
 			\ 'gitcommit',
 			\ 'scratch'
 			\]
+" 启用或禁用默认的key mapping
+" let g:bullets_set_mappings = 0 " default = 1
+" Add a leader key before default mappings:
+" let g:bullets_mapping_leader = '<M-b>'
+" Set <M-b> to the leader before all default mappings:
+" Example: renumbering becomes `<M-b>gN` instead of just `gN`
+
+" 映射
+" Insert new bullet in INSERT mode: <cr> (Return key)
+" Same as in case you want to unmap in INSERT mode (compatibility depends on your terminal emulator): <C-cr>
+" Insert new bullet in NORMAL mode: o
+" Renumber current visual selection: gN
+" Renumber entire bullet list containing the cursor in NORMAL mode: gN
+" Toggle a checkbox in NORMAL mode: <leader>x
+" Demote a bullet (indent it, decrease bullet level, and make it a child of the previous bullet):
+"     NORMAL mode: >>
+"     INSERT mode: <C-t>
+"     VISUAL mode: >
+" Promote a bullet (unindent it and increase the bullet level):
+"     NORMAL mode: <<
+"     INSERT mode: <C-d>
+"     VISUAL mode: >
 
 " ===
 " === valsorym/.del.vim-json
@@ -1436,15 +1476,14 @@ if has('unix')
 else
 	set runtimepath+=$HOME/AppData/Local/nvim
 endif
-nnoremap <c-p> :Leaderf file<CR>
-" noremap <silent> <C-p> :Files<CR>
-noremap <silent> <A-f> :Rg<CR>
-noremap <silent> <A-h> :History<CR>
+noremap <silent> <leader>sf :Files<CR>
+noremap <silent> <leader>sg :Rg<CR>
+noremap <silent> <leader>sh :History<CR>
+noremap <silent> <leader>sH :History:<CR>
 "noremap <C-t> :BTags<CR>
-noremap <silent> <A-l> :Lines<CR>
-noremap <silent> <A-w> :Buffers<CR>
-noremap \h             :History:<CR>
-noremap <A-d>          :BD<CR>
+noremap <silent> <leader>sl :Lines<CR>
+noremap <silent> <leader>sb :Buffers<CR>
+noremap <silent> <leader>sd :BD<CR>
 
 let g:fzf_preview_window = 'right:60%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -1471,6 +1510,7 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 " ===
 " === Leaderf
 " ===
+nnoremap <c-p> :Leaderf file<CR>
 " let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_PreviewCode = 1
@@ -1560,13 +1600,9 @@ let g:clever_f_smart_case = 1
 " timeout
 let g:clever_f_timeout_ms = 1000
 " Repeat last input
-let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
+" let g:clever_f_repeat_last_char_inputs = ["\<CR>", "\<Tab>"]
 " If you want to show a prompt when you input a character for clever-f
 " let g:clever_f_show_prompt = 1
-" Match all symbols with one char
-let g:clever_f_chars_match_any_signs = ';'
-" Keeping the functionality of ;
-" map ; <Plug>(clever-f-repeat-forward)
 
 " ===
 " === auto-pairs
@@ -1645,7 +1681,99 @@ nnoremap <silent><expr> <M-u> translator#window#float#has_scroll() ?
 " sm: bing search word under cursor in the default web browser
 " <leadr>gt: 把选择的或光标下的单词送到百度翻译页面
 
+" ===
+" === vim-peekaboo
+" ===
+" g:peekaboo_window				vert bo 30new		Command for creating Peekaboo window
+" g:peekaboo_delay				0 (ms)					Delay opening of Peekaboo window
+" g:peekaboo_compact			0 (boolean)			Compact display
+" g:peekaboo_prefix				Empty (string)	Prefix for key mapping (e.g. <leader>)
+" g:peekaboo_ins_prefix		Empty (string)	Prefix for insert mode key mapping (e.g. <c-x>)
 
+" ===
+" === vim-signify
+" ===
+nmap <leader>gj <plug>(signify-next-hunk)
+nmap <leader>gk <plug>(signify-prev-hunk)
+nmap <leader>gJ 9999<leader>gj
+nmap <leader>gK 9999<leader>gk
+
+" When you jump to a hunk, show "[Hunk 2/15]" by putting this in your vimrc:
+autocmd User SignifyHunk call s:show_current_hunk()
+
+function! s:show_current_hunk() abort
+	let h = sy#util#get_hunk_stats()
+	if !empty(h)
+		echo printf('[Hunk %d/%d]', h.current_hunk, h.total_hunks)
+	endif
+endfunction
+
+" ===
+" === gv.vim
+" ===
+" Commands
+"     :GV to open commit browser
+"         You can pass git log options to the command, e.g. :GV -S foobar -- plugins.
+nnoremap <leader>gv :GV<cr>
+"     :GV! will only list commits that affected the current file
+"     :GV? fills the location list with the revisions of the current file
+
+" :GV or :GV? can be used in visual mode to track the changes in the selected lines.
+
+" Mappings
+"     o or <cr> on a commit to display the content of it
+"     o or <cr> on commits to display the diff in the range
+"     O opens a new tab instead
+"     gb for :GBrowse
+"     ]] and [[ to move between commits
+"     . to start command-line with :Git [CURSOR] SHA à la fugitive
+"     q or gq to close
+
+" ===
+" === lualine.nvim
+" ===
+lua << END
+require('lualine').setup {
+	options = {
+		icons_enabled = true,
+		theme = 'auto',
+		component_separators = { left = '|', right = '|'},
+		section_separators = { left = '', right = ''},
+		disabled_filetypes = {},
+		always_divide_middle = true,
+		},
+	sections = {
+		lualine_a = {'mode'},
+		lualine_b = {'branch', 'diff', 'diagnostics'},
+		lualine_c = {'filename'},
+		lualine_x = {'encoding', 'fileformat', 'filetype'},
+		lualine_y = {'progress'},
+		lualine_z = {'location'}
+		},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = {'filename'},
+		lualine_x = {'location'},
+		lualine_y = {},
+		lualine_z = {}
+		},
+	tabline = {},
+	extensions = {}
+	}
+END
+" component_separators = { left = '', right = ''},
+
+" ===
+" === vim-sneak
+" ===
+" map f <Plug>Sneak_s
+" map F <Plug>Sneak_S
+
+" map f <Plug>Sneak_f
+" map F <Plug>Sneak_F
+" map t <Plug>Sneak_t
+" map T <Plug>Sneak_T
 
 
 

@@ -546,6 +546,9 @@ if has('unix')
 	Plug 'rbgrouleff/bclose.vim'
 endif
 
+" 终端管理，使用(neo)vim中的浮动或弹窗的终端 Terminal manager for (neo)vim
+Plug 'voldikss/vim-floaterm'
+
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
 " Extended f, F, t and T key mappings for Vim. maybe don't work.
@@ -701,6 +704,8 @@ Plug 'junegunn/gv.vim'
 Plug 'mhinz/vim-signify'
 " GitHub extension for fugitive.vim
 Plug 'tpope/vim-rhubarb'
+" Plugin for calling lazygit from within neovim.
+Plug 'kdheepak/lazygit.nvim'
 
 " syntax check/linter
 Plug 'vim-syntastic/syntastic'
@@ -727,7 +732,10 @@ Plug 'tpope/vim-unimpaired'
 " Plug 'puremourning/vimspector'
 
 " See what keys do like in emacs, need more config
-"Plug 'liuchengxu/vim-which-key'
+" On-demand lazy load
+" Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+" " This nvim-plugin is just a wrapper for vim-which-key to simplify setup in lua.
+" Plug 'AckslD/nvim-whichkey-setup.lua'
 
 " A high-performance color highlighter for Neovim which has no external dependencies!
 Plug 'norcalli/nvim-colorizer.lua'
@@ -859,8 +867,8 @@ nnoremap <c-c> :CocCommand<CR>
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>fs  <Plug>(coc-format-selected)
+nmap <leader>fs <Plug>(coc-format-selected)
 
 augroup mygroup
 	autocmd!
@@ -1443,9 +1451,10 @@ func! CompileRunGcc()
 	elseif &filetype == 'sh'
 		:!time bash %
 	elseif &filetype == 'python'
-		set splitbelow
-		:sp
-		:term python3 %
+		:FloatermNew python3 %
+		" set splitbelow
+		" :sp
+		" :term python3 %
 	elseif &filetype == 'html'
 		silent! exec "!".g:mkdp_browser." % &"
 	elseif &filetype == 'markdown'
@@ -1457,13 +1466,15 @@ func! CompileRunGcc()
 		exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
 		silent! exec "CocCommand flutter.dev.openDevLog"
 	elseif &filetype == 'javascript'
-		set splitbelow
-		:sp
-		:term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
+		:FloatermNew export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
+		" set splitbelow
+		" :sp
+		" :term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
 	elseif &filetype == 'go'
-		set splitbelow
-		:sp
-		:term go run .
+		:FloatermNew go run .
+		" set splitbelow
+		" :sp
+		" :term go run .
 	endif
 endfunc
 "}}}
@@ -1730,6 +1741,15 @@ nnoremap <leader>gv :GV<cr>
 "     q or gq to close
 
 " ===
+" === lazygit.nvim
+" ===
+nnoremap <leader>lg :LazyGit<CR>
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
+
+" ===
 " === lualine.nvim
 " ===
 lua << END
@@ -1765,15 +1785,29 @@ END
 " component_separators = { left = '', right = ''},
 
 " ===
-" === vim-sneak
+" === vim-floaterm
 " ===
-" map f <Plug>Sneak_s
-" map F <Plug>Sneak_S
+nnoremap <silent> <leader>fc  :FloatermNew<CR>
+tnoremap <silent> <leader>fc  <C-\><C-n>:FloatermNew<CR>
+nnoremap <silent> <leader>fp  :FloatermPrev<CR>
+tnoremap <silent> <leader>fp  <C-\><C-n>:FloatermPrev<CR>
+nnoremap <silent> <leader>fn  :FloatermNext<CR>
+tnoremap <silent> <leader>fn  <C-\><C-n>:FloatermNext<CR>
+nnoremap <silent> <leader>ff  :FloatermFirst<CR>
+tnoremap <silent> <leader>ff  <C-\><C-n>:FloatermFirst<CR>
+nnoremap <silent> <leader>fl  :FloatermLast<CR>
+tnoremap <silent> <leader>fl  <C-\><C-n>:FloatermLast<CR>
+nnoremap <silent> <leader>ft  :FloatermToggle<CR>
+tnoremap <silent> <leader>ft  <C-\><C-n>:FloatermToggle<CR>
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.6
+let g:floaterm_gitcommit = 'floaterm'
+let g:floaterm_autoinsert = 1
+let g:floaterm_wintitle = 0
+let g:floaterm_autoclose = 0
 
-" map f <Plug>Sneak_f
-" map F <Plug>Sneak_F
-" map t <Plug>Sneak_t
-" map T <Plug>Sneak_T
+
+
 
 
 

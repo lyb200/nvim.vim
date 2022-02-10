@@ -97,50 +97,52 @@
 		"explorer.buffer.showHiddenBuffers": false,
 		"explorer.keyMappings.global": {
 			"i": false, // cancel default mapkey
+			"<c-o>": "noop",
 
 			"*": "toggleSelection",
 			"<tab>": "actionMenu",
 
-			"gk": "expandablePrev",
-			"gj": "expandableNext",
-			"h": "collapse",
-			"l": ["expandable?", "expand", "open"],
-			"J": ["toggleSelection", "normal:j"],
-			"K": ["toggleSelection", "normal:k"],
-			"gl": "expand:recursive",
-			"gh": "collapse:recursive",
+			"gk": ["wait", "expandablePrev"],
+			"gj": ["wait", "expandableNext"],
+			"h": ["wait", "collapse"],
+			"l": ["wait", "expandable?", "expand", "open"],
+			"J": ["wait", "toggleSelection", "normal:j"],
+			"K": ["wait", "toggleSelection", "normal:k"],
+			"gl": ["wait", "expand:recursive"],
+			"gh": ["wait", "collapse:recursive"],
 			"<2-LeftMouse>": [
 				"expandable?",
 				["expanded?", "collapse", "expand"],
 				"open"
 			],
-			"o": ["expanded?", "collapse", "expand"],
-			"<cr>": ["expandable?", "cd", "open"],
+			"o": ["wait", "expanded?", "collapse", "expand"],
+			"<cr>": ["wait", "expandable?", "cd", "open"],
 			"e": "open",
 			"s": "open:split",
 			"E": "open:vsplit",
 			"t": "open:tab",
-			"<bs>": "gotoParent",
-			"gs": "reveal:select",
+			"<bs>": ["wait", "gotoParent"],
+			"gs": ["wait", "reveal:select"],
 			"il": "preview:labeling",
 			"ic": "preview:content",
 			"Il": "previewOnHover:toggle:labeling",
 			"Ic": "previewOnHover:toggle:content",
 			"II": "previewOnHover:disable",
 
-			"y": "copyFilepath",
-			"Y": "copyFilename",
-			"c": "copyFile",
-			"x": "cutFile",
+			"yp": "copyFilepath",
+			"yn": "copyFilename",
+			"yy": "copyFile",
+			"dd": "cutFile",
 			"p": "pasteFile",
-			"d": "delete",
-			"D": "deleteForever",
+			"df": "delete",
+			"dF": "deleteForever",
 
 			"a": "addFile",
 			"A": "addDirectory",
 			"r": "rename",
 
-			".": "toggleHidden",
+			"zh": "toggleHidden",
+			"g<dot>": "toggleHidden",
 			"R": "refresh",
 
 			"?": "help",
@@ -155,24 +157,25 @@
 			"gf": "gotoSource:file",
 			"gb": "gotoSource:buffer",
 
-			"[[": "sourcePrev",
-				"]]": "sourceNext",
+			"[[": ["wait", "sourcePrev"],
+				"]]": ["wait", "sourceNext"],
 
-				"[i": "indentPrev",
-					"]i": "indentNext",
+				"[i": ["wait", "indentPrev"],
+					"]i": ["wait", "indentNext"],
 
-					"[m": "indexPrev:modified",
-						"]m": "indexNext:modified",
+					"[m": ["wait", "markPrev:modified"],
+						"]m": ["wait", "markNext:modified"],
 
-						"[d": "indexPrev:diagnosticError:diagnosticWarning",
-							"]d": "indexNext:diagnosticError:diagnosticWarning",
-							"[D": "indexPrev:diagnosticError",
-								"]D": "indexNext:diagnosticError",
+						"[d": ["wait", "markPrev:diagnosticError:diagnosticWarning"],
+							"]d": ["wait", "markNext:diagnosticError:diagnosticWarning"],
+							"[D": ["wait", "markPrev:diagnosticError"],
+								"]D": ["wait", "markNext:diagnosticError"],
 
-								"[c": "indexPrev:git",
-									"]c": "indexNext:git",
+								"[c": ["wait", "markPrev:git"],
+									"]c": ["wait", "markNext:git"],
 									"<<": "gitStage",
 									">>": "gitUnstage"
+
 		},
 		"flutter.outlineWidth": 40,
 		"flutter.outlineIconPadding": 0,
@@ -218,66 +221,66 @@
 		},
 		"languageserver": {
 			// "vimls": {
-			// 	"module": "C:/Users/lyb/AppData/Roaming/npm/node_modules/vim-language-server/bin/index.js",
-			// 	"args": ["--node-ipc"],
-			// 	"initializationOptions": {
-			// 		"isNeovim": true, // is neovim, default false
-			// 		"iskeyword": "@,48-57,_,192-255,-#", // vim iskeyword option
-			// 		"vimruntime": "", // $VIMRUNTIME option
-			// 		"runtimepath": "",   // vim runtime path separate by `,`
-			// 		"diagnostic": {
-			// 			"enable": true
-			// 		},
-			// 		"trace.server":"verbose",
-			// 		"indexes": {
-			// 			"runtimepath": true,      // if index runtimepath's vim files this will effect the suggest
-			// 			"gap": 100,               // index time gap between next file
-			// 			"count": 3,               // count of files index at the same time
-			// 			"projectRootPatterns" : ["strange-root-pattern", ".git", "autoload", "plugin"] // Names of files used as the mark of project root. If empty, the default value [".git", "autoload", "plugin"] will be used
-			// 		},
-			// 		"suggest": {
-			// 			"fromVimruntime": true,   // completionItems from vimruntime's vim files
-			// 			"fromRuntimepath": false  // completionItems from runtimepath's vim files, if this is true that fromVimruntime is true
-			// 		}
-			// 	},
-			// 	"filetypes": [ "vim" ]
-			// },
-			"lua": {
-				"command": "lua-lsp",
-				"filetypes": ["lua"]
-			},
-			"swift": {
-				"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-				"args": [],
-				"filetypes": ["swift"],
-				"initializationOptions": {},
-				"settings": {}
-			},
-			"golang": {
-				"command": "gopls",
-				"rootPatterns": ["go.mod"],
-				"filetypes": ["go"],
-				"initializationOptions": {
-					"gocodeCompletionEnabled": true,
-					"diagnosticsEnabled": true,
-					"lintTool": "golint"
-				}
-			},
-			"bash": {
-				"command": "bash-language-server",
-				"args": ["start"],
-				"filetypes": ["sh"],
-				"ignoredRootPaths": []
-			},
-			"ccls": {
-				"command": "ccls",
-				"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-				"rootPatterns": [".ccls", ".ccls-root", "compile_commands.json", ".git/", ".hg/"],
-				"initializationOptions": {
-					"cache": {
-						"directory": "/tmp/ccls"
-					}
-				}
-			}
+				//	"module": "C:/Users/lyb/AppData/Roaming/npm/node_modules/vim-language-server/bin/index.js",
+				//	"args": ["--node-ipc"],
+				//	"initializationOptions": {
+					//		"isNeovim": true, // is neovim, default false
+					//		"iskeyword": "@,48-57,_,192-255,-#", // vim iskeyword option
+					//		"vimruntime": "", // $VIMRUNTIME option
+					//		"runtimepath": "",   // vim runtime path separate by `,`
+					//		"diagnostic": {
+						//			"enable": true
+						//		},
+						//		"trace.server":"verbose",
+						//		"indexes": {
+							//			"runtimepath": true,      // if index runtimepath's vim files this will effect the suggest
+							//			"gap": 100,               // index time gap between next file
+							//			"count": 3,               // count of files index at the same time
+							//			"projectRootPatterns" : ["strange-root-pattern", ".git", "autoload", "plugin"] // Names of files used as the mark of project root. If empty, the default value [".git", "autoload", "plugin"] will be used
+							//		},
+							//		"suggest": {
+								//			"fromVimruntime": true,   // completionItems from vimruntime's vim files
+								//			"fromRuntimepath": false  // completionItems from runtimepath's vim files, if this is true that fromVimruntime is true
+								//		}
+								//	},
+								//	"filetypes": [ "vim" ]
+								// },
+								"lua": {
+									"command": "lua-lsp",
+									"filetypes": ["lua"]
+								},
+								"swift": {
+									"command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+									"args": [],
+									"filetypes": ["swift"],
+									"initializationOptions": {},
+									"settings": {}
+								},
+								"golang": {
+									"command": "gopls",
+									"rootPatterns": ["go.mod"],
+									"filetypes": ["go"],
+									"initializationOptions": {
+										"gocodeCompletionEnabled": true,
+										"diagnosticsEnabled": true,
+										"lintTool": "golint"
+									}
+								},
+								"bash": {
+									"command": "bash-language-server",
+									"args": ["start"],
+									"filetypes": ["sh"],
+									"ignoredRootPaths": []
+								},
+								"ccls": {
+									"command": "ccls",
+									"filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+									"rootPatterns": [".ccls", ".ccls-root", "compile_commands.json", ".git/", ".hg/"],
+									"initializationOptions": {
+										"cache": {
+											"directory": "/tmp/ccls"
+										}
+									}
+								}
 		}
 }

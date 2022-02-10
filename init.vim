@@ -25,6 +25,7 @@ endif
 
 "====================== Custom Mappings ===========================
 let mapleader=","
+nmap , <nop>
 
 nnoremap S :w<CR>
 nnoremap Q :q<CR>
@@ -69,6 +70,14 @@ nnoremap N Nzz
 vnoremap < <gv
 vnoremap > >gv
 
+" Move text up and down
+nmap <A-j> V:move .+1<CR>==
+nmap <A-k> V:move .-2<CR>==
+vmap <A-j> :move .+1<CR>==
+vmap <A-k> :move .-2<CR>==
+xmap <A-j> :move '>+1<CR>gv-gv
+xmap <A-k> :move '<-2<CR>gv-gv
+
 " delete all, yank all, change all
 onoremap al :<c-u>normal! ggVG<CR>
 nnoremap val ggVG
@@ -76,6 +85,7 @@ nnoremap val ggVG
 " system copyboard to visual select some characters.
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
+vnoremap p "_dp
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap <C-s> :<C-u>w !sudo tee > /dev/null %
@@ -224,10 +234,10 @@ noremap srv <C-W>b<C-w>H
 " Press to close the window below the current window
 noremap <LEADER>q <C-w>j:q<CR>
 
-nmap <UP>    :resize +5<CR>
-nmap <DOWN>  :resize -5<CR>
-nmap <LEFT>  :vertical resize +5<CR>
-nmap <RIGHT> :vertical resize -5<CR>
+nmap <UP>    :resize +2<CR>
+nmap <DOWN>  :resize -2<CR>
+nmap <LEFT>  :vertical resize -2<CR>
+nmap <RIGHT> :vertical resize +2<CR>
 
 set nocompatible
 set secure
@@ -640,9 +650,6 @@ Plug 'tpope/vim-abolish'
 " 寄存器面板
 Plug 'junegunn/vim-peekaboo'
 
-" move!  select line or selection to move.
-Plug 'valsorym/.del.vim-json'
-
 " easymotion
 Plug 'easymotion/vim-easymotion'
 
@@ -716,6 +723,9 @@ Plug 'tpope/vim-commentary'
 Plug 'SirVer/ultisnips'
 " vim-snippets
 Plug 'honza/vim-snippets'
+" 最近发现的两个snippests
+" Plug 'rafamadriz/friendly-snippets'
+" Plug 'L3MON4D3/LuaSnip'
 
 " Undo Tree
 Plug 'mbbill/undotree'
@@ -764,6 +774,7 @@ let g:coc_global_extensions = [
 			\ 'coc-gitignore',
 			\ 'coc-html',
 			\ 'coc-json',
+			\ 'coc-explorer',
 			\ 'coc-snippets',
 			\ 'coc-emmet',
 			\ 'coc-lists',
@@ -780,10 +791,10 @@ let g:coc_global_extensions = [
 			\ 'coc-vetur',
 			\ 'coc-vimlsp',
 			\ 'coc-flutter-tools',
+			\ 'coc-lua',
 			\ 'coc-yank'
 			\ ]
 
-" \ 'coc-explorer',
 " \ 'coc-yaml',
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -1296,15 +1307,6 @@ let g:bullets_enabled_file_types = [
 "     VISUAL mode: >
 
 " ===
-" === valsorym/.del.vim-json
-" ===
-let g:move_key_modifier = 'A'
-nmap <A-k>   :Move current line/selection up
-nmap <A-j>   :Move current line/selection down
-vmap <A-k>   :Move current line/selection up
-vmap <A-j>   :Move current line/selection down
-
-" ===
 " === vim-visual-multi
 " ===
 " select words with Ctrl-N (like Ctrl-d in Sublime Text/VS Code)
@@ -1515,7 +1517,7 @@ command! BD call fzf#run(fzf#wrap({
 			\ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
 			\ }))
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 
 " ===
 " === Leaderf
@@ -1798,12 +1800,14 @@ nnoremap <silent> <leader>fl  :FloatermLast<CR>
 tnoremap <silent> <leader>fl  <C-\><C-n>:FloatermLast<CR>
 nnoremap <silent> <leader>ft  :FloatermToggle<CR>
 tnoremap <silent> <leader>ft  <C-\><C-n>:FloatermToggle<CR>
-let g:floaterm_width = 0.8
+let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_gitcommit = 'floaterm'
 let g:floaterm_autoinsert = 1
 let g:floaterm_wintitle = 0
 let g:floaterm_autoclose = 0
+" let g:floaterm_position = 'botright'
+let g:floaterm_position = 'rightbelow'
 
 
 

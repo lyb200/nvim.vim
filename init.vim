@@ -33,7 +33,6 @@ nnoremap Y y$
 vnoremap Y "+y
 
 inoremap jk <ESC>
-inoremap kj <ESC>
 
 nmap s <nop>
 nmap t <nop>
@@ -48,8 +47,8 @@ nnoremap K 5k
 noremap H ^
 noremap L $
 " remap H and L function
-noremap th H
-noremap tl L
+noremap <space>h H
+noremap <space>l L
 
 nnoremap <space>j J
 nnoremap <space>k K
@@ -175,7 +174,7 @@ noremap <leader>;  <Esc>/<++><CR>:nohlsearch<CR>c4l
 inoremap <leader>; <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Toggle spelling check with sc
-noremap sc :set spell!<CR>
+noremap <leader>sc :set spell!<CR>
 " 定于光标之前的单词，然后为它查找第一个拼写建议
 " find the first spell suggestion for it.
 noremap <A-s> ea<C-x>s
@@ -190,8 +189,8 @@ set mouse=a
 " cnoreabbrev wrap :set wrap
 " cnoreabbrev nowrap :set nowrap
 set nowrap
-noremap sw :set wrap<CR>
-noremap sW :set nowrap<CR>
+noremap <leader>sw :set wrap<CR>
+noremap <leader>sW :set nowrap<CR>
 
 " Split windows Management
 set splitbelow
@@ -552,7 +551,7 @@ Plug 'voldikss/vim-floaterm'
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
 " Extended f, F, t and T key mappings for Vim. maybe don't work.
-" Plug 'rhysd/clever-f.vim'
+Plug 'rhysd/clever-f.vim'
 
 " Taglist: Viewer & Finder for LSP symbols and tags
 Plug 'liuchengxu/vista.vim'
@@ -1642,11 +1641,11 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 " map tj  <Plug>(easymotion-sol-j)
 " map tk  <Plug>(easymotion-sol-k)
-map tw  <Plug>(easymotion-bd-W)
+map sw  <Plug>(easymotion-bd-W)
 " go to search 2 chars<cr>, gs default for go to sleep.
-nmap gs <Plug>(easymotion-s2)
-xmap gs <Plug>(easymotion-s2)
-omap gz <Plug>(easymotion-s2)
+nmap ss <Plug>(easymotion-s2)
+xmap ss <Plug>(easymotion-s2)
+omap sz <Plug>(easymotion-s2)
 
 " ===
 " === tpope/vim-capslock

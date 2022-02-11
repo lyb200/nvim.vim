@@ -113,8 +113,6 @@ exec "nohlsearch"
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
-" lookup keyword under the cursor(manual pag)
-noremap <leader>k K
 
 cnoreabbrev Wq wq
 cnoreabbrev WQ wq
@@ -859,7 +857,7 @@ nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 
 " Use to K[ey] to show documentation in preview window.
 " 似乎与默认K的功能一样
-nnoremap <silent> tk :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)

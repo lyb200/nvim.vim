@@ -53,9 +53,6 @@ noremap <space>l L
 
 nnoremap <space>j J
 nnoremap <space>k K
-" visual line continue move
-" xnoremap K :move '<-2<CR>gv-gv
-" xnoremap J :move '>+1<CR>gv-gv
 
 " 使<Bs>和<CR>具有开始新的undo序列
 " inoremap <C-H> <C-G>u<C-H>
@@ -219,10 +216,16 @@ set diffopt+=vertical
 " ===================== START MAP Config ====================
 " =                     switch window                       =
 " ===========================================================
-nnoremap <C-H> :wincmd h<CR>
-nnoremap <C-J> :wincmd j<CR>
-nnoremap <C-K> :wincmd k<CR>
-nnoremap <C-L> :wincmd l<CR>
+nnoremap <C-h> :wincmd h<CR>
+nnoremap <C-j> :wincmd j<CR>
+nnoremap <C-k> :wincmd k<CR>
+nnoremap <C-l> :wincmd l<CR>
+
+" Terminal -- better navigate
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " ====================== exchange tab ======================
 nmap sV <C-W>t<C-w>H<C-W>l

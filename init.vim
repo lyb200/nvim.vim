@@ -48,14 +48,11 @@ nnoremap K 5k
 noremap H ^
 noremap L $
 " remap H and L function
-noremap th H
-noremap tl L
+noremap <space>h H
+noremap <space>l L
 
 nnoremap <space>j J
 nnoremap <space>k K
-" visual line continue move
-" xnoremap K :move '<-2<CR>gv-gv
-" xnoremap J :move '>+1<CR>gv-gv
 
 " 使<Bs>和<CR>具有开始新的undo序列
 " inoremap <C-H> <C-G>u<C-H>
@@ -116,8 +113,6 @@ exec "nohlsearch"
 
 " Open the init.vim file anytime
 noremap <leader>n :e $MYVIMRC<CR>
-" lookup keyword under the cursor(manual pag)
-noremap <leader>k K
 
 cnoreabbrev Wq wq
 cnoreabbrev WQ wq
@@ -184,7 +179,7 @@ noremap <leader>;  <Esc>/<++><CR>:nohlsearch<CR>c4l
 inoremap <leader>; <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Toggle spelling check with sc
-noremap sc :set spell!<CR>
+noremap <leader>sc :set spell!<CR>
 " 定于光标之前的单词，然后为它查找第一个拼写建议
 " find the first spell suggestion for it.
 noremap <A-s> ea<C-x>s
@@ -199,8 +194,8 @@ set mouse=a
 " cnoreabbrev wrap :set wrap
 " cnoreabbrev nowrap :set nowrap
 set nowrap
-noremap sw :set wrap<CR>
-noremap sW :set nowrap<CR>
+noremap <leader>sw :set wrap<CR>
+noremap <leader>sW :set nowrap<CR>
 
 " Split windows Management
 set splitbelow
@@ -219,10 +214,16 @@ set diffopt+=vertical
 " ===================== START MAP Config ====================
 " =                     switch window                       =
 " ===========================================================
-nnoremap <C-H> :wincmd h<CR>
-nnoremap <C-J> :wincmd j<CR>
-nnoremap <C-K> :wincmd k<CR>
-nnoremap <C-L> :wincmd l<CR>
+nnoremap <C-h> :wincmd h<CR>
+nnoremap <C-j> :wincmd j<CR>
+nnoremap <C-k> :wincmd k<CR>
+nnoremap <C-l> :wincmd l<CR>
+
+" Terminal -- better navigate
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
 " ====================== exchange tab ======================
 nmap sV <C-W>t<C-w>H<C-W>l
@@ -562,7 +563,7 @@ Plug 'voldikss/vim-floaterm'
 " Jump to any definition and references, IDE madness without overhead
 Plug 'pechorin/any-jump.vim'
 " Extended f, F, t and T key mappings for Vim. maybe don't work.
-" Plug 'rhysd/clever-f.vim'
+Plug 'rhysd/clever-f.vim'
 
 " Taglist: Viewer & Finder for LSP symbols and tags
 Plug 'liuchengxu/vista.vim'
@@ -857,7 +858,7 @@ nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<cr>
 
 " Use to K[ey] to show documentation in preview window.
 " 似乎与默认K的功能一样
-nnoremap <silent> tk :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)
@@ -1644,11 +1645,11 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0
 " map tj  <Plug>(easymotion-sol-j)
 " map tk  <Plug>(easymotion-sol-k)
-map tw  <Plug>(easymotion-bd-W)
+map sw  <Plug>(easymotion-bd-W)
 " go to search 2 chars<cr>, gs default for go to sleep.
-nmap gs <Plug>(easymotion-s2)
-xmap gs <Plug>(easymotion-s2)
-omap gz <Plug>(easymotion-s2)
+nmap ss <Plug>(easymotion-s2)
+xmap ss <Plug>(easymotion-s2)
+omap sz <Plug>(easymotion-s2)
 
 " ===
 " === tpope/vim-capslock

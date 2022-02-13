@@ -1478,6 +1478,12 @@ func! CompileRunGcc()
 		" set splitbelow
 		" :sp
 		" :term go run .
+	elseif &filetype == 'lua'
+		if has('unix')
+			:FloatermNew lua54 %
+		else
+			:FloatermNew c:\lua_bin/lua54 %
+		endif
 	endif
 endfunc
 "}}}

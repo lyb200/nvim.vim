@@ -656,14 +656,11 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'easymotion/vim-easymotion'
 
 " 输入法自动切换, for linux
-if has('unix')
-	Plug 'lyokha/vim-xkbswitch'
-	" In windows you need not only the plugin, but DLL-files from latest release.
-	" If you have 64-bit Vim, you need libxkbswitch64.dll.
-	" For 32-bit version use libxkbswitch32.dll.
-else
-	Plug 'DeXP/xkb-switch-win'
-endif
+Plug 'brglng/vim-im-select'
+" if has('unix')
+" 	Plug 'lyokha/vim-xkbswitch'
+" endif
+
 " 翻译，暂时不用，基本上是网速太慢的提示
 Plug 'voldikss/vim-translator'
 
@@ -1819,7 +1816,18 @@ let g:floaterm_wintype = 'split'
 let g:floaterm_position = 'botright'
 " let g:floaterm_position = 'rightbelow'
 
+" ===
+" === vim-im-select
+" ===
+let g:im_select_get_im_cmd = ['im-select']
+let g:ImSelectSetImCmd = {key -> ['im-select', key]}
 
+function! GetImCallback(exit_code, stdout, stderr) abort
+    return a:stdout
+endfunction
+
+let g:ImSelectGetImCallback = function('GetImCallback')
+let g:im_select_default = '1033'                      " The default value on Windows
 
 
 

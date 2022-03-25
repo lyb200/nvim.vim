@@ -119,6 +119,15 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 
+cnoreabbrev git Git
+cnoreabbrev gitd Git diff
+cnoreabbrev gits Git status
+cnoreabbrev gita Git add
+cnoreabbrev gitc Git commit -m '
+cnoreabbrev gitp Git push
+cnoreabbrev gitl Git pull
+cnoreabbrev w!! <C-u>w !sudo tee > /dev/null %
+
 " ==============Command line mode cursor movement ===========
 cnoremap <C-A> <Home>       "default <C-B>
 cnoremap <C-E> <End>
@@ -656,14 +665,8 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'easymotion/vim-easymotion'
 
 " 输入法自动切换, for linux
-if has('unix')
-	Plug 'lyokha/vim-xkbswitch'
-	" In windows you need not only the plugin, but DLL-files from latest release.
-	" If you have 64-bit Vim, you need libxkbswitch64.dll.
-	" For 32-bit version use libxkbswitch32.dll.
-else
-	Plug 'DeXP/xkb-switch-win'
-endif
+Plug 'brglng/vim-im-select'
+
 " 翻译，暂时不用，基本上是网速太慢的提示
 Plug 'voldikss/vim-translator'
 
@@ -1822,8 +1825,8 @@ let g:floaterm_position = 'botright'
 
 
 
-
-
+" 输入法自动切换
+let g:im_select_default = '2052'
 
 " :options can list all configures
 " :h option-list can get help.

@@ -163,10 +163,13 @@ noremap <leader>mT :+tabmove<CR>
 noremap <leader>mf :0tabmove<CR>
 noremap <leader>ml :$tabmove<CR>
 
+nnoremap <expr><silent> j v:count == 0 ? 'gj' : 'j'
+nnoremap <expr><silent> k v:count == 0 ? 'gk' : 'k'
+
 " j, k  Store relative line number jumps in the jumplist
 " if they exceed a threshold.
-nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
-nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
+" nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
+" nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 " search adjacent duplicate words
 " noremap sdw /\(\<\w\+\>\)\_s*\1
@@ -1837,7 +1840,7 @@ let g:im_select_default = '1033'                      " The default value on Win
 
 
 " 输入法自动切换
-let g:im_select_default = '2052'
+" let g:im_select_default = '2052'
 
 " :options can list all configures
 " :h option-list can get help.
